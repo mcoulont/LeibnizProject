@@ -1,0 +1,122 @@
+
+body {
+	background-color: #000000;
+	color: #B2F613;
+	font-family: Georgia, "Times New Roman", Times, serif;
+
+	margin: 0;
+
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: auto auto auto auto;
+}
+
+a {
+	color: #3CDFFF;
+}
+
+.link-mail {
+	color: #00008B;
+	text-decoration: underline;
+}
+
+.header-container {
+	grid-row: 1;
+	grid-column: 1;
+}
+
+.header {
+	display: grid;
+	grid-template-columns: min-content auto;
+	grid-template-rows: auto;
+
+	align-items: end;
+}
+
+.logo {
+	grid-row: 1;
+	grid-column: 1;
+
+	padding: 0.5em 0em 0em 1em;
+}
+
+.header-title {
+	grid-row: 1;
+	grid-column: 2;
+
+	text-align: center;
+	align-self: center;
+
+	font-size: 2rem;
+}
+
+.title-bar-container {
+	grid-row: 2;
+	grid-column: 1;
+
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: auto;
+
+	/* text-align: center; */
+	align-items: center;
+}
+
+.title-bar {
+	background-color: #B2F613;
+	color: #000000;
+
+	grid-row: 1;
+	grid-column: 1;
+	padding: 0.8em 2em 0.8em 0.8em;
+	text-align: right;
+}
+
+.heart {
+	display: grid;
+	grid-template-columns: auto;
+	grid-template-rows: auto;
+
+	margin: 1em 5em;
+
+	align-items: center;
+}
+
+.heart-container {
+	grid-row: 3;
+	grid-column: 1;
+}
+
+/* For the math part */
+.math_block {
+	background-color: #070C0F;
+	padding: 0 0.5em;
+}
+
+/* For the Coq code */
+pre {
+	background-color: #0C151C;
+	padding: 0.5em;
+}
+
+.mjx-container {
+	margin: 0.5em 0;
+}
+
+.links_coq {
+	margin: 2em 0 0.5em;
+}
+
+.footer {
+	grid-row: 4;
+	grid-column: 1;
+}
+
+.contact {
+	background-color: #B2F613;
+	color: #000000;
+
+	padding: 1em;
+
+	text-align: center;
+}
