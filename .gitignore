@@ -1,7 +1,7 @@
 
 # Images and the HTML of articles are generated
-Images/
-Articles/
+Images/*
+Articles/*
 index.html
 
 # For Coq
