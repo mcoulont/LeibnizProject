@@ -29,7 +29,7 @@ IMAGE_FOLDER = str(
 ) + "/../Images"
 IMAGE_LOCATION_WITHOUT_EXTENSION = IMAGE_FOLDER + "/Logo.png"
 
-color = "#B2F613"
+COLOR = "#B2F613"
 	
 logo = Image.new('RGBA', (WIDTH, WIDTH), (0,0,0,0))
 
@@ -50,7 +50,7 @@ def drawFractal(logo, nbrSteps, coordsRoot, angleWithVertical):
 
 		ImageDraw.Draw(logo).line(
 			shape,
-			fill = color,
+			fill = COLOR,
 			width = int(
 				INITIAL_WIDTH * (COEFF**(NBR_STEPS - nbrSteps + 1))
 			)
@@ -75,7 +75,7 @@ drawFractal(logo, NBR_STEPS, (WIDTH/2, HEIGHT_FRACTAL), 0)
 # We make the trunk longer in order to make the image square
 # and make it look more like a tree
 shape = [(WIDTH/2, HEIGHT_FRACTAL), (WIDTH/2, HEIGHT_TREE)]
-ImageDraw.Draw(logo).line(shape, fill = color, width = int(INITIAL_WIDTH))
+ImageDraw.Draw(logo).line(shape, fill = COLOR, width = int(INITIAL_WIDTH))
 
 # The basis of the tree
 shape = [
@@ -85,6 +85,6 @@ shape = [
 	(WIDTH/2 - INITIAL_WIDTH/2, HEIGHT_TREE)
 ]
 
-ImageDraw.Draw(logo).polygon(shape, fill = color)
+ImageDraw.Draw(logo).polygon(shape, fill = COLOR)
 
 logo.save(IMAGE_LOCATION_WITHOUT_EXTENSION)
