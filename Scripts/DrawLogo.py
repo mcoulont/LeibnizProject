@@ -24,13 +24,16 @@ ANGLE_BRANCH_DEVIATION = pi/10
 
 NBR_STEPS = 9
 
-IMAGE_LOCATION_WITHOUT_EXTENSION = str(
+IMAGE_FOLDER = str(
 	Path(__file__).parent.resolve()
-) + "/../Images/Logo.png"
+) + "/../Images"
+IMAGE_LOCATION_WITHOUT_EXTENSION = IMAGE_FOLDER + "/Logo.png"
 
 color = "#B2F613"
 	
 logo = Image.new('RGBA', (WIDTH, WIDTH), (0,0,0,0))
+
+Path(IMAGE_FOLDER).mkdir(parents=True, exist_ok=True)
 
 def drawFractal(logo, nbrSteps, coordsRoot, angleWithVertical):
 	if nbrSteps > 0:

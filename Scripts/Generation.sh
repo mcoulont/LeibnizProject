@@ -15,6 +15,8 @@ script_insert_coq=$folder_current_script/InsertCoqInMarkdown.py
 script_insert_links_coq=$folder_current_script/InsertLinksCoq.py
 script_generate_index=$folder_current_script/GenerateIndex.py
 
+mkdir -p $folder_html
+
 for file_article_md in $folder_markdown/*; do
     base_name=$(basename $file_article_md)
     basename_without_extension="${base_name%.*}"
