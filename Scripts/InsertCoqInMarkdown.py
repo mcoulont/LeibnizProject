@@ -6,11 +6,9 @@ from re import finditer
 
 SUFFIXE_MARKDOWN = ".md"
 REGEX_COQ_INSERTION = "\\[//\\]: # \\((\\d+)-(\\d+)\\)"
-# TOKEN_MATH_START = "<math>"
-# TOKEN_MATH_END = "</math>"
 TOKEN_MATH_START = "--MATH_START--"
 TOKEN_MATH_END = "--MATH_END--"
-START_MATH_BLOCK = "<div class='math_block'>"
+START_MATH_BLOCK = "<div class='math-block'>"
 END_MATH_BLOCK = "</div>"
 
 folder_coq = sys.argv[1]
