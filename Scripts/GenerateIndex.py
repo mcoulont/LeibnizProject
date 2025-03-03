@@ -5,6 +5,7 @@ from re import sub, search
 from os import listdir
 
 
+TOKEN_LINK_INDEX = "--link_index--"
 TOKEN_LINKS_COQ = "--links_coq--"
 TOKEN_BODY = "$body$"
 INDEX_TITLE = "A website aiming at global formalization"
@@ -37,6 +38,9 @@ print(
         open(file_general_template).read().replace(
             "$title$",
             INDEX_TITLE
+        ).replace(
+            TOKEN_LINK_INDEX,
+            ""
         ).replace(
             TOKEN_LINKS_COQ,
             ""
