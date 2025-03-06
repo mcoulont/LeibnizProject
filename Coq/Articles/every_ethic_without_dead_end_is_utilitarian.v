@@ -2,7 +2,6 @@
 Require Import Bool.Bool.
 Require Import Relations.Relation_Definitions.
 Require Import Arith.PeanoNat.
-Require Import Classical.
 
 Context {State : Type}.
 
@@ -10,8 +9,11 @@ Context {Action : Type}.
 
 Definition Ethic : Type := State -> Action -> bool.
 
-Definition has_no_dead_end (ethic : Ethic) : Prop :=
-  forall (state : State), exists (action : Action), ethic state action = true.
+Definition has_no_dead_end (ethic : Ethic) (state : State) : Prop :=
+  exists (action : Action), ethic state action = true.
+
+Definition never_has_dead_end (ethic : Ethic) : Prop :=
+  forall (state : State), has_no_dead_end ethic state.
 
 Definition total {T : Type} (R : relation T) := forall (x y : T), R x y \/ R y x.
 
@@ -21,35 +23,37 @@ Definition transitive {T : Type} (R : relation T) := forall (x y z : T),
 Definition preference_order {T : Type} (R : relation T) :=
   transitive R /\ total R.
 
-Definition is_preference_space {T : Type} (R : relation T) : Prop := preference_order R.
+Structure PreferenceSpace : Type := {
+    carrier :> Type ;
+    order : relation carrier ;
+    is_preference_order: preference_order order
+}.
 
-Definition is_utility_function {Utility : Type}
-(utility_function : State -> Action -> Utility) (R : relation Utility) : Prop :=
-  is_preference_space R.
+Definition get_carrier : PreferenceSpace -> Type:=
+  fun (ps : PreferenceSpace) => ps.(carrier).
 
-Definition can_be_obtained {Utility : Type}
-(utility_function : State -> Action -> Utility) (R : relation Utility)
-(state : State) (utility : Utility) :=
-  exists (action : Action), utility = utility_function state action.
+Definition get_preference_order (ps : PreferenceSpace) : relation (get_carrier ps) :=
+  ps.(order).
 
-Definition is_maximum {Utility : Type}
-(utility_function : State -> Action -> Utility) (R : relation Utility)
-(state : State) (utility : Utility) :=
-  can_be_obtained utility_function R state utility /\
-  forall (action : Action), R utility (utility_function state action).
+Definition UtilityFunction {ps : PreferenceSpace} : Type := State -> Action -> ps.
 
-Definition results_in_ethic {Utility : Type} {R : relation Utility}
-{utility_function : State -> Action -> Utility}
-(p : is_utility_function utility_function R) (ethic : Ethic) : Prop :=
+Definition can_be_obtained {ps : PreferenceSpace}
+(uf : UtilityFunction) (state : State) (utility : get_carrier ps) : Prop :=
+  exists (action : Action), utility = uf state action.
+
+Definition is_maximum {ps : PreferenceSpace}
+(uf : UtilityFunction) (state : State) (utility : get_carrier ps) : Prop :=
+  can_be_obtained uf state utility /\
+  forall (action : Action), get_preference_order ps utility (uf state action).
+
+Definition maximizes {ps : PreferenceSpace}
+(ethic : Ethic) (uf : @UtilityFunction ps) : Prop :=
   forall (state : State) (action : Action),
     Is_true (ethic state action) <->
-    is_maximum utility_function R state (utility_function state action).
+    is_maximum uf state (uf state action).
 
 Definition is_utilitarian (ethic : Ethic) : Prop :=
-  exists (Utility : Type) (R : relation Utility)
-  (utility_function : State -> Action -> Utility)
-  (p : is_utility_function utility_function R),
-    results_in_ethic p ethic.
+  exists (ps : PreferenceSpace) (uf : UtilityFunction), @maximizes ps ethic uf.
 
 Definition associated_utility (ethic : Ethic) : State -> Action -> nat :=
   fun state => (fun action => if ethic state action then 0 else 1).
@@ -72,23 +76,25 @@ Proof.
   - right. unfold gt in H. apply Nat.lt_le_incl. tauto.
 Qed.
 
-Lemma associated_utility_is_utility (ethic : Ethic) :
-  is_utility_function (associated_utility ethic) le.
+Lemma le_preference_order : preference_order le.
 Proof.
-  unfold is_utility_function. unfold is_preference_space. unfold preference_order.
-  split.
+  unfold preference_order. split.
   - apply le_transitive.
   - apply le_total.
 Qed.
 
+Definition associatedPreferenceSpace (ethic : Ethic) : PreferenceSpace := {|
+  carrier := nat ;
+  order := le ;
+  is_preference_order := le_preference_order
+|}.
+
 Proposition every_ethic_without_dead_end_is_utilitarian :
-  forall (ethic : Ethic), has_no_dead_end ethic -> is_utilitarian ethic.
+  forall (ethic : Ethic), never_has_dead_end ethic -> is_utilitarian ethic.
 Proof.
   intros. unfold is_utilitarian.
-  exists nat. exists le.
-  exists (associated_utility ethic).
-  exists (associated_utility_is_utility ethic).
-  unfold results_in_ethic. intros. unfold is_maximum.
+  exists (associatedPreferenceSpace ethic). exists (associated_utility ethic).
+  unfold maximizes. intros. unfold is_maximum.
   split.
   - intro. destruct (ethic state action) eqn:H1.
     2: { simpl in H0. inversion H0. }
@@ -101,8 +107,8 @@ Proof.
     destruct (ethic state action) eqn:H2.
     + reflexivity.
     + unfold associated_utility in H1. rewrite H2 in H1.
-      unfold has_no_dead_end in H. pose proof (H state).
+      unfold never_has_dead_end in H. pose proof (H state).
       destruct H3 as [action'].
       pose proof (H1 action'). rewrite H3 in H4.
-      inversion H4. 
+      inversion H4.
 Qed.

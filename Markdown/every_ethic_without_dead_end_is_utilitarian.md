@@ -25,7 +25,7 @@ $\mathbf{Definition}$\
 An ethic is a function from $S × A$ to $\{⊥ ,⊤\}$, where $⊥$ is the image for actions being unethical and $⊤$ the one for ethical actions.
 --MATH_END--
 
-[//]: # (2-11)
+[//]: # (2-10)
 
 An ethic without dead end is an ethic which lets you at least one ethical action in each situation. Note that this is not an assumption of hope: such a possible action can be "do nothing". It seems possible to assume that every ethic has no dead end (or at least can be slightly modified to remove them, for example adding as ethical action "kill oneself" to situations having none).
 
@@ -34,7 +34,7 @@ $\mathbf{Definition}$\
 An ethic $e: S × A \to \{⊥ ,⊤\}$ has no dead end if $\forall s \in S$ there is $a in A$ such that $e(s, a) = ⊤$.
 --MATH_END--
 
-[//]: # (13-14)
+[//]: # (12-16)
 
 
 ## Definition of a utility function
@@ -46,7 +46,7 @@ $\mathbf{Definition}$\
 A preference order is a total and transitive binary relation. We will in this page denote with $a_1 \ge a_2$ the fact that the alternative $a_1$ is preferable (or equally preferable) to an alternative $a_2$.
 --MATH_END--
 
-[//]: # (16-24)
+[//]: # (18-24)
 
 A utility function gives preferences among all possible alternatives. In our context, you may see this utility function as a measure of the "goodness" of actions.
 
@@ -57,7 +57,7 @@ A utility function is a function from a set $A$ of alternatives to a set $U$ end
 Note that the usual utility functions are given with $U$ being the real numbers endowed with the usual $\ge$ operator. We deal with (arguably) the most general definition.
 --MATH_END--
 
-[//]: # (26-33)
+[//]: # (26-38)
 
 
 ## Definition of an utilitarian ethic
@@ -70,7 +70,7 @@ An ethic $e$ maximizes a utility function $u$ if
 $$\forall s \in S,\ \forall a \in A,\ e(s, a)=⊤ \iff \forall a' \in A,\ u(a) \ge u(a')$$
 --MATH_END--
 
-[//]: # (35-46)
+[//]: # (40-53)
 
 An ethic is said to be utilitarian if it maximizes a utility function.
 
@@ -79,7 +79,7 @@ $\mathbf{Definition}$\
 An ethic $e$ is utilitarian if there is a utility function $u$ such that $e$ maximizes $u$.
 --MATH_END--
 
-[//]: # (48-52)
+[//]: # (55-56)
 
 
 ## Proving that every ethic (without dead end) is utilitarian
@@ -98,7 +98,7 @@ $$\begin{align*}
 \end{align*}$$
 --MATH_END--
 
-[//]: # (54-82)
+[//]: # (58-90)
 
 If the ethic has no dead end, this gives a utility function it maximizes.
 
@@ -117,5 +117,5 @@ And $e(s, a)=⊤ \iff au(a) = 1$ results from the definition of the associated u
 ■
 --MATH_END--
 
-[//]: # (84-108)
+[//]: # (92-114)
 
