@@ -10,6 +10,7 @@ folder_coq=$folder_current_script/../Coq/Articles
 file_general_template=$folder_current_script/../Templates/general.html
 file_template_link_index=$folder_current_script/../Templates/link_index.html
 file_template_links_coq=$folder_current_script/../Templates/links_coq.html
+file_coq_project=$folder_current_script/../Coq/_CoqProject
 index_file=$folder_current_script/../index.html
 
 script_insert_coq=$folder_current_script/InsertCoqInMarkdown.py
@@ -27,4 +28,4 @@ for file_article_md in $folder_markdown/*; do
     python3 $script_insert_links_coq $file_template_link_index $file_template_links_coq $basename_without_extension > $folder_html/$basename_without_extension.html
 done
 
-python3 $script_generate_index $file_general_template $folder_markdown > $root_folder/index.html
+python3 $script_generate_index $file_general_template $folder_markdown $file_coq_project > $root_folder/index.html

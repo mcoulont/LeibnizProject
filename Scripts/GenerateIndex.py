@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
 import sys
-from re import sub, search
-from os import listdir
+from re import finditer, search, sub
 
 
 TOKEN_LINK_INDEX = "--link_index--"
@@ -12,20 +11,26 @@ INDEX_TITLE = "A website aiming at global formalization"
 REGEX_MATHJAX = "\\$if\\(math\\)\\$\\s+\\$math\\$\\s+\\$endif\\$"
 REGEX_TITLE_MD = """title\\s*:\\s*['"]([^'"]+)['"]\\s+author\\s*:"""
 FOLDER_HTML = "Articles/"
+REGEX_BASENAME_COQ_PROJECT = "Articles/([a-z0-9_]+)\\.v\\s"
 
 file_general_template = sys.argv[1]
 folder_markdown = sys.argv[2]
+file_coq_project = sys.argv[3]
 
 body_html = "<ul>"
 
-for article_md in listdir(folder_markdown):
-    basename_without_extension = article_md.split('/')[-1].split('.')[0]
-
+# The articles must be in the index in the same order as in _CoqProject
+# (to be consistent with imports)
+for occurrence_article_basename in finditer(
+    REGEX_BASENAME_COQ_PROJECT,
+    open(file_coq_project).read()
+):
     body_html += (
-        '<li><a href="' + FOLDER_HTML + basename_without_extension +
+        '<li><a href="' + FOLDER_HTML + occurrence_article_basename.group(1) +
         '.html">' + search(
             REGEX_TITLE_MD,
-            open(folder_markdown + '/' + article_md).read()
+            open(folder_markdown + '/' + occurrence_article_basename.group(1) +
+            ".md").read()
         ).group(1) + '</a></li>'
     )
 
