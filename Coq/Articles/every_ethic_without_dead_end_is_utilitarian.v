@@ -9,11 +9,11 @@ Context {Action : Type}.
 
 Definition Ethic : Type := State -> Action -> bool.
 
-Definition has_no_dead_end (ethic : Ethic) (state : State) : Prop :=
-  exists (action : Action), ethic state action = true.
+Definition dead_end (ethic : Ethic) (state : State) : Prop :=
+  forall (action : Action), ethic state action = false.
 
-Definition never_has_dead_end (ethic : Ethic) : Prop :=
-  forall (state : State), has_no_dead_end ethic state.
+Definition without_dead_end (ethic : Ethic) : Prop :=
+  forall (state : State), ~ dead_end ethic state.
 
 Definition total {T : Type} (R : relation T) := forall (x y : T), R x y \/ R y x.
 
@@ -90,7 +90,7 @@ Definition associatedPreferenceSpace (ethic : Ethic) : PreferenceSpace := {|
 |}.
 
 Proposition every_ethic_without_dead_end_is_utilitarian :
-  forall (ethic : Ethic), never_has_dead_end ethic -> is_utilitarian ethic.
+  forall (ethic : Ethic), without_dead_end ethic -> is_utilitarian ethic.
 Proof.
   intros. unfold is_utilitarian.
   exists (associatedPreferenceSpace ethic). exists (associated_utility ethic).
@@ -107,8 +107,10 @@ Proof.
     destruct (ethic state action) eqn:H2.
     + reflexivity.
     + unfold associated_utility in H1. rewrite H2 in H1.
-      unfold never_has_dead_end in H. pose proof (H state).
-      destruct H3 as [action'].
-      pose proof (H1 action'). rewrite H3 in H4.
-      inversion H4.
+      unfold without_dead_end in H. pose proof (H state).
+      unfold dead_end in H3. exfalso. apply H3.
+      intro. pose proof (H1 action0).
+      destruct (ethic state action0).
+      { inversion H4. }
+      { reflexivity. }
 Qed.

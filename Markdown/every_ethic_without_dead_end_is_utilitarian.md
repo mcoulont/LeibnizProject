@@ -11,7 +11,7 @@ keywords:
 
 ## Presentation
 
-An ethic being the rule of conduct which tells in each given situation if an action is ethical or not, it is proved here that every ethic is utlitarian, in the sense that it maximizes a [utility function](https://en.wikipedia.org/wiki/Utility#Preference).
+An ethic being the rule of conduct which tells in each given situation if an action is ethical or not, it is proved here that every ethic without dead end is utlitarian, in the sense that it maximizes a [utility function](https://en.wikipedia.org/wiki/Utility#Preference).
 
 
 ## Definition of an ethic
@@ -19,7 +19,7 @@ An ethic being the rule of conduct which tells in each given situation if an act
 Being given a situation (also named state following the usual terminology in artificial intelligence: see [this Wikipedia page](https://en.wikipedia.org/wiki/Intelligent_agent#Objective_function) for example), an ethic tells if the action is right or wrong in the situation.
 
 --MATH_START--
-Throughout this page, let $S$ be the state of states and $A$ the set of actions.
+Throughout this page, let $S$ be the set of states and $A$ the set of actions.
 
 $\mathbf{Definition}$\
 An ethic is a function from $S × A$ to $\{⊥ ,⊤\}$, where $⊥$ is the image for actions being unethical and $⊤$ the one for ethical actions.
@@ -27,14 +27,26 @@ An ethic is a function from $S × A$ to $\{⊥ ,⊤\}$, where $⊥$ is the image
 
 [//]: # (2-10)
 
-An ethic without dead end is an ethic which lets you at least one ethical action in each situation. Note that this is not an assumption of hope: such a possible action can be "do nothing". It seems possible to assume that every ethic has no dead end (or at least can be slightly modified to remove them, for example adding as ethical action "kill oneself" to situations having none).
+
+## Definition of a dead end in an ethic
+
+A dead end is a situation in which the ethic allows no action.
 
 --MATH_START--
 $\mathbf{Definition}$\
-An ethic $e: S × A \to \{⊥ ,⊤\}$ has no dead end if $\forall s \in S$ there is $a in A$ such that $e(s, a) = ⊤$.
+A dead end in an ethic $e: S × A \to \{⊥ ,⊤\}$ is a state $s \in S$ such that $\forall a in A, e(s, a) = ⊥$.
 --MATH_END--
 
-[//]: # (12-16)
+[//]: # (12-13)
+
+An ethic without dead end is an ethic for which no situation is a dead end. Note that this is not an assumption of hope: such a possible action can be "do nothing". It seems possible to assume that every ethic has no dead end (or at least can be slightly modified to remove them, for example adding as ethical action "kill oneself" to situations having none).
+
+--MATH_START--
+$\mathbf{Definition}$\
+An ethic is without dead end if $\forall s \in S$ $s$ is not a dead end.
+--MATH_END--
+
+[//]: # (15-16)
 
 
 ## Definition of a utility function
@@ -113,9 +125,9 @@ $$\forall s \in S,\ \forall a \in A,\ e(s, a)=⊤ \iff \forall a' \in A,\ au(a) 
 Let $s \in S$ and $a \in A$. \
 As $e$ has no dead end, by definition of the associated utility, there is an action whose image by $au$ is $1$, which is thus the maximum value of $au$ (because the other possible value is $0$), that is: \
 $$\forall a' \in A,\ au(a) \ge au(a') \iff au(a) = 1$$
-And $e(s, a)=⊤ \iff au(a) = 1$ results from the definition of the associated utility
+And $e(s, a)=⊤ \iff au(a) = 1$ results from the definition of the associated utility \
 ■
 --MATH_END--
 
-[//]: # (92-114)
+[//]: # (92-116)
 
