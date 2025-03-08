@@ -34,7 +34,7 @@ A dead end is a situation in which the ethic allows no action.
 
 --MATH_START--
 $\mathbf{Definition}$\
-A dead end in an ethic $e: S × A \to \{⊥ ,⊤\}$ is a state $s \in S$ such that $\forall a in A, e(s, a) = ⊥$.
+A dead end in an ethic $e: S × A \to \{⊥ ,⊤\}$ is a state $s \in S$ such that $\forall a \in A, e(s, a) = ⊥$.
 --MATH_END--
 
 [//]: # (12-13)

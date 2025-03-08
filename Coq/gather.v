@@ -1,1 +1,2 @@
 Require Import every_ethic_without_dead_end_is_utilitarian.
+Require Import utilitarian_ethic_no_freedom_iff_maximum_for_unique_action.
