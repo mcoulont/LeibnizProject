@@ -92,7 +92,7 @@ $$\begin{cases*}
 
 --MATH_START--
 $\mathbf{Definition}$\
-An utilitarian ethic $e$ is said to always have a unique action maximizing its utility if $\forall s \in \S, $e$ has a unique maximum action maximizing its utility
+An utilitarian ethic $e$ is said to always have a unique action maximizing its utility if $\forall s \in S$, $e$ has a unique maximum action maximizing its utility
 --MATH_END--
 
 [//]: # (38-41)
