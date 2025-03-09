@@ -95,7 +95,7 @@ $\mathbf{Definition}$\
 An utilitarian ethic $e$ is said to always have a unique action maximizing its utility if $\forall s \in \S, $e$ has a unique maximum action maximizing its utility
 --MATH_END--
 
-[//]: # (38-40)
+[//]: # (38-41)
 
 
 ## An utilitarian ethic has a unique function maximizing its utility if and only if it leaves no freedom
@@ -111,7 +111,7 @@ Let $e$ be a utilitarian ethic, $uf$ its utility function and $s$ a state. \
 ■
 --MATH_END--
 
-[//]: # (42-77)
+[//]: # (43-79)
 
 --MATH_START--
 $\mathbf{Corollary}$\ 
@@ -126,4 +126,4 @@ $\iff e$ never leaves freedom \
 ■
 --MATH_END--
 
-[//]: # (79-89)
+[//]: # (81-93)
