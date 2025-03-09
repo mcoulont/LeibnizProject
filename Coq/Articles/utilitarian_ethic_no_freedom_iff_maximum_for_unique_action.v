@@ -2,10 +2,11 @@
 Require Import Bool.Bool.
 Require Import Relations.Relation_Definitions.
 
+Require Import ethics_first_steps.
 Require Import every_ethic_without_dead_end_is_utilitarian.
 
-Definition State : Type := every_ethic_without_dead_end_is_utilitarian.State.
-Definition Action : Type := every_ethic_without_dead_end_is_utilitarian.Action.
+Definition State : Type := ethics_first_steps.State.
+Definition Action : Type := ethics_first_steps.Action.
 
 Definition leaves_no_freedom (ethic: Ethic) (state: State) : Prop :=
   exists! (action: Action), ethic state action = true.

@@ -11,21 +11,15 @@ keywords:
 
 ## Presentation
 
-An ethic being the rule of conduct which tells in each given situation if an action is ethical or not, it is proved here that every ethic without dead end is utlitarian, in the sense that it maximizes a [utility function](https://en.wikipedia.org/wiki/Utility#Preference).
+It is proved here that every ethic without dead end is utlitarian, in the sense that it maximizes a [utility function](https://en.wikipedia.org/wiki/Utility#Preference).
 
-
-## Definition of an ethic
-
-Being given a situation (also named state following the usual terminology in artificial intelligence: see [this Wikipedia page](https://en.wikipedia.org/wiki/Intelligent_agent#Objective_function) for example), an ethic tells if the action is right or wrong in the situation.
+One relies on [this article](https://leibnizproject.com/Articles/ethics_first_steps.html).
 
 --MATH_START--
 Throughout this page, let $S$ be the set of states and $A$ the set of actions.
-
-$\mathbf{Definition}$\
-An ethic is a function from $S × A$ to $\{⊥ ,⊤\}$, where $⊥$ is the image for actions being unethical and $⊤$ the one for ethical actions.
 --MATH_END--
 
-[//]: # (2-10)
+[//]: # (2-9)
 
 
 ## Definition of a dead end in an ethic
@@ -37,7 +31,7 @@ $\mathbf{Definition}$\
 A dead end in an ethic $e: S × A \to \{⊥ ,⊤\}$ is a state $s \in S$ such that $\forall a \in A, e(s, a) = ⊥$.
 --MATH_END--
 
-[//]: # (12-13)
+[//]: # (11-12)
 
 An ethic without dead end is an ethic for which no situation is a dead end. Note that this is not an assumption of hope: such a possible action can be "do nothing". It seems possible to assume that every ethic has no dead end (or at least can be slightly modified to remove them, for example adding as ethical action "kill oneself" to situations having none).
 
@@ -46,7 +40,7 @@ $\mathbf{Definition}$\
 An ethic is without dead end if $\forall s \in S$ $s$ is not a dead end.
 --MATH_END--
 
-[//]: # (15-16)
+[//]: # (14-15)
 
 
 ## Definition of a utility function
@@ -58,7 +52,7 @@ $\mathbf{Definition}$\
 A preference order is a total and transitive binary relation. We will in this page denote with $a_1 \ge a_2$ the fact that the alternative $a_1$ is preferable (or equally preferable) to an alternative $a_2$.
 --MATH_END--
 
-[//]: # (18-24)
+[//]: # (17-23)
 
 A utility function gives preferences among all possible alternatives. In our context, you may see this utility function as a measure of the "goodness" of actions.
 
@@ -69,7 +63,7 @@ A utility function is a function from a set $A$ of alternatives to a set $U$ end
 Note that the usual utility functions are given with $U$ being the real numbers endowed with the usual $\ge$ operator. We deal with (arguably) the most general definition.
 --MATH_END--
 
-[//]: # (26-38)
+[//]: # (25-37)
 
 
 ## Definition of an utilitarian ethic
@@ -82,7 +76,7 @@ An ethic $e$ maximizes a utility function $u$ if
 $$\forall s \in S,\ \forall a \in A,\ e(s, a)=⊤ \iff \forall a' \in A,\ u(a) \ge u(a')$$
 --MATH_END--
 
-[//]: # (40-53)
+[//]: # (39-52)
 
 An ethic is said to be utilitarian if it maximizes a utility function.
 
@@ -91,7 +85,7 @@ $\mathbf{Definition}$\
 An ethic $e$ is utilitarian if there is a utility function $u$ such that $e$ maximizes $u$.
 --MATH_END--
 
-[//]: # (55-56)
+[//]: # (54-55)
 
 
 ## Proving that every ethic (without dead end) is utilitarian
@@ -110,7 +104,7 @@ $$\begin{align*}
 \end{align*}$$
 --MATH_END--
 
-[//]: # (58-90)
+[//]: # (57-89)
 
 If the ethic has no dead end, this gives a utility function it maximizes.
 
@@ -129,5 +123,5 @@ And $e(s, a)=⊤ \iff au(a) = 1$ results from the definition of the associated u
 ■
 --MATH_END--
 
-[//]: # (92-116)
+[//]: # (91-115)
 
