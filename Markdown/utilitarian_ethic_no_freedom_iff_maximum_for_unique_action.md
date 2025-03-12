@@ -49,7 +49,7 @@ An ethic $e$ never leaves freedom if $\forall s \in S$, $e$ leaves no freedom in
 In a given situation, if an ethic leaves no freedom, then it still allows an action and therefore we are not in a dead end.
 
 --MATH_START--
-$\mathbf{Lemma}$\ 
+$\mathbf{Lemma}$\
 If an ethic $e$ leaves no freedom in a state $s$, then $s$ is not a dead end for $e$.
 
 $\mathbf{proof:}$\
@@ -64,7 +64,7 @@ Then this action $a$ is allowed by $e$ in $s$, which means that $s$ is not a dea
 Therefore, if an ethic never leaves freedom, then it is without dead end.
 
 --MATH_START--
-$\mathbf{Corollary}$\ 
+$\mathbf{Corollary}$\
 An ethic which never leaves freedom is without dead end.
 
 $\mathbf{proof:}$\
@@ -101,7 +101,7 @@ An utilitarian ethic $e$ is said to always have a unique action maximizing its u
 ## An utilitarian ethic has a unique function maximizing its utility if and only if it leaves no freedom
 
 --MATH_START--
-$\mathbf{Proposition}$\ 
+$\mathbf{Proposition}$\
 A utilitarian ethic $e$ has a unique action maximizing its utility in a state $s$ iff it leaves no freedom in $s$.
 
 $\mathbf{proof:}$\
@@ -114,7 +114,7 @@ Let $e$ be a utilitarian ethic, $uf$ its utility function and $s$ a state. \
 [//]: # (44-80)
 
 --MATH_START--
-$\mathbf{Corollary}$\ 
+$\mathbf{Corollary}$\
 A utilitarian ethic always has a unique action maximizing its utility iff it never leaves freedom.
 
 $\mathbf{proof:}$\
