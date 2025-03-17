@@ -1,1 +1,1 @@
-Repository of the website [leibnizproject.com](leibnizproject.com)
+Repository of the website [leibnizproject.com](https://leibnizproject.com)
