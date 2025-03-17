@@ -116,8 +116,12 @@ pre {
 	padding: 0.5em;
 }
 
-.mjx-container {
+mjx-container {
 	margin: 0.5em 0;
+}
+
+mjx-itable {
+	margin-right: 1em;
 }
 
 .links-coq {
