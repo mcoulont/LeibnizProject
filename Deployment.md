@@ -11,3 +11,5 @@
     * `index.html`
     * `Templates/general.css`
     * All the files of `Articles/`
+
+- `git push`
