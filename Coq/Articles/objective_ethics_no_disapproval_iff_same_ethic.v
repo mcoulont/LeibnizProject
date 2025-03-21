@@ -1,11 +1,11 @@
 
 Require Import Logic.FunctionalExtensionality.
-From mathcomp Require Import fintype fingroup perm seq.
+From mathcomp Require Import all_ssreflect fintype fingroup perm seq.
 
 Require Import ethics_first_steps.
 
 Definition State : Type := ethics_first_steps.State.
-Definition Action : Type := ethics_first_steps.Action.
+Definition Action : eqType := ethics_first_steps.Action.
 
 Context {Individual : finType}.
 

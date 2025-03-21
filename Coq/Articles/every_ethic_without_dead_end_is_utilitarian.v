@@ -2,11 +2,12 @@
 Require Import Bool.Bool.
 Require Import Relations.Relation_Definitions.
 Require Import Arith.PeanoNat.
+From mathcomp Require Import all_ssreflect.
 
 Require Import ethics_first_steps.
 
 Definition State : Type := ethics_first_steps.State.
-Definition Action : Type := ethics_first_steps.Action.
+Definition Action : eqType := ethics_first_steps.Action.
 
 Definition dead_end (ethic : Ethic) (state : State) : Prop :=
   forall (action : Action), ethic state action = false.
@@ -68,7 +69,7 @@ Qed.
 Lemma le_total : total le.
 Proof.
   intros n m.
-  assert (n <= m \/ n > m).
+  assert (le n m \/ gt n m).
   { apply Nat.le_gt_cases. }
   destruct H.
   - left. tauto.

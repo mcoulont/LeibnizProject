@@ -23,13 +23,23 @@ Definition ActionProfile : Type := Individual -> Action.
 
 Context {feasible : State -> ActionProfile -> bool}.
 
-Definition with_constraints (feasible : State -> ActionProfile -> bool) : Prop :=
-  exists (state : State) (ap : ActionProfile), feasible state ap = false.
+Definition with_constraints (feasible : State -> ActionProfile -> bool)
+(state : State) : Prop :=
+  exists (ap : ActionProfile), feasible state ap = false.
+
+Definition everyone_follows_its_ethic (ep : EthicalProfile) (ap : ActionProfile)
+(state : State) : Prop :=
+  forall (i : Individual), ep i (get_SubjectiveState state i) (ap i) = true.
 
 Definition conflict (ep : EthicalProfile) (ap : ActionProfile)
 (state : State) : Prop :=
-  (feasible state ap) = false /\
-  forall (i : Individual), ep i (get_SubjectiveState state i) (ap i) = true.
+  feasible state ap = false /\
+  everyone_follows_its_ethic ep ap state.
+
+Definition no_conflict (ep : EthicalProfile) (ap : ActionProfile)
+(state : State) : Prop :=
+  feasible state ap = true /\
+  everyone_follows_its_ethic ep ap state.
 
 Definition replace_individual_ethic (ep : EthicalProfile) (i : Individual)
 (ethic : IndividualEthic) : EthicalProfile :=
@@ -55,16 +65,15 @@ Proof.
   apply H1.
 Qed.
 
-Proposition more_restrictive_ethic_strictly_diminishes_conflicts (i : Individual) :
-  with_constraints feasible ->
-  exists (state : State) (ap : ActionProfile) (ep : EthicalProfile)
-  (ethic : IndividualEthic),
+Proposition more_restrictive_ethic_strictly_diminishes_conflicts (state : State)
+(i : Individual) :
+  with_constraints feasible state ->
+  exists (ap : ActionProfile) (ep : EthicalProfile) (ethic : IndividualEthic),
     more_restrictive (ep i) ethic (get_SubjectiveState state i) /\
     ~ conflict ep ap state /\
     conflict (replace_individual_ethic ep i ethic) ap state.
 Proof.
-  intro. unfold with_constraints in H. destruct H as [state]. destruct H as [ap].
-  exists (state).
+  intro. unfold with_constraints in H. destruct H as [ap].
   exists (ap).
   exists (
     fun (j : Individual) =>
@@ -83,9 +92,7 @@ Proof.
     intro. destruct H0. pose proof (H1 i).
     rewrite eq_refl in H2. inversion H2.
   }
-  {
-    tauto. 
-  }
+  { tauto. }
   {
     intro.
     unfold replace_individual_ethic.

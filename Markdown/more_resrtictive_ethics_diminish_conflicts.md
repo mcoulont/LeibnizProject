@@ -54,10 +54,10 @@ $\mathbf{Definition}$\
 Let $feasible$ be a function which at each $s \in S, (a_i) \in A^I$ associates $⊥$ if it's not concretely possible that each individuals $i$ does the $a_i$ action and $⊤$ if it is.
 
 $\mathbf{Definition}$\
-$feasible$ is said to involve constraints if $\exists s \in S, (a_i) \in A^I, \neg feasible(s, (a_i))$.
+$feasible$ is said to involve constraints in $s$ if $\exists (a_i) \in A^I, \neg feasible(s, (a_i))$.
 --MATH_END--
 
-[//]: # (22-27)
+[//]: # (22-28)
 
 
 ## Conflicts
@@ -67,14 +67,18 @@ A conflict occurs when not every individual (following its own ethic) can do the
 --MATH_START--
 $\mathbf{Definition}$\
 Let $s \in S, (e_i) \in E^I, (a_i) \in A^I$.
+We say that everyone follows its ethic if $\forall i \in I, e_i((s, i), a_i)$.
+
+$\mathbf{Definition}$\
+Let $s \in S, (e_i) \in E^I, (a_i) \in A^I$.
 There is a conflict if
 $$\begin{cases*}
   \neg feasible(s, (a_i)) \\
-  \forall i \in I, e_i((s, i), a_i)
+  \text{ everyone follows its ethic }
 \end{cases*}$$
 --MATH_END--
 
-[//]: # (29-32)
+[//]: # (30-42)
 
 
 ## More restrictive individual ethics diminish the risk of conflicts
@@ -85,7 +89,7 @@ Let $s(e_i) \in E^I, e \in E$.
 For some $j \in I$, replacing $e_j$ with $e$ in $(e_i)$ results in $(e_i)_{j/e}$.
 --MATH_END--
 
-[//]: # (34-36)
+[//]: # (44-46)
 
 If an individual ethic is replaced with a more restrictive one, this can't create a conflict.
 
@@ -101,7 +105,7 @@ We can cconclude that $s, (e_i)_{j/e}, (a_i)$ conflict. \
 ■
 --MATH_END--
 
-[//]: # (38-56)
+[//]: # (48-66)
 
 And if not everything is feasible, one can create a conflict by unrestricting a single individual ethic.
 
@@ -129,4 +133,4 @@ Now, $(e_i)_{j/e}((s, i), a) = ⊤ \text{ } \forall (s, i) \in SubjStates, a \in
 ■
 --MATH_END--
 
-[//]: # (58-94)
+[//]: # (68-101)
