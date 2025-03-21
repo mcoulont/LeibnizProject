@@ -11,7 +11,7 @@ keywords:
 
 ## Presentation
 
-In a society composed of ndividuals, it is proved here with given definitions that the more individuals have a restrictive in their personnal ethic, the less likely conflicts are.
+In a society composed of individuals, it is proved here with given definitions that the more individuals have a restrictive in their personnal ethic, the less likely conflicts are.
 
 One relies on [this article](https://leibnizproject.com/Articles/objective_ethics_no_disapproval_iff_same_ethic.html).
 
