@@ -19,7 +19,7 @@ The context is the same as in [this article](https://leibnizproject.com/Articles
 Throughout this page, let $S$ be the set of states and $A$ the set of actions.
 --MATH_END--
 
-[//]: # (2-10)
+[//]: # (2-11)
 
 
 ## Definition of freedom left by an ethic
@@ -32,7 +32,7 @@ Let $s$ in $S$. An ethic $e$ leaves no freedom in state $s$ if
 $$\exists! a, e(s, a) = ⊤$$
 --MATH_END--
 
-[//]: # (12-13)
+[//]: # (13-14)
 
 An ethic is said to never leave freedom if it leaves no freedom in every situation.
 
@@ -41,7 +41,7 @@ $\mathbf{Definition}$\
 An ethic $e$ never leaves freedom if $\forall s \in S$, $e$ leaves no freedom in $s$.
 --MATH_END--
 
-[//]: # (15-16)
+[//]: # (16-17)
 
 
 ## Relationship between freedom and dead ends
@@ -59,7 +59,7 @@ Then this action $a$ is allowed by $e$ in $s$, which means that $s$ is not a dea
 ■
 --MATH_END--
 
-[//]: # (18-26)
+[//]: # (19-27)
 
 Therefore, if an ethic never leaves freedom, then it is without dead end.
 
@@ -74,7 +74,7 @@ By the previous lemma, $\forall s \in S$, $s$ is not a dead end for $e$, which m
 ■
 --MATH_END--
 
-[//]: # (28-33)
+[//]: # (29-34)
 
 
 ## Maximum utility reached for a unique action
@@ -88,14 +88,14 @@ $$\begin{cases*}
 \end{cases*}$$
 --MATH_END--
 
-[//]: # (35-38)
+[//]: # (36-39)
 
 --MATH_START--
 $\mathbf{Definition}$\
 An utilitarian ethic $e$ is said to always have a unique action maximizing its utility if $\forall s \in S$, $e$ has a unique maximum action maximizing its utility
 --MATH_END--
 
-[//]: # (40-43)
+[//]: # (41-44)
 
 
 ## An utilitarian ethic has a unique function maximizing its utility if and only if it leaves no freedom
@@ -111,7 +111,7 @@ Let $e$ be a utilitarian ethic, $uf$ its utility function and $s$ a state. \
 ■
 --MATH_END--
 
-[//]: # (45-81)
+[//]: # (46-82)
 
 --MATH_START--
 $\mathbf{Corollary}$\
@@ -126,4 +126,4 @@ $\iff e$ never leaves freedom \
 ■
 --MATH_END--
 
-[//]: # (83-95)
+[//]: # (84-96)

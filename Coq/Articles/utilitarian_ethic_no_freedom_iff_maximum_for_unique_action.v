@@ -3,6 +3,7 @@ Require Import Bool.Bool.
 Require Import Relations.Relation_Definitions.
 From mathcomp Require Import all_ssreflect.
 
+Require Import preference.
 Require Import ethics_first_steps.
 Require Import every_ethic_without_dead_end_is_utilitarian.
 

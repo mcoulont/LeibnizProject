@@ -52,8 +52,6 @@ $\mathbf{Definition}$\
 A preference order is a total and transitive binary relation. We will in this page denote with $a_1 \ge a_2$ the fact that the alternative $a_1$ is preferable (or equally preferable) to an alternative $a_2$.
 --MATH_END--
 
-[//]: # (18-24)
-
 A utility function gives preferences among all possible alternatives. In our context, you may see this utility function as a measure of the "goodness" of actions.
 
 --MATH_START--
@@ -63,7 +61,7 @@ A utility function is a function from a set $A$ of alternatives to a set $U$ end
 Note that the usual utility functions are given with $U$ being the real numbers endowed with the usual $\ge$ operator. We deal with (arguably) the most general definition.
 --MATH_END--
 
-[//]: # (26-38)
+[//]: # (18-18)
 
 
 ## Definition of an utilitarian ethic
@@ -76,7 +74,7 @@ An ethic $e$ maximizes a utility function $u$ if
 $$\forall s \in S,\ \forall a \in A,\ e(s, a)=⊤ \iff \forall a' \in A,\ u(a) \ge u(a')$$
 --MATH_END--
 
-[//]: # (40-53)
+[//]: # (20-33)
 
 An ethic is said to be utilitarian if it maximizes a utility function.
 
@@ -85,7 +83,7 @@ $\mathbf{Definition}$\
 An ethic $e$ is utilitarian if there is a utility function $u$ such that $e$ maximizes $u$.
 --MATH_END--
 
-[//]: # (55-56)
+[//]: # (35-36)
 
 
 ## Proving that every ethic (without dead end) is utilitarian
@@ -104,7 +102,7 @@ $$\begin{align*}
 \end{align*}$$
 --MATH_END--
 
-[//]: # (58-90)
+[//]: # (38-70)
 
 If the ethic has no dead end, this gives a utility function it maximizes.
 
@@ -123,5 +121,5 @@ And $e(s, a)=⊤ \iff au(a) = 1$ results from the definition of the associated u
 ■
 --MATH_END--
 
-[//]: # (92-116)
+[//]: # (72-96)
 

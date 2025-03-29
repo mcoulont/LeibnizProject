@@ -1,9 +1,9 @@
 
 Require Import Bool.Bool.
-Require Import Relations.Relation_Definitions.
 Require Import Arith.PeanoNat.
 From mathcomp Require Import all_ssreflect.
 
+Require Import preference.
 Require Import ethics_first_steps.
 
 Definition State : Type := ethics_first_steps.State.
@@ -14,26 +14,6 @@ Definition dead_end (ethic : Ethic) (state : State) : Prop :=
 
 Definition without_dead_end (ethic : Ethic) : Prop :=
   forall (state : State), ~ dead_end ethic state.
-
-Definition total {T : Type} (R : relation T) := forall (x y : T), R x y \/ R y x.
-
-Definition transitive {T : Type} (R : relation T) := forall (x y z : T),
-  R x y -> R y z -> R x z.
-
-Definition preference_order {T : Type} (R : relation T) :=
-  transitive R /\ total R.
-
-Structure PreferenceSpace : Type := {
-    carrier :> Type ;
-    order : relation carrier ;
-    is_preference_order: preference_order order
-}.
-
-Definition get_carrier : PreferenceSpace -> Type:=
-  fun (ps : PreferenceSpace) => ps.(carrier).
-
-Definition get_preference_order (ps : PreferenceSpace) : relation (get_carrier ps) :=
-  ps.(order).
 
 Definition UtilityFunction {ps : PreferenceSpace} : Type := State -> Action -> ps.
 
