@@ -114,6 +114,21 @@ a {
 pre {
 	background-color: #0C151C;
 	padding: 0.5em;
+
+	display: grid;
+	grid-template-columns: min-content auto;
+	grid-template-rows: auto;
+}
+
+.prover-icon {
+	grid-row: 1;
+	grid-column: 1;
+	margin-right: 10px;
+}
+
+code {
+	grid-row: 1;
+	grid-column: 2;
 }
 
 mjx-container {
