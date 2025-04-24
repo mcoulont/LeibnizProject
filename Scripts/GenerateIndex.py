@@ -11,7 +11,7 @@ INDEX_TITLE = "A website aiming at global formalization"
 REGEX_MATHJAX = "\\$if\\(math\\)\\$\\s+\\$math\\$\\s+\\$endif\\$"
 REGEX_TITLE_MD = """title\\s*:\\s*['"]([^'"]+)['"]\\s+author\\s*:"""
 FOLDER_HTML = "Articles/"
-REGEX_BASENAME_COQ_PROJECT = "Articles/([a-z0-9_]+)\\.v\\s"
+REGEX_BASENAME_COQ_PROJECT = "(?<!#)\\./Articles/([a-z0-9_]+)\\.v\\s"
 
 file_general_template = sys.argv[1]
 folder_markdown = sys.argv[2]
