@@ -4,6 +4,9 @@ Images/Logo.png
 Articles/*
 index.html
 
+# For Lean4
+.lake
+
 # For Coq
 .*.aux
 .*.d
