@@ -19,7 +19,7 @@ One relies on [this article](https://leibnizproject.com/Articles/objective_ethic
 Throughout this page, let $I$ be the finite set of individuals of a society, $S$ be the set of states, $A$ be the set of actions, $SubjStates = \{{s, i)\}_{s \in S, i \in I}$ be the set of individual states and $E = \{⊤, ⊥\}^{SubjStates \times A}$ the set of ethics.
 --MATH_END--
 
-[//]: # (2-9)
+[//]: # Coq (2-9)
 
 
 ## Compared restrictiveness of two ethics
@@ -32,7 +32,7 @@ Let $e_1, e_2$ be individual ethics.
 $e_1$ is said more restrictive than $e_2$ in state $(s, k)$ if $\forall a \in A, e_1((s, k), a) \implies e_2((s, k), a)$.
 --MATH_END--
 
-[//]: # (11-14)
+[//]: # Coq (11-14)
 
 An ethic is strictly more restrictive than another if it allows strictly fewer actions.
 
@@ -42,7 +42,7 @@ Let $e_1, e_2$ be individual ethics.
 $e_1$ is said strictly more restrictive than $e_2$ in state $(s, k)$ if it's more restrictive, $\exists a \in A, e_1((s, k), a) = ⊥$ and $e_2((s, k), a) = ⊤$.
 --MATH_END--
 
-[//]: # (16-20)
+[//]: # Coq (16-20)
 
 
 ## Feasability
@@ -57,7 +57,7 @@ $\mathbf{Definition}$\
 $feasible$ is said to involve constraints in $s$ if $\exists (a_i) \in A^I, \neg feasible(s, (a_i))$.
 --MATH_END--
 
-[//]: # (22-28)
+[//]: # Coq (22-28)
 
 
 ## Conflicts
@@ -78,7 +78,7 @@ $$\begin{cases*}
 \end{cases*}$$
 --MATH_END--
 
-[//]: # (30-42)
+[//]: # Coq (30-42)
 
 
 ## More restrictive individual ethics diminish the risk of conflicts
@@ -89,7 +89,7 @@ Let $s(e_i) \in E^I, e \in E$.
 For some $j \in I$, replacing $e_j$ with $e$ in $(e_i)$ results in $(e_i)_{j/e}$.
 --MATH_END--
 
-[//]: # (44-46)
+[//]: # Coq (44-46)
 
 If an individual ethic is replaced with a more restrictive one, this can't create a conflict.
 
@@ -105,7 +105,7 @@ We can cconclude that $s, (e_i)_{j/e}, (a_i)$ conflict. \
 ■
 --MATH_END--
 
-[//]: # (48-66)
+[//]: # Coq (48-66)
 
 And if not everything is feasible, one can create a conflict by unrestricting a single individual ethic.
 
@@ -133,4 +133,4 @@ Now, $(e_i)_{j/e}((s, i), a) = ⊤ \text{ } \forall (s, i) \in SubjStates, a \in
 ■
 --MATH_END--
 
-[//]: # (68-101)
+[//]: # Coq (68-101)

@@ -1,6 +1,7 @@
 
 - Check that:
     * `make` run in the `Coq/` folder doesn't return an error
+    * `lake build` run in the `Lean4/` folder doesn't return an error
     * `Generation.sh` feeds the `Articles/` folder
 
 - If the logo isn't present in the production server (web host),
@@ -10,6 +11,7 @@
 - Copy into production:
     * `index.html`
     * `Templates/general.css`
+    * `Templates/general.js`
     * All the files of `Articles/`
 
 - `git push`

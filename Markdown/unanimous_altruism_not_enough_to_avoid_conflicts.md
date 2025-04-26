@@ -19,7 +19,7 @@ One relies on [this article](https://leibnizproject.com/Articles/more_resrtictiv
 Throughout this page, let $I$ be the finite set of individuals of a society containing at least two of them, $S$ be the set of states, $A$ be the set of actions, $SubjStates = S × I$ be the set of individual states and $E = \{⊤, ⊥\}^{SubjStates \times A}$ the set of ethics. $feasible: S × A^I -> \{⊤, ⊥\}$ is the function of practical feasibility.
 --MATH_END--
 
-[//]: # (2-15)
+[//]: # Coq (2-15)
 
 
 ## Altruism
@@ -34,7 +34,7 @@ $\mathbf{Definition}$\
 An ethic $e$ is said altruist in $s$ if $\exists (a_i) \in A^I$ such that there is no conflict if $e$ is generalized to the whole society.
 --MATH_END--
 
-[//]: # (17-21)
+[//]: # Coq (17-21)
 
 
 ## Bipartite contest
@@ -52,7 +52,7 @@ $$\begin{cases*}
 \end{cases*}$$
 --MATH_END--
 
-[//]: # (23-41)
+[//]: # Coq (23-41)
 
 
 ## Unanimous altruism is not enough to avoid conflicts
@@ -100,4 +100,4 @@ $$\begin{cases*}
 ■
 --MATH_END--
 
-[//]: # (43-262)
+[//]: # Coq (43-262)

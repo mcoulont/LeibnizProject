@@ -19,7 +19,7 @@ One relies on [this article](https://leibnizproject.com/Articles/ethics_first_st
 Throughout this page, let $S$ be the set of states and $A$ the set of actions.
 --MATH_END--
 
-[//]: # (2-10)
+[//]: # Coq (2-10)
 
 
 ## Definition of a dead end in an ethic
@@ -31,7 +31,7 @@ $\mathbf{Definition}$\
 A dead end in an ethic $e: S × A \to \{⊥ ,⊤\}$ is a state $s \in S$ such that $\forall a \in A, e(s, a) = ⊥$.
 --MATH_END--
 
-[//]: # (12-13)
+[//]: # Coq (12-13)
 
 An ethic without dead end is an ethic for which no situation is a dead end. Note that this is not an assumption of hope: such a possible action can be "do nothing". It seems possible to assume that every ethic has no dead end (or at least can be slightly modified to remove them, for example adding as ethical action "kill oneself" to situations having none).
 
@@ -40,7 +40,7 @@ $\mathbf{Definition}$\
 An ethic is without dead end if $\forall s \in S$ $s$ is not a dead end.
 --MATH_END--
 
-[//]: # (15-16)
+[//]: # Coq (15-16)
 
 
 ## Definition of a utility function
@@ -61,7 +61,7 @@ A utility function is a function from a set $A$ of alternatives to a set $U$ end
 Note that the usual utility functions are given with $U$ being the real numbers endowed with the usual $\ge$ operator. We deal with (arguably) the most general definition.
 --MATH_END--
 
-[//]: # (18-18)
+[//]: # Coq (18-18)
 
 
 ## Definition of an utilitarian ethic
@@ -74,7 +74,7 @@ An ethic $e$ maximizes a utility function $u$ if
 $$\forall s \in S,\ \forall a \in A,\ e(s, a)=⊤ \iff \forall a' \in A,\ u(a) \ge u(a')$$
 --MATH_END--
 
-[//]: # (20-33)
+[//]: # Coq (20-33)
 
 An ethic is said to be utilitarian if it maximizes a utility function.
 
@@ -83,7 +83,7 @@ $\mathbf{Definition}$\
 An ethic $e$ is utilitarian if there is a utility function $u$ such that $e$ maximizes $u$.
 --MATH_END--
 
-[//]: # (35-36)
+[//]: # Coq (35-36)
 
 
 ## Proving that every ethic (without dead end) is utilitarian
@@ -102,7 +102,7 @@ $$\begin{align*}
 \end{align*}$$
 --MATH_END--
 
-[//]: # (38-70)
+[//]: # Coq (38-70)
 
 If the ethic has no dead end, this gives a utility function it maximizes.
 
@@ -121,5 +121,4 @@ And $e(s, a)=⊤ \iff au(a) = 1$ results from the definition of the associated u
 ■
 --MATH_END--
 
-[//]: # (72-96)
-
+[//]: # Coq (72-96)

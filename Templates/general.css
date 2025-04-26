@@ -139,7 +139,33 @@ mjx-itable {
 	margin-right: 1em;
 }
 
-.links-coq {
+#switch-prover {
+	margin: 2em 0 0.0 0;
+
+	display: grid;
+	grid-template-columns: max-content auto;
+	grid-template-rows: auto;
+	justify-items: left;
+}
+
+.sentence-switch-prover {
+	grid-row: 1;
+	grid-column: 1;
+
+	margin-right: 0.5em;
+}
+
+#coq-bottom-icon {
+	grid-row: 1;
+	grid-column: 2;
+}
+
+#lean-bottom-icon {
+	grid-row: 1;
+	grid-column: 2;
+}
+
+#links-provers {
 	margin: 2em 0 0.5em;
 }
 
