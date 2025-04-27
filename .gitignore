@@ -1,4 +1,8 @@
 
+# For Python
+__pycache__/
+*.py[cod]
+
 # Images and the HTML of articles are generated
 Images/Logo.png
 Articles/*
