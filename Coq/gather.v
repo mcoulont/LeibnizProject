@@ -1,2 +1,7 @@
+
+Require Import ethics_first_steps.
 Require Import every_ethic_without_dead_end_is_utilitarian.
 Require Import utilitarian_ethic_no_freedom_iff_maximum_for_unique_action.
+Require Import objective_ethics_no_disapproval_iff_same_ethic.
+Require Import more_resrtictive_ethics_diminish_conflicts.
+Require Import unanimous_altruism_not_enough_to_avoid_conflicts.
