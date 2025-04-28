@@ -15,7 +15,7 @@ Definition dead_end (ethic : Ethic) (state : State) : Prop :=
 Definition without_dead_end (ethic : Ethic) : Prop :=
   forall (state : State), ~ dead_end ethic state.
 
-Definition UtilityFunction {ps : PreferenceSpace} : Type := State -> Action -> ps.
+Definition UtilityFunction {ps : PreferenceSpace} : Type := State -> Action -> ps.(carrier).
 
 Definition can_be_obtained {ps : PreferenceSpace}
 (uf : UtilityFunction) (state : State) (utility : get_carrier ps) : Prop :=
@@ -63,7 +63,7 @@ Proof.
   - apply le_total.
 Qed.
 
-Definition associatedPreferenceSpace (ethic : Ethic) : PreferenceSpace := {|
+Definition associatedPreferenceSpace : PreferenceSpace := {|
   carrier := nat ;
   order := le ;
   is_preference_order := le_preference_order
@@ -73,7 +73,7 @@ Proposition every_ethic_without_dead_end_is_utilitarian :
   forall (ethic : Ethic), without_dead_end ethic -> is_utilitarian ethic.
 Proof.
   intros. unfold is_utilitarian.
-  exists (associatedPreferenceSpace ethic). exists (associated_utility ethic).
+  exists associatedPreferenceSpace. exists (associated_utility ethic).
   unfold maximizes. intros. unfold is_maximum.
   split.
   - intro. destruct (ethic state action) eqn:H1.
