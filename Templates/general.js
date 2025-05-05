@@ -1,5 +1,4 @@
 
-//if (localStorage.getItem("prover") == null) {
 if (localStorage.getItem("prover") != "Lean4") {
     localStorage.setItem("prover", "Coq");
 }
