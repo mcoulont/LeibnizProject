@@ -1,5 +1,5 @@
 name = "articles"
-defaultTargets = ["Articles"]
+defaultTargets = ["Tools", "Articles"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -11,6 +11,10 @@ weak.linter.style.multiGoal = true
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4"
 rev = "master"
+
+[[lean_lib]]
+name = "Tools"
+globs = 'Tools.+'
 
 [[lean_lib]]
 name = "Articles"

@@ -20,6 +20,7 @@ Throughout this page, let $S$ be the set of states and $A$ the set of actions.
 --MATH_END--
 
 [//]: # Coq (2-10)
+[//]: # Lean4 (10-11)
 
 
 ## Definition of a dead end in an ethic
@@ -32,6 +33,7 @@ A dead end in an ethic $e: S × A \to \{⊥ ,⊤\}$ is a state $s \in S$ such th
 --MATH_END--
 
 [//]: # Coq (12-13)
+[//]: # Lean4 (15-16)
 
 An ethic without dead end is an ethic for which no situation is a dead end. Note that this is not an assumption of hope: such a possible action can be "do nothing". It seems possible to assume that every ethic has no dead end (or at least can be slightly modified to remove them, for example adding as ethical action "kill oneself" to situations having none).
 
@@ -41,6 +43,7 @@ An ethic is without dead end if $\forall s \in S$ $s$ is not a dead end.
 --MATH_END--
 
 [//]: # Coq (15-16)
+[//]: # Lean4 (18-19)
 
 
 ## Definition of a utility function
@@ -62,6 +65,7 @@ Note that the usual utility functions are given with $U$ being the real numbers 
 --MATH_END--
 
 [//]: # Coq (18-18)
+[//]: # Lean4 (21-21)
 
 
 ## Definition of an utilitarian ethic
@@ -75,6 +79,7 @@ $$\forall s \in S,\ \forall a \in A,\ e(s, a)=⊤ \iff \forall a' \in A,\ u(a) \
 --MATH_END--
 
 [//]: # Coq (20-33)
+[//]: # Lean4 (23-36)
 
 An ethic is said to be utilitarian if it maximizes a utility function.
 
@@ -84,6 +89,7 @@ An ethic $e$ is utilitarian if there is a utility function $u$ such that $e$ max
 --MATH_END--
 
 [//]: # Coq (35-36)
+[//]: # Lean4 (38-40)
 
 
 ## Proving that every ethic (without dead end) is utilitarian
@@ -103,6 +109,7 @@ $$\begin{align*}
 --MATH_END--
 
 [//]: # Coq (38-70)
+[//]: # Lean4 (42-52)
 
 If the ethic has no dead end, this gives a utility function it maximizes.
 
@@ -122,3 +129,4 @@ And $e(s, a)=⊤ \iff au(a) = 1$ results from the definition of the associated u
 --MATH_END--
 
 [//]: # Coq (72-96)
+[//]: # Lean4 (54-98)
