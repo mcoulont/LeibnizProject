@@ -10,7 +10,7 @@ if (coqIsUsed() && leanIsUsed()) {
         proversIcons[i].onclick = switchProver;
         proversIcons[i].style.cursor = "pointer";
 
-        if ("coq-code" == proversIcons[i].parentElement.id) {
+        if ("coq-code" == proversIcons[i].parentElement.className) {
             proversIcons[i].title += "\nClick to switch to Lean4";
         } else {
             proversIcons[i].title += "\nClick to switch to Coq";
@@ -51,17 +51,25 @@ function proverIsLean() {
 }
 
 function coqIsUsed() {
-    return null != document.getElementById("coq-code");
+    return 0 != document.getElementsByClassName("coq-code").length;
 }
 
 function leanIsUsed() {
-    return null != document.getElementById("lean-code");
+    return 0 != document.getElementsByClassName("lean-code").length;
 }
 
 
 function setDisplay(id, display) {
     if (null != document.getElementById(id)) {
         document.getElementById(id).style.display = display;
+    }
+}
+
+function setDisplayByClassName(className, display) {
+    const elements = document.getElementsByClassName(className);
+
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = display;
     }
 }
 
@@ -84,30 +92,30 @@ function refreshDisplay() {
         setDisplay("links-coq", "inline");
 
         if (proverIsCoq()) {
-            setDisplay("coq-code", "grid");
+            setDisplayByClassName("coq-code", "grid");
             setDisplay("coq-bottom-icon", "none");
         } else {
-            setDisplay("coq-code", "none");
+            setDisplayByClassName("coq-code", "none");
             setDisplay("coq-bottom-icon", "inline");
         }
     } else {
+        setDisplayByClassName("coq-code", "none");
         setDisplay("links-coq", "none");
-        setDisplay("coq-code", "none");
     }
 
     if (leanUsed) {
         setDisplay("links-lean", "inline");
 
         if (proverIsLean()) {
-            setDisplay("lean-code", "grid");
+            setDisplayByClassName("lean-code", "grid");
             setDisplay("lean-bottom-icon", "none");
         } else {
-            setDisplay("lean-code", "none");
+            setDisplayByClassName("lean-code", "none");
             setDisplay("lean-bottom-icon", "inline");
         }
     } else {
+        setDisplayByClassName("lean-code", "none");
         setDisplay("links-lean", "none");
-        setDisplay("lean-code", "none");
     }
 
     if (coqUsed && leanUsed) {

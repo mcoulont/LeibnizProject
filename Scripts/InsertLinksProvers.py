@@ -41,12 +41,12 @@ if __name__ == "__main__":
 		template_switch_prover
 	).replace(
 		TOKEN_CODE_TAGS + TOKEN_COQ_CODE,
-		"""<pre id='coq-code'>
+		"""<pre class='coq-code'>
 		<img src='../Images/Coq_logo.png' height='20' width='13' title='Coq code' class='prover-icon'>
 		<code>"""
 	).replace(
 		TOKEN_CODE_TAGS + TOKEN_LEAN_CODE,
-		"""<pre id='lean-code'>
+		"""<pre class='lean-code'>
 		<img src='../Images/Lean_logo.jpg' height='20' width='20' title='Lean4 code' class='prover-icon'>
 		<code>"""
 	)
