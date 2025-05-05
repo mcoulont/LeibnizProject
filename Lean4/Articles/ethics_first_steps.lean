@@ -1,9 +1,8 @@
 
 namespace ethics_first_steps
 
-variable (State : Type)
-
-variable (Action : Type)
+variable {State : Type}
+variable {Action : Type}
 
 def Ethic : Type := State -> Action -> Bool
 

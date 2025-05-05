@@ -25,4 +25,4 @@ An ethic is a function from $S × A$ to $\{⊥ ,⊤\}$, where $⊥$ is the image
 --MATH_END--
 
 [//]: # Coq (2-9)
-[//]: # Lean4 (4-8)
+[//]: # Lean4 (4-7)
