@@ -88,14 +88,14 @@ $$\begin{cases*}
 \end{cases*}$$
 --MATH_END--
 
-[//]: # Coq (36-39)
+[//]: # Coq (36-38)
 
 --MATH_START--
 $\mathbf{Definition}$\
 An utilitarian ethic $e$ is said to always have a unique action maximizing its utility if $\forall s \in S$, $e$ has a unique maximum action maximizing its utility
 --MATH_END--
 
-[//]: # Coq (41-44)
+[//]: # Coq (40-42)
 
 
 ## An utilitarian ethic has a unique function maximizing its utility if and only if it leaves no freedom
@@ -111,7 +111,7 @@ Let $e$ be a utilitarian ethic, $uf$ its utility function and $s$ a state. \
 ■
 --MATH_END--
 
-[//]: # Coq (46-82)
+[//]: # Coq (44-80)
 
 --MATH_START--
 $\mathbf{Corollary}$\
@@ -126,4 +126,4 @@ $\iff e$ never leaves freedom \
 ■
 --MATH_END--
 
-[//]: # Coq (84-96)
+[//]: # Coq (82-94)

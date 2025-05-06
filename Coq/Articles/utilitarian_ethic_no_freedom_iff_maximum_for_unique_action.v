@@ -34,20 +34,18 @@ Proof.
 Qed.
 
 Definition utilitarian_ethic_unique_maximum {ps : PreferenceSpace}
-(ethic : Ethic) (uf : @UtilityFunction ps)
-(ethic_maximizes_uf : maximizes ethic uf) (state : State) :=
+(uf : @UtilityFunction ps) (state : State) : Prop :=
   exists! (action : Action), is_maximum uf state (uf state action).
 
 Definition utilitarian_ethic_always_unique_maximum {ps : PreferenceSpace}
-(ethic : Ethic) (uf : @UtilityFunction ps) (ethic_maximizes_uf : maximizes ethic uf) :=
-  forall (state: State),
-    utilitarian_ethic_unique_maximum ethic uf ethic_maximizes_uf state.
+(uf : @UtilityFunction ps) : Prop :=
+  forall (state: State), utilitarian_ethic_unique_maximum uf state.
 
 Proposition utilitarian_ethic_no_freedom_iff_maximum_for_unique_action
 {ps : PreferenceSpace} :
   forall (ethic: Ethic) (uf : UtilityFunction)
   (ethic_maximizes_uf : maximizes ethic uf) (state: State),
-    @utilitarian_ethic_unique_maximum ps ethic uf ethic_maximizes_uf state <->
+    @utilitarian_ethic_unique_maximum ps uf state <->
     leaves_no_freedom ethic state.
 Proof.
   intros.
@@ -85,12 +83,12 @@ Corollary utilitarian_ethic_never_freedom_iff_always_maximum_for_unique_action
 {ps : PreferenceSpace} :
   forall (ethic: Ethic) (uf : UtilityFunction)
   (ethic_maximizes_uf : maximizes ethic uf),
-    @utilitarian_ethic_always_unique_maximum ps ethic uf ethic_maximizes_uf <->
+    @utilitarian_ethic_always_unique_maximum ps uf <->
     never_leaves_freedom ethic.
 Proof.
   intros. unfold utilitarian_ethic_always_unique_maximum. unfold never_leaves_freedom.
   split ; intros; pose proof (H state) ; 
   apply @utilitarian_ethic_no_freedom_iff_maximum_for_unique_action with
-  (ps:=ps) (ethic:=ethic) (uf:=uf) (ethic_maximizes_uf:=ethic_maximizes_uf) ;
+  (ps:=ps) (ethic:=ethic) (uf:=uf) ;
   tauto.
 Qed.
