@@ -15,8 +15,8 @@ INDEX_TITLE = "A website aiming at global formalization"
 REGEX_MATHJAX = "\\$if\\(math\\)\\$\\s+\\$math\\$\\s+\\$endif\\$"
 REGEX_TITLE_MD = """title\\s*:\\s*['"]([^'"]+)['"]\\s+author\\s*:"""
 FOLDER_HTML = "Articles/"
-REGEX_BASENAME_COQ_PROJECT = "(?<!#)\\./Articles/([a-z0-9_]+)\\.v($|\\s)"
-REGEX_BASENAME_LEAN_PROJECT = "(?<!--)import\\s+Articles\\.([a-z0-9_]+)($|\\s)"
+REGEX_BASENAME_COQ_PROJECT = "(#\\s*)?\\./Articles/([a-z0-9_]+)\\.v($|\\s)"
+REGEX_BASENAME_LEAN_PROJECT = "(--\\s*)?import\\s+Articles\\.([a-z0-9_]+)($|\\s)"
 
 file_general_template = sys.argv[1]
 folder_markdown = sys.argv[2]
@@ -59,7 +59,8 @@ for occurrence_article_basename in finditer(
     REGEX_BASENAME_COQ_PROJECT,
     open(file_coq_project).read()
 ):
-    articles_in_coq.append(occurrence_article_basename.group(1))
+    if not occurrence_article_basename.group(0).startswith("#"):
+        articles_in_coq.append(occurrence_article_basename.group(2))
 
 articles_in_lean = []
 
@@ -67,7 +68,8 @@ for occurrence_article_basename in finditer(
     REGEX_BASENAME_LEAN_PROJECT,
     open(file_lean_project).read()
 ):
-    articles_in_lean.append(occurrence_article_basename.group(1))
+    if not occurrence_article_basename.group(0).startswith("--"):
+        articles_in_lean.append(occurrence_article_basename.group(2))
 
 articles = order_articles(articles_in_coq, articles_in_lean)
 
