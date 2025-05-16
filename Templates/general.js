@@ -1,5 +1,8 @@
 
-if (localStorage.getItem("prover") != "Lean4") {
+if (
+    localStorage.getItem("prover") != "Lean4" ||
+    ! leanIsUsed()
+) {
     localStorage.setItem("prover", "Coq");
 }
 
