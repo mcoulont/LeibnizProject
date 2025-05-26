@@ -1,5 +1,5 @@
 ---
-title: 'For an utilitarian ethic, no freedom iff maximum utility reached for a unique action'
+title: "For an utilitarian ethic, no freedom iff maximum utility reached for a unique action"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:

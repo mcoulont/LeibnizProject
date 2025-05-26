@@ -1,5 +1,5 @@
 ---
-title: 'If every individual ethic is objective, no possible disapproval iff everyone has the same ethic'
+title: "If every individual ethic is objective, no possible disapproval iff everyone has the same ethic"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:

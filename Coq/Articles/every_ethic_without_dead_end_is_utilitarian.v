@@ -3,6 +3,7 @@ Require Import Bool.Bool.
 Require Import Arith.PeanoNat.
 From mathcomp Require Import all_ssreflect.
 
+Require Import relation_facts.
 Require Import preference.
 Require Import ethics_first_steps.
 
@@ -38,7 +39,7 @@ Definition is_utilitarian (ethic : Ethic) : Prop :=
 Definition associated_utility (ethic : Ethic) : State -> Action -> nat :=
   fun state => (fun action => if ethic state action then 0 else 1).
 
-Lemma le_transitive : transitive le.
+Lemma le_transitive : Relation_Definitions.transitive nat le.
 Proof.
   intros n m o Hnm Hmo.
   induction Hmo.
@@ -65,7 +66,7 @@ Qed.
 
 Definition associatedPreferenceSpace : PreferenceSpace := {|
   carrier := nat ;
-  order := le ;
+  order := Nat.le ;
   is_preference_order := le_preference_order
 |}.
 

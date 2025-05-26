@@ -1,5 +1,5 @@
 ---
-title: 'Every ethic without dead end is utilitarian'
+title: "Every ethic without dead end is utilitarian"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:

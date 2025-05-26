@@ -1,5 +1,5 @@
 ---
-title: 'Ethics: first steps'
+title: "Ethics: first steps"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
