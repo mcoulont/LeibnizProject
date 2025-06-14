@@ -16,7 +16,7 @@ In a society composed of individuals, it is proved here with given definitions t
 One relies on [this article](https://leibnizproject.com/Articles/objective_ethics_no_disapproval_iff_same_ethic.html).
 
 --MATH_START--
-Throughout this page, let $I$ be the finite set of individuals of a society, $S$ be the set of states, $A$ be the set of actions, $SubjStates = \{{s, i)\}_{s \in S, i \in I}$ be the set of individual states and $E = \{⊤, ⊥\}^{SubjStates \times A}$ the set of ethics.
+Throughout this page, let $I$ be the finite set of individuals of a society, $S$ be the set of states, $A$ be the set of actions, $SubjStates = \{(s, i)\}_{s \in S, i \in I}$ be the set of individual states and $E = \{⊤, ⊥\}^{SubjStates \times A}$ the set of ethics.
 --MATH_END--
 
 [//]: # Coq (2-9)

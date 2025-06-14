@@ -11,7 +11,7 @@ keywords:
 
 ## Presentation
 
-In a society composed of ndividuals, each of them being [objective](https://en.wikipedia.org/wiki/Subjectivity_and_objectivity_(philosophy)) in his ethic, it is proved here that it's not possible that an individual disapproves an action by another individual if and only if all the individuals have the same ethic.
+In a society composed of individuals, each of them being [objective](https://en.wikipedia.org/wiki/Subjectivity_and_objectivity_(philosophy)) in his ethic, it is proved here that it's not possible that an individual disapproves an action by another individual if and only if all the individuals have the same ethic.
 
 One relies on [this article](https://leibnizproject.com/Articles/ethics_first_steps.html).
 
