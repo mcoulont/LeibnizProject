@@ -13,7 +13,7 @@ keywords:
 
 In a society composed of at least two individuals, it is proved here with given definitions that even if every individual is altruist, conflicts still happen.
 
-One relies on [this article](https://leibnizproject.com/Articles/more_resrtictive_ethics_diminish_conflicts.html).
+One relies on [this article](https://leibnizproject.com/Articles/more_restrictive_ethics_diminish_conflicts.html).
 
 --MATH_START--
 Throughout this page, let $I$ be the finite set of individuals of a society containing at least two of them, $S$ be the set of states, $A$ be the set of actions, $SubjStates = S × I$ be the set of individual states and $E = \{⊤, ⊥\}^{SubjStates \times A}$ the set of ethics. $feasible: S × A^I -> \{⊤, ⊥\}$ is the function of practical feasibility.

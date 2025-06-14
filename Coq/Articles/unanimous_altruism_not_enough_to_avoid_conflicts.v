@@ -5,14 +5,14 @@ From mathcomp Require Import all_ssreflect.
 
 Require Import ethics_first_steps.
 Require Import objective_ethics_no_disapproval_iff_same_ethic.
-Require Import more_resrtictive_ethics_diminish_conflicts.
+Require Import more_restrictive_ethics_diminish_conflicts.
 
 Definition Action : eqType := ethics_first_steps.Action.
 
 Definition Individual : finType :=
-  more_resrtictive_ethics_diminish_conflicts.Individual.
+  more_restrictive_ethics_diminish_conflicts.Individual.
 Definition feasible : State -> ActionProfile -> bool :=
-  more_resrtictive_ethics_diminish_conflicts.feasible.
+  more_restrictive_ethics_diminish_conflicts.feasible.
 
 Definition generalized_whole_society (e : IndividualEthic) : EthicalProfile :=
   fun (i : Individual) => e.
