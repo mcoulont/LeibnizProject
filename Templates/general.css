@@ -107,10 +107,15 @@ a {
 /* For the math part */
 .math-block {
 	background-color: #070C0F;
-	padding: 0 0.5em;
+	padding: 0 1em;
+	margin: 0.5em 0;
 }
 
-/* For the Coq code */
+/* For the (Coq or Lean) code */
+.code-block {
+	margin: 0.5em 0 1.2em;
+}
+
 pre {
 	background-color: #0C151C;
 	padding: 0.5em;
