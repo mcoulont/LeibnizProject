@@ -16,7 +16,8 @@ Definition dead_end (ethic : Ethic) (state : State) : Prop :=
 Definition without_dead_end (ethic : Ethic) : Prop :=
   forall (state : State), ~ dead_end ethic state.
 
-Definition UtilityFunction {ps : PreferenceSpace} : Type := State -> Action -> ps.(carrier).
+Definition UtilityFunction {ps : PreferenceSpace} : Type :=
+  State -> Action -> ps.(carrier).
 
 Definition can_be_obtained {ps : PreferenceSpace}
 (uf : UtilityFunction) (state : State) (utility : get_carrier ps) : Prop :=
