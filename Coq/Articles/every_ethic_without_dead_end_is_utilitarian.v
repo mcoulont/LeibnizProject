@@ -7,8 +7,11 @@ Require Import relation_facts.
 Require Import preference.
 Require Import ethics_first_steps.
 
-Definition State : Type := ethics_first_steps.State.
-Definition Action : eqType := ethics_first_steps.Action.
+Section every_ethic_without_dead_end_is_utilitarian.
+
+Context {State : Type}.
+Context {Action : eqType}.
+Definition Ethic : Type := ethics_first_steps.Ethic State Action.
 
 Definition dead_end (ethic : Ethic) (state : State) : Prop :=
   forall (action : Action), ethic state action = false.
@@ -96,3 +99,5 @@ Proof.
       { inversion H4. }
       { reflexivity. }
 Qed.
+
+End every_ethic_without_dead_end_is_utilitarian.

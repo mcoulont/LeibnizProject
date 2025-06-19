@@ -19,7 +19,7 @@ One relies on [this article](https://leibnizproject.com/Articles/objective_ethic
 Throughout this page, let $I$ be the finite set of individuals of a society, $S$ be the set of states, $A$ be the set of actions, $SubjStates = \{(s, i)\}_{s \in S, i \in I}$ be the set of individual states and $E = \{⊤, ⊥\}^{SubjStates \times A}$ the set of ethics.
 --MATH_END--
 
-[//]: # Coq (2-9)
+[//]: # Coq (12-14)
 
 
 ## Compared restrictiveness of two ethics
@@ -32,7 +32,7 @@ Let $e_1, e_2$ be individual ethics.
 $e_1$ is said more restrictive than $e_2$ in state $(s, k)$ if $\forall a \in A, e_1((s, k), a) \implies e_2((s, k), a)$.
 --MATH_END--
 
-[//]: # Coq (11-14)
+[//]: # Coq (16-19)
 
 An ethic is strictly more restrictive than another if it allows strictly fewer actions.
 
@@ -42,7 +42,7 @@ Let $e_1, e_2$ be individual ethics.
 $e_1$ is said strictly more restrictive than $e_2$ in state $(s, k)$ if it's more restrictive, $\exists a \in A, e_1((s, k), a) = ⊥$ and $e_2((s, k), a) = ⊤$.
 --MATH_END--
 
-[//]: # Coq (16-20)
+[//]: # Coq (21-25)
 
 
 ## Feasability
@@ -57,18 +57,33 @@ $\mathbf{Definition}$\
 $feasible$ is said to involve constraints in $s$ if $\exists (a_i) \in A^I, \neg feasible(s, (a_i))$.
 --MATH_END--
 
-[//]: # Coq (22-28)
+[//]: # Coq (27-33)
 
 
 ## Conflicts
 
-A conflict occurs when not every individual (following its own ethic) can do the action (s)he wants.
+If everyone can follow its own ethic then no one is an ethical dead end.
 
 --MATH_START--
 $\mathbf{Definition}$\
 Let $s \in S, (e_i) \in E^I, (a_i) \in A^I$.
 We say that everyone follows its ethic if $\forall i \in I, e_i((s, i), a_i)$.
 
+$\mathbf{Lemma\text{ }1}$\
+Let $s \in S, (e_i) \in E^I, (a_i) \in A^I.
+If every individual follows its own ethic, then none of them is in an ethical dead end.
+
+$\mathbf{proof:}$\
+Let $s \in S$ and $i \in I$. \
+As $i$ follows its own ethic, there is an $a \in A$ such that $e_i((s, i), a_i)$, so $i$ is not in an ethical dead end. \
+■
+--MATH_END--
+
+[//]: # Coq (35-48)
+
+A conflict occurs when not every individual (following its own ethic) can do the action (s)he wants.
+
+--MATH_START--
 $\mathbf{Definition}$\
 Let $s \in S, (e_i) \in E^I, (a_i) \in A^I$.
 There is a conflict if
@@ -76,9 +91,29 @@ $$\begin{cases*}
   \neg feasible(s, (a_i)) \\
   \text{ everyone follows its ethic }
 \end{cases*}$$
+There is no conflict if
+$$\begin{cases*}
+  feasible(s, (a_i)) \\
+  \text{ everyone follows its ethic }
+\end{cases*}$$
 --MATH_END--
 
-[//]: # Coq (30-42)
+[//]: # Coq (50-58)
+
+Conflict (and the absence of conflict) presuppose that everyone follows its own ethic, which is possible only if no one is an ethical dead end.
+
+--MATH_START--
+$\mathbf{Lemma\text{ }2}$\
+If there is a conflict, then no individual is in an ethical dead end.
+If there is no conflict, then no individual is in an ethical dead end.
+
+$\mathbf{proof:}$\
+Let $s \in S$ and $i \in I$. \
+In both cases, everyone follows its own ethic by definition, and we conclude with the previous lemma. \
+■
+--MATH_END--
+
+[//]: # Coq (60-78)
 
 
 ## More restrictive individual ethics diminish the risk of conflicts
@@ -89,7 +124,7 @@ Let $s(e_i) \in E^I, e \in E$.
 For some $j \in I$, replacing $e_j$ with $e$ in $(e_i)$ results in $(e_i)_{j/e}$.
 --MATH_END--
 
-[//]: # Coq (44-46)
+[//]: # Coq (80-82)
 
 If an individual ethic is replaced with a more restrictive one, this can't create a conflict.
 
@@ -105,7 +140,7 @@ We can cconclude that $s, (e_i)_{j/e}, (a_i)$ conflict. \
 ■
 --MATH_END--
 
-[//]: # Coq (48-66)
+[//]: # Coq (84-103)
 
 And if not everything is feasible, one can create a conflict by unrestricting a single individual ethic.
 
@@ -133,4 +168,4 @@ Now, $(e_i)_{j/e}((s, i), a) = ⊤ \text{ } \forall (s, i) \in SubjStates, a \in
 ■
 --MATH_END--
 
-[//]: # Coq (68-101)
+[//]: # Coq (105-139)

@@ -4,9 +4,10 @@ From mathcomp Require Import all_ssreflect fintype fingroup perm seq.
 
 Require Import ethics_first_steps.
 
-Definition State : Type := ethics_first_steps.State.
-Definition Action : eqType := ethics_first_steps.Action.
+Section objective_ethics_no_disapproval_iff_same_ethic.
 
+Context {State : Type}.
+Context {Action : eqType}.
 Context {Individual : finType}.
 
 Structure SubjectiveState : Type := {
@@ -32,7 +33,8 @@ Proof.
   auto.
 Qed.
 
-Definition IndividualEthic : Type := SubjectiveState -> Action -> bool.
+Definition IndividualEthic : Type := @Ethic SubjectiveState Action.
+
 Definition EthicalProfile : Type := Individual -> IndividualEthic.
 
 Definition everyone_same_ethic
@@ -231,3 +233,5 @@ Proof.
     unfold everyone_always_same_ethic in H0. unfold everyone_same_ethic in H0.
     apply H0 with (subjective_state:=(get_SubjectiveState state0 j)).
 Qed.
+
+End objective_ethics_no_disapproval_iff_same_ethic.

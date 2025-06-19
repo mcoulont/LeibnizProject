@@ -2,8 +2,9 @@
 Require Import Bool.Bool.
 From mathcomp Require Import all_ssreflect.
 
-Context {State : Type}.
+Section ethics_first_steps.
 
-Context {Action : eqType}.
+Definition Ethic (State : Type) (Action : eqType) : Type :=
+    State -> Action -> bool.
 
-Definition Ethic : Type := State -> Action -> bool.
+End ethics_first_steps.

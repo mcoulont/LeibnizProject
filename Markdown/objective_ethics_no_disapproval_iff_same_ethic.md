@@ -19,7 +19,7 @@ One relies on [this article](https://leibnizproject.com/Articles/ethics_first_st
 Throughout this page, let $I$ the finite set of individuals of a society, $S$ be the set of states and $A$ the set of actions.
 --MATH_END--
 
-[//]: # Coq (2-10)
+[//]: # Coq (9-11)
 
 
 ## Definition of a subjective state
@@ -31,7 +31,7 @@ $\mathbf{Definition}$\
 A subjective state is a pair $(s, i)$, where $s \in S$, $i \in I$.
 --MATH_END--
 
-[//]: # Coq (12-33)
+[//]: # Coq (13-34)
 
 
 ## Individual ethics in society
@@ -43,16 +43,16 @@ $\mathbf{Definition}$\
 An individual ethic is a function which at each subjective state and action associates $⊥$ if the action is considered ethically right and $⊤$ if it's considered wrong.
 --MATH_END--
 
-[//]: # Coq (35-35)
+[//]: # Coq (36-36)
 
-An individual profile gives the ethic of each individual.
+An ethical profile gives the ethic of each individual.
 
 --MATH_START--
 $\mathbf{Definition}$\
 An ethical profile is a function which at each individual $i \in I$ associates an individual ethic.
 --MATH_END--
 
-[//]: # Coq (36-46)
+[//]: # Coq (38-48)
 
 
 ## Objectivity
@@ -69,7 +69,7 @@ Let $(s, i)$ be an individual state and $\sigma$ a permutation of $S_I$.
 Then $(s, i)_\sigma$ is defined as $(s_\sigma, \sigma (i))$.
 --MATH_END--
 
-[//]: # Coq (48-75)
+[//]: # Coq (50-77)
 
 An individual ethic is said objective if it does not depend on persons (only on states). To be more concrete, if the state is "Alice is in jail and Bob is free" and if one's ethic specifies that someone in jail should be able to have a job, this ethical rule must apply whether it's Alice or Bob who's in jail. An objective ethic requires in some way an equality of rights, but an objective ethic can include something like "the richest one can do whatever (s)he wants", provided it applies whoever is the richest one.
 
@@ -79,7 +79,7 @@ An individual ethic $e$ is said objective if
 $$\forall state \in S, i \in I, \sigma \in S_I, a \in A, e((s, i)_\sigma, a) = e((s, i), a)$$
 --MATH_END--
 
-[//]: # Coq (77-86)
+[//]: # Coq (79-88)
 
 
 ## Disapproval
@@ -95,7 +95,7 @@ $i$ may disapprove $j$ in state $s$ if
 $$\exists a \in A, e_j((s, j), a) = ⊤ \text{ and } e_j((s, i), a) = ⊥$$
 --MATH_END--
 
-[//]: # Coq (88-103)
+[//]: # Coq (90-105)
 
 
 ## Disapproval with objective individual ethics
@@ -112,7 +112,7 @@ As $e_i((s, j), a) = e_j((s, j), a)$, it's not possible that $e_j((s, j), a) = �
 ■
 --MATH_END--
 
-[//]: # Coq (105-115)
+[//]: # Coq (107-117)
 
 If two individuals are objective and may not disapprove with one another, then they have the same ethic.
 
@@ -140,7 +140,7 @@ Together with $(1)$, this gives that $j$ may disapprove $i$, which is in contrad
 ■
 --MATH_END--
 
-[//]: # Coq (117-204)
+[//]: # Coq (119-206)
 
 Overall, in a society where everyone is objective in his ethic, there is no possible disapproval if and only everyone has the same ethic.
 
@@ -155,4 +155,4 @@ $\Leftarrow$ is obtained by generalizing the last lemma on all individuals and s
 ■
 --MATH_END--
 
-[//]: # Coq (206-233)
+[//]: # Coq (208-235)

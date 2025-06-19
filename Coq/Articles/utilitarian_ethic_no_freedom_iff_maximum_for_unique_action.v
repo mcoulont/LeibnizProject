@@ -7,8 +7,11 @@ Require Import preference.
 Require Import ethics_first_steps.
 Require Import every_ethic_without_dead_end_is_utilitarian.
 
-Definition State : Type := ethics_first_steps.State.
-Definition Action : eqType := ethics_first_steps.Action.
+Section utilitarian_ethic_no_freedom_iff_maximum_for_unique_action.
+
+Context {State : Type}.
+Context {Action : eqType}.
+Definition Ethic : Type := ethics_first_steps.Ethic State Action.
 
 Definition leaves_no_freedom (ethic: Ethic) (state: State) : Prop :=
   exists! (action: Action), ethic state action = true.
@@ -34,11 +37,11 @@ Proof.
 Qed.
 
 Definition utilitarian_ethic_unique_maximum {ps : PreferenceSpace}
-(uf : @UtilityFunction ps) (state : State) : Prop :=
+(uf : @UtilityFunction State Action ps) (state : State) : Prop :=
   exists! (action : Action), is_maximum uf state (uf state action).
 
 Definition utilitarian_ethic_always_unique_maximum {ps : PreferenceSpace}
-(uf : @UtilityFunction ps) : Prop :=
+(uf : @UtilityFunction State Action ps) : Prop :=
   forall (state: State), utilitarian_ethic_unique_maximum uf state.
 
 Proposition utilitarian_ethic_no_freedom_iff_maximum_for_unique_action
@@ -92,3 +95,5 @@ Proof.
   (ps:=ps) (ethic:=ethic) (uf:=uf) ;
   tauto.
 Qed.
+
+End utilitarian_ethic_no_freedom_iff_maximum_for_unique_action.

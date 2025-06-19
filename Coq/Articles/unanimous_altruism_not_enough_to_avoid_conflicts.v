@@ -4,37 +4,60 @@ Require Import Logic.FunctionalExtensionality.
 From mathcomp Require Import all_ssreflect.
 
 Require Import ethics_first_steps.
+Require Import every_ethic_without_dead_end_is_utilitarian.
 Require Import objective_ethics_no_disapproval_iff_same_ethic.
 Require Import more_restrictive_ethics_diminish_conflicts.
 
-Definition Action : eqType := ethics_first_steps.Action.
+Section unanimous_altruism_not_enough_to_avoid_conflicts.
 
-Definition Individual : finType :=
-  more_restrictive_ethics_diminish_conflicts.Individual.
-Definition feasible : State -> ActionProfile -> bool :=
-  more_restrictive_ethics_diminish_conflicts.feasible.
+Context {State : Type}.
+Context {Action : eqType}.
+Context {Individual : finType}.
+Context {feasible : State -> @ActionProfile Action Individual -> bool}.
 
-Definition generalized_whole_society (e : IndividualEthic) : EthicalProfile :=
+Definition generalized_whole_society
+(e : @IndividualEthic State Action Individual) : EthicalProfile :=
   fun (i : Individual) => e.
 
-Definition altruist (e : IndividualEthic) (state : State) : Prop :=
-  exists (ap : ActionProfile), no_conflict (generalized_whole_society e) ap state.
+Definition altruist (e : @IndividualEthic State Action Individual)
+(state : State) : Prop :=
+  exists (ap : @ActionProfile Action Individual),
+    @no_conflict State Action Individual feasible (
+      generalized_whole_society e
+    ) ap state.
+
+Lemma no_dead_end_if_altruist (e : @IndividualEthic State Action Individual)
+(state : State) :
+  altruist e state ->
+  forall (i : Individual), ~ dead_end e (get_SubjectiveState state i).
+Proof.
+  intros.
+  unfold altruist in H. destruct H as [ap]. unfold generalized_whole_society in H.
+  assert (~ dead_end ((fun (i : Individual) => e) i) (get_SubjectiveState state i)).
+  {
+    apply (@no_dead_end_if_no_conflict State Action Individual feasible (
+      fun (i : Individual) => e
+    ) ap state).
+    exact H.
+  }
+  simpl in H0. exact H0.
+Qed.
 
 Definition bipartite_contest (state : State) (i j : Individual)
 (a_i a_j b_i b_j : Action) : Prop :=
   i <> j /\
   (
-    forall (ap : ActionProfile),
+    forall (ap : @ActionProfile Action Individual),
       ap i = a_i ->
       ap j = a_j ->
       feasible state ap = false
   ) /\ (
-    exists (ap : ActionProfile),
+    exists (ap : @ActionProfile Action Individual),
       ap i = a_i /\
       ap j = b_j /\
       feasible state ap = true
   ) /\ (
-    exists (ap : ActionProfile),
+    exists (ap : @ActionProfile Action Individual),
       ap i = b_i /\
       ap j = a_j /\
       feasible state ap = true
@@ -45,8 +68,8 @@ Proposition unanimous_altruism_not_enough_to_avoid_conflicts (state : State) :
     exists (i j : Individual) (a_i a_j b_i b_j : Action),
       bipartite_contest state i j a_i a_j b_i b_j
   ) -> (
-    exists (ep : EthicalProfile) (ap : ActionProfile),
-      conflict ep ap state /\
+    exists (ep : EthicalProfile) (ap : @ActionProfile Action Individual),
+      @conflict State Action Individual feasible ep ap state /\
       forall (k : Individual), altruist (ep k) state
   ).
 Proof.
@@ -107,7 +130,7 @@ Proof.
         rewrite Di0i.
         rewrite eq_refl.
         rewrite proj_individual_SubjectiveState.
-        destruct (i0 == j) eqn:Di0j ; rewrite Di0j ; reflexivity.
+        destruct (i0 == j) eqn:Di0j ; reflexivity.
       }
     }
   }
@@ -160,22 +183,16 @@ Proof.
         rewrite proj_individual_SubjectiveState.
         destruct (i0 == i) eqn: Di0i.
         {
-          rewrite Di0i.
           rewrite eq_refl.
           reflexivity.
         }
         {
-          rewrite Di0i.
           destruct (i0 == j) eqn: Di0j.
           {
-            rewrite Di0j.
             rewrite eq_refl.
             reflexivity.
           }
-          {
-            rewrite Di0j.
-            reflexivity.
-          }
+          { reflexivity. }
         }
       }
     }
@@ -222,7 +239,6 @@ Proof.
         rewrite proj_individual_SubjectiveState.
         destruct (i0 == i) eqn: Di0i.
         {
-          rewrite Di0i.
           rewrite eq_refl.
           destruct (i0 == j) eqn: Di0j.
           {
@@ -238,25 +254,19 @@ Proof.
             exfalso.
             apply H in H7. inversion H7.
           }
-          {
-            rewrite Di0j.
-            reflexivity.
-          }
+          { reflexivity. }
         }
         {
-          rewrite Di0i.
           destruct (i0 == j) eqn: Di0j.
           {
-            rewrite Di0j.
             rewrite eq_refl.
             reflexivity.
           }
-          {
-            rewrite Di0j.
-            reflexivity.
-          }
+          { reflexivity. }
         }
       }
     }
   }
 Qed.
+
+End unanimous_altruism_not_enough_to_avoid_conflicts.

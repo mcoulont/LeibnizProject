@@ -14,6 +14,8 @@ Require Import relation_facts.
 Require Import preference.
 Require Import finType_facts.
 
+Section arrow_theorem.
+
 Context {Alternative : finType}.
 Context {Individual : finType}.
 
@@ -1650,3 +1652,5 @@ Proof.
   intro.
   apply exists_pivot ; try tauto.
 Qed.
+
+End arrow_theorem.
