@@ -1,7 +1,6 @@
 
 Require Import Bool.Bool.
 Require Import Arith.PeanoNat.
-From mathcomp Require Import all_ssreflect.
 
 Require Import relation_facts.
 Require Import preference.
@@ -10,7 +9,7 @@ Require Import ethics_first_steps.
 Section every_ethic_without_dead_end_is_utilitarian.
 
 Context {State : Type}.
-Context {Action : eqType}.
+Context {Action : Type}.
 Definition Ethic : Type := ethics_first_steps.Ethic State Action.
 
 Definition dead_end (ethic : Ethic) (state : State) : Prop :=

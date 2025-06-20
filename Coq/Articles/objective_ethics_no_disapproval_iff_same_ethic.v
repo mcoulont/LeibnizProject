@@ -1,13 +1,13 @@
 
 Require Import Logic.FunctionalExtensionality.
-From mathcomp Require Import all_ssreflect fintype fingroup perm seq.
+From mathcomp Require Import fintype fingroup perm.
 
 Require Import ethics_first_steps.
 
 Section objective_ethics_no_disapproval_iff_same_ethic.
 
 Context {State : Type}.
-Context {Action : eqType}.
+Context {Action : Type}.
 Context {Individual : finType}.
 
 Structure SubjectiveState : Type := {

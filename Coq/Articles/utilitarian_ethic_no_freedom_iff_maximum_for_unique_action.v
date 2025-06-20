@@ -1,7 +1,6 @@
 
 Require Import Bool.Bool.
 Require Import Relations.Relation_Definitions.
-From mathcomp Require Import all_ssreflect.
 
 Require Import preference.
 Require Import ethics_first_steps.
@@ -10,7 +9,7 @@ Require Import every_ethic_without_dead_end_is_utilitarian.
 Section utilitarian_ethic_no_freedom_iff_maximum_for_unique_action.
 
 Context {State : Type}.
-Context {Action : eqType}.
+Context {Action : Type}.
 Definition Ethic : Type := ethics_first_steps.Ethic State Action.
 
 Definition leaves_no_freedom (ethic: Ethic) (state: State) : Prop :=

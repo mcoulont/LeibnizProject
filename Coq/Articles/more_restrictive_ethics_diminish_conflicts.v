@@ -10,7 +10,7 @@ Require Import objective_ethics_no_disapproval_iff_same_ethic.
 Section more_restrictive_ethics_diminish_conflicts.
 
 Context {State : Type}.
-Context {Action : eqType}.
+Context {Action : Type}.
 Context {Individual : finType}.
 
 Definition more_restrictive (e1 e2 : @IndividualEthic State Action Individual)

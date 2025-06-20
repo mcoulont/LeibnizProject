@@ -24,5 +24,5 @@ $\mathbf{Definition}$\
 An ethic is a function from $S × A$ to $\{⊥ ,⊤\}$, where $⊥$ is the image for actions being unethical and $⊤$ the one for ethical actions.
 --MATH_END--
 
-[//]: # Coq (7-8)
+[//]: # Coq (6-7)
 [//]: # Lean4 (4-7)
