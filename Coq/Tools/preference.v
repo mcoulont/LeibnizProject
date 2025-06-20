@@ -48,7 +48,7 @@ Proof.
 Qed.
 
 Definition PreferenceOrder (T : Type) : Type :=
-  { R : relation T | @preference_order T R }.
+  { R : relation T | preference_order R }.
 
 Definition non_strict {T : Type} (po : PreferenceOrder T) : relation T :=
   proj1_sig po.
