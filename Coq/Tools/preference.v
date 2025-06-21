@@ -50,12 +50,6 @@ Qed.
 Definition PreferenceOrder (T : Type) : Type :=
   { R : relation T | preference_order R }.
 
-Definition non_strict {T : Type} (po : PreferenceOrder T) : relation T :=
-  proj1_sig po.
-
-Definition strict {T : Type} (po : PreferenceOrder T) : relation T :=
-  fun (x y : T) => ~ non_strict po y x.
-
 Definition indifferent {T : Type} (po : PreferenceOrder T) (a b : T) : Prop :=
   ~ strict po a b /\ ~ strict po b a.
 

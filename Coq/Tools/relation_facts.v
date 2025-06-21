@@ -25,3 +25,19 @@ Definition map_relation {T U : Type} (f : T -> U) (R : relation U) : relation T 
 Definition second_equal_or_1st_unequal {T : eqType} (a : T) : relation T :=
   fun (x : T) => fun (y : T) =>
   if y == a then true else if x == a then false else true.
+
+(*
+  Below, to be consistent with the usual notation for preferences,
+  we write R x y when x is above y
+  These notions are here because they concern at the same time:
+  - preferences
+  - total orders
+*)
+
+Definition non_strict {T : Type} {property : relation T -> Prop}
+(sig_pty : { R : relation T | property R }) : relation T :=
+  proj1_sig sig_pty.
+
+Definition strict {T : Type} {property : relation T -> Prop}
+(sig_pty : { R : relation T | property R }) : relation T :=
+  fun (x y : T) => ~ non_strict sig_pty y x.

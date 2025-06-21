@@ -1,6 +1,7 @@
 -R . LeibnizProject
 ./Tools/relation_facts.v
 ./Tools/preference.v
+./Tools/total_order.v
 ./Tools/finType_facts.v
 ./Articles/ethics_first_steps.v
 ./Articles/every_ethic_without_dead_end_is_utilitarian.v
@@ -9,4 +10,5 @@
 ./Articles/more_restrictive_ethics_diminish_conflicts.v
 ./Articles/unanimous_altruism_not_enough_to_avoid_conflicts.v
 ./Articles/arrow_theorem.v
+./Articles/agents_dynamic_environment.v
 ./gather.v

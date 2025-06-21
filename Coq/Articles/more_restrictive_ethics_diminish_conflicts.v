@@ -24,20 +24,20 @@ Definition strictly_more_restrictive (e1 e2 : @IndividualEthic State Action Indi
   exists (action : Action),
     e1 subj_state action = false /\ e2 subj_state action = true.
 
-Definition ActionProfile : Type := Individual -> Action.
+Definition ActionPerIndividual : Type := Individual -> Action.
 
-Context {feasible : State -> ActionProfile -> bool}.
+Context {feasible : State -> ActionPerIndividual -> bool}.
 
-Definition with_constraints (feasible : State -> ActionProfile -> bool)
+Definition with_constraints (feasible : State -> ActionPerIndividual -> bool)
 (state : State) : Prop :=
-  exists (ap : ActionProfile), feasible state ap = false.
+  exists (ap : ActionPerIndividual), feasible state ap = false.
 
-Definition everyone_follows_its_ethic (ep : EthicalProfile) (ap : ActionProfile)
+Definition everyone_follows_its_ethic (ep : EthicalProfile) (ap : ActionPerIndividual)
 (state : State) : Prop :=
   forall (i : Individual), ep i (get_SubjectiveState state i) (ap i) = true.
 
 Lemma no_dead_end_if_everyone_follows_its_ethic (ep : EthicalProfile)
-(ap : ActionProfile) (state : State) :
+(ap : ActionPerIndividual) (state : State) :
   everyone_follows_its_ethic ep ap state ->
   forall (i : Individual), ~ dead_end (ep i) (get_SubjectiveState state i).
 Proof.
@@ -47,17 +47,17 @@ Proof.
   exists (ap i). rewrite H. intuition.
 Qed.
 
-Definition conflict (ep : EthicalProfile) (ap : ActionProfile)
+Definition conflict (ep : EthicalProfile) (ap : ActionPerIndividual)
 (state : State) : Prop :=
   feasible state ap = false /\
   everyone_follows_its_ethic ep ap state.
 
-Definition no_conflict (ep : EthicalProfile) (ap : ActionProfile)
+Definition no_conflict (ep : EthicalProfile) (ap : ActionPerIndividual)
 (state : State) : Prop :=
   feasible state ap = true /\
   everyone_follows_its_ethic ep ap state.
 
-Definition no_dead_end_if_conflict (ep : EthicalProfile) (ap : ActionProfile)
+Definition no_dead_end_if_conflict (ep : EthicalProfile) (ap : ActionPerIndividual)
 (state : State) :
   conflict ep ap state ->
   forall (i : Individual), ~ dead_end (ep i) (get_SubjectiveState state i).
@@ -67,7 +67,7 @@ Proof.
   apply no_dead_end_if_everyone_follows_its_ethic with (ap:=ap). exact H0.
 Qed.
 
-Definition no_dead_end_if_no_conflict (ep : EthicalProfile) (ap : ActionProfile)
+Definition no_dead_end_if_no_conflict (ep : EthicalProfile) (ap : ActionPerIndividual)
 (state : State) :
   no_conflict ep ap state ->
   forall (i : Individual), ~ dead_end (ep i) (get_SubjectiveState state i).
@@ -82,8 +82,8 @@ Definition replace_individual_ethic (ep : EthicalProfile) (i : Individual)
   fun (j : Individual) => if j == i then ethic else ep j.
 
 Proposition more_restrictive_ethic_diminishes_conflicts (ep : EthicalProfile)
-(ap : ActionProfile) (i : Individual) (ethic : @IndividualEthic State Action Individual)
-(state : State) :
+(ap : ActionPerIndividual) (i : Individual)
+(ethic : @IndividualEthic State Action Individual) (state : State) :
   more_restrictive (ep i) ethic (get_SubjectiveState state i) ->
   conflict ep ap state ->
   conflict (replace_individual_ethic ep i ethic) ap state.
@@ -105,7 +105,7 @@ Qed.
 Proposition more_restrictive_ethic_strictly_diminishes_conflicts (state : State)
 (i : Individual) :
   with_constraints feasible state ->
-  exists (ap : ActionProfile) (ep : EthicalProfile)
+  exists (ap : ActionPerIndividual) (ep : EthicalProfile)
   (ethic : @IndividualEthic State Action Individual),
     more_restrictive (ep i) ethic (get_SubjectiveState state i) /\
     ~ conflict ep ap state /\

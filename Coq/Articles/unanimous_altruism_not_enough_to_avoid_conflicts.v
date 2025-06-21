@@ -13,7 +13,7 @@ Section unanimous_altruism_not_enough_to_avoid_conflicts.
 Context {State : Type}.
 Context {Action : eqType}.
 Context {Individual : finType}.
-Context {feasible : State -> @ActionProfile Action Individual -> bool}.
+Context {feasible : State -> @ActionPerIndividual Action Individual -> bool}.
 
 Definition generalized_whole_society
 (e : @IndividualEthic State Action Individual) : EthicalProfile :=
@@ -21,7 +21,7 @@ Definition generalized_whole_society
 
 Definition altruist (e : @IndividualEthic State Action Individual)
 (state : State) : Prop :=
-  exists (ap : @ActionProfile Action Individual),
+  exists (ap : @ActionPerIndividual Action Individual),
     @no_conflict State Action Individual feasible (
       generalized_whole_society e
     ) ap state.
@@ -47,17 +47,17 @@ Definition bipartite_contest (state : State) (i j : Individual)
 (a_i a_j b_i b_j : Action) : Prop :=
   i <> j /\
   (
-    forall (ap : @ActionProfile Action Individual),
+    forall (ap : @ActionPerIndividual Action Individual),
       ap i = a_i ->
       ap j = a_j ->
       feasible state ap = false
   ) /\ (
-    exists (ap : @ActionProfile Action Individual),
+    exists (ap : @ActionPerIndividual Action Individual),
       ap i = a_i /\
       ap j = b_j /\
       feasible state ap = true
   ) /\ (
-    exists (ap : @ActionProfile Action Individual),
+    exists (ap : @ActionPerIndividual Action Individual),
       ap i = b_i /\
       ap j = a_j /\
       feasible state ap = true
@@ -68,7 +68,7 @@ Proposition unanimous_altruism_not_enough_to_avoid_conflicts (state : State) :
     exists (i j : Individual) (a_i a_j b_i b_j : Action),
       bipartite_contest state i j a_i a_j b_i b_j
   ) -> (
-    exists (ep : EthicalProfile) (ap : @ActionProfile Action Individual),
+    exists (ep : EthicalProfile) (ap : @ActionPerIndividual Action Individual),
       @conflict State Action Individual feasible ep ap state /\
       forall (k : Individual), altruist (ep k) state
   ).
