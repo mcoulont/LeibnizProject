@@ -6,3 +6,6 @@ Require Import objective_ethics_no_disapproval_iff_same_ethic.
 Require Import more_restrictive_ethics_diminish_conflicts.
 Require Import unanimous_altruism_not_enough_to_avoid_conflicts.
 Require Import arrow_theorem.
+Require Import deterministic_stochastic_physics.
+Require Import ethics_restrict_goal_achieving.
+Require Import ethics_restrict_conflict_winning.

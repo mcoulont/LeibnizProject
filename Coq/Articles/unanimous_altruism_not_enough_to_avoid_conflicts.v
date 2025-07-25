@@ -5,7 +5,7 @@ From mathcomp Require Import all_ssreflect.
 
 Require Import ethics_first_steps.
 Require Import every_ethic_without_dead_end_is_utilitarian.
-Require Import objective_ethics_no_disapproval_iff_same_ethic.
+Require Import ethics_in_society.
 Require Import more_restrictive_ethics_diminish_conflicts.
 
 Section unanimous_altruism_not_enough_to_avoid_conflicts.
@@ -13,7 +13,7 @@ Section unanimous_altruism_not_enough_to_avoid_conflicts.
 Context {State : Type}.
 Context {Action : eqType}.
 Context {Individual : finType}.
-Context {feasible : State -> @ActionPerIndividual Action Individual -> bool}.
+Context {feasible : State -> @ActionProfile Action Individual -> bool}.
 
 Definition generalized_whole_society
 (e : @IndividualEthic State Action Individual) : EthicalProfile :=
@@ -21,7 +21,7 @@ Definition generalized_whole_society
 
 Definition altruist (e : @IndividualEthic State Action Individual)
 (state : State) : Prop :=
-  exists (ap : @ActionPerIndividual Action Individual),
+  exists (ap : @ActionProfile Action Individual),
     @no_conflict State Action Individual feasible (
       generalized_whole_society e
     ) ap state.
@@ -47,17 +47,17 @@ Definition bipartite_contest (state : State) (i j : Individual)
 (a_i a_j b_i b_j : Action) : Prop :=
   i <> j /\
   (
-    forall (ap : @ActionPerIndividual Action Individual),
+    forall (ap : @ActionProfile Action Individual),
       ap i = a_i ->
       ap j = a_j ->
       feasible state ap = false
   ) /\ (
-    exists (ap : @ActionPerIndividual Action Individual),
+    exists (ap : @ActionProfile Action Individual),
       ap i = a_i /\
       ap j = b_j /\
       feasible state ap = true
   ) /\ (
-    exists (ap : @ActionPerIndividual Action Individual),
+    exists (ap : @ActionProfile Action Individual),
       ap i = b_i /\
       ap j = a_j /\
       feasible state ap = true
@@ -68,7 +68,7 @@ Proposition unanimous_altruism_not_enough_to_avoid_conflicts (state : State) :
     exists (i j : Individual) (a_i a_j b_i b_j : Action),
       bipartite_contest state i j a_i a_j b_i b_j
   ) -> (
-    exists (ep : EthicalProfile) (ap : @ActionPerIndividual Action Individual),
+    exists (ep : EthicalProfile) (ap : @ActionProfile Action Individual),
       @conflict State Action Individual feasible ep ap state /\
       forall (k : Individual), altruist (ep k) state
   ).

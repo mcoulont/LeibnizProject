@@ -10,7 +10,7 @@ Section utilitarian_ethic_no_freedom_iff_maximum_for_unique_action.
 
 Context {State : Type}.
 Context {Action : Type}.
-Definition Ethic : Type := ethics_first_steps.Ethic State Action.
+Definition Ethic : Type := @ethics_first_steps.Ethic State Action.
 
 Definition leaves_no_freedom (ethic: Ethic) (state: State) : Prop :=
   exists! (action: Action), ethic state action = true.

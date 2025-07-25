@@ -10,7 +10,7 @@ Section every_ethic_without_dead_end_is_utilitarian.
 
 Context {State : Type}.
 Context {Action : Type}.
-Definition Ethic : Type := ethics_first_steps.Ethic State Action.
+Definition Ethic : Type := @ethics_first_steps.Ethic State Action.
 
 Definition dead_end (ethic : Ethic) (state : State) : Prop :=
   forall (action : Action), ethic state action = false.

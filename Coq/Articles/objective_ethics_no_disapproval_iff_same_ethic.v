@@ -2,50 +2,13 @@
 Require Import Logic.FunctionalExtensionality.
 From mathcomp Require Import fintype fingroup perm.
 
-Require Import ethics_first_steps.
+Require Import ethics_in_society.
 
 Section objective_ethics_no_disapproval_iff_same_ethic.
 
 Context {State : Type}.
 Context {Action : Type}.
 Context {Individual : finType}.
-
-Structure SubjectiveState : Type := {
-    state : State ;
-    individual : Individual
-  }.
-
-Definition get_SubjectiveState (state : State) (i : Individual) :
-SubjectiveState := {|
-    state := state ;
-    individual := i
-  |}.
-
-Lemma proj_individual_SubjectiveState (state : State) (i : Individual) :
-  individual (get_SubjectiveState state i) = i.
-Proof.
-  auto.
-Qed.
-
-Lemma proj_state_SubjectiveState (s : State) (i : Individual) :
-  state (get_SubjectiveState s i) = s.
-Proof.
-  auto.
-Qed.
-
-Definition IndividualEthic : Type := @Ethic SubjectiveState Action.
-
-Definition EthicalProfile : Type := Individual -> IndividualEthic.
-
-Definition everyone_same_ethic
-(ethical_profile : EthicalProfile) (subjective_state : SubjectiveState) : Prop :=
-  forall (i j : Individual),
-    ethical_profile i subjective_state =
-    ethical_profile j subjective_state.
-
-Definition everyone_always_same_ethic (ethical_profile : EthicalProfile) : Prop :=
-  forall (subjective_state : SubjectiveState),
-    everyone_same_ethic ethical_profile subjective_state.
 
 Definition PermutationOnIndividuals : Type := {perm Individual}.
 
@@ -76,7 +39,7 @@ Notation " ipos , subjective_state ⋅ σ " := (
   permutation_subjective_state ipos subjective_state σ
 ) (at level 100, no associativity).
 
-Definition objective (ethic : IndividualEthic)
+Definition objective (ethic : @IndividualEthic State Action Individual)
 (ipos : IndividualsPermutationOnStates) : Prop :=
   forall (state : State) (individual : Individual) (σ : PermutationOnIndividuals),
     ethic ( ipos , (
@@ -133,13 +96,13 @@ Proof.
     destruct (ethical_profile j x x0) eqn:H4.
     { reflexivity. }
     destruct x.
-    pose proof (H state0 individual0 (tperm i individual0)).
+    pose proof (H state individual (tperm i individual)).
     unfold get_SubjectiveState in H5.
     assert ( forall (action : Action),
       ethical_profile i (
-        ipos, {| state := state0; individual := individual0 |} ⋅ tperm i individual0
+        ipos, {| state := state; individual := individual |} ⋅ tperm i individual
       ) action =
-      ethical_profile i {| state := state0; individual := individual0 |} action
+      ethical_profile i {| state := state; individual := individual |} action
     ).
     { intro. rewrite H5. reflexivity. }
     pose proof (H6 x0).
@@ -148,13 +111,13 @@ Proof.
     rewrite proj_individual_SubjectiveState in H7.
     rewrite proj_state_SubjectiveState in H7.
     rewrite tpermR in H7.
-    pose proof (H0 state0 individual0 (tperm i individual0)).
+    pose proof (H0 state individual (tperm i individual)).
     unfold get_SubjectiveState in H8.
     assert ( forall (action : Action),
       ethical_profile j (
-        ipos, {| state := state0; individual := individual0 |} ⋅ tperm i individual0
+        ipos, {| state := state; individual := individual |} ⋅ tperm i individual
       ) action =
-      ethical_profile j {| state := state0; individual := individual0 |} action
+      ethical_profile j {| state := state; individual := individual |} action
     ).
     { intro. rewrite H8. reflexivity. }
     pose proof (H9 x0).
@@ -163,20 +126,20 @@ Proof.
     rewrite proj_individual_SubjectiveState in H10.
     rewrite proj_state_SubjectiveState in H10.
     rewrite tpermR in H10.
-    pose proof (H2 (proj1_sig ipos state0 (tperm i individual0))).
+    pose proof (H2 (proj1_sig ipos state (tperm i individual))).
     exfalso. apply H11. exists x0. split ; tauto.
   }
   {
     destruct (ethical_profile j x x0) eqn:H4.
     2: { reflexivity. }
     destruct x.
-    pose proof (H state0 individual0 (tperm j individual0)).
+    pose proof (H state individual (tperm j individual)).
     unfold get_SubjectiveState in H5.
     assert ( forall (action : Action),
       ethical_profile i (
-        ipos, {| state := state0; individual := individual0 |} ⋅ tperm j individual0
+        ipos, {| state := state; individual := individual |} ⋅ tperm j individual
       ) action =
-      ethical_profile i {| state := state0; individual := individual0 |} action
+      ethical_profile i {| state := state; individual := individual |} action
     ).
     { intro. rewrite H5. reflexivity. }
     pose proof (H6 x0).
@@ -185,13 +148,13 @@ Proof.
     rewrite proj_individual_SubjectiveState in H7.
     rewrite proj_state_SubjectiveState in H7.
     rewrite tpermR in H7.
-    pose proof (H0 state0 individual0 (tperm j individual0)).
+    pose proof (H0 state individual (tperm j individual)).
     unfold get_SubjectiveState in H8.
     assert ( forall (action : Action),
       ethical_profile j (
-        ipos, {| state := state0; individual := individual0 |} ⋅ tperm j individual0
+        ipos, {| state := state; individual := individual |} ⋅ tperm j individual
       ) action =
-      ethical_profile j {| state := state0; individual := individual0 |} action
+      ethical_profile j {| state := state; individual := individual |} action
     ).
     { intro. rewrite H8. reflexivity. }
     pose proof (H9 x0).
@@ -200,7 +163,7 @@ Proof.
     rewrite proj_individual_SubjectiveState in H10.
     rewrite proj_state_SubjectiveState in H10.
     rewrite tpermR in H10.
-    pose proof (H1 (proj1_sig ipos state0 (tperm j individual0))).
+    pose proof (H1 (proj1_sig ipos state (tperm j individual))).
     exfalso. apply H11. exists x0. split ; tauto.
   }
 Qed.
@@ -231,7 +194,7 @@ Proof.
     unfold nobody_may_disapprove. intros.
     apply same_ethic_implies_may_not_disapprove.
     unfold everyone_always_same_ethic in H0. unfold everyone_same_ethic in H0.
-    apply H0 with (subjective_state:=(get_SubjectiveState state0 j)).
+    apply H0 with (subjective_state:=(get_SubjectiveState state j)).
 Qed.
 
 End objective_ethics_no_disapproval_iff_same_ethic.
