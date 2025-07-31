@@ -32,7 +32,7 @@ $\mathbf{Definition}$\
 Let $G = {\{⊥ ,⊤\}}^H$ be the set of goals (which are events in [this article with $S = S \times A$](https://leibnizproject.com/Articles/deterministic_stochastic_physics.html)).
 --MATH_END--
 
-[//]: # Coq (9-23)
+[//]: # Rocq (9-23)
 
 
 ## Ethics can't help to achieve goals
@@ -49,7 +49,7 @@ $\mathbf{Definition}$\
 A $g \in G$ can be achieved ethically with $e \in E$ if there is a history compatible with the laws of physics in which $g$ happens and $e$ is always followed.
 --MATH_END--
 
-[//]: # Coq (25-45)
+[//]: # Rocq (25-45)
 
 If you can achieve a goal with your ethic, you can without as well.
 
@@ -63,7 +63,7 @@ Obvious: the history given by the ethical achievement also works for the ethicle
 ■
 --MATH_END--
 
-[//]: # Coq (47-56)
+[//]: # Rocq (47-56)
 
 
 ## Restrictiveness and goal achieving
@@ -76,7 +76,7 @@ An ethic $e_1 \in E$ is said more restrictive than $e_2 \in E$ in a state $s \in
 And $e_1$ is said strictly more restrictive than $e_2$ if $e_1$ is more restrictive than $e_2$ and $\exists t \in T, s \in S e_1(s, a) = ⊥$ and $e_2(s, a) = ⊤$.
 --MATH_END--
 
-[//]: # Coq (58-68)
+[//]: # Rocq (58-68)
 
 If you can achieve a goal with your ethic, you can with a less restrictive one as well.
 
@@ -91,7 +91,7 @@ It suffices to show that $e_2$ is always followed in $h$, which is true because 
 ■
 --MATH_END--
 
-[//]: # Coq (70-92)
+[//]: # Rocq (70-92)
 
 If a goal can be achieved, it can be achieved with a void ethic (that is an ethic which allows everything).
 
@@ -106,4 +106,4 @@ Then the void ethic is satisfied by every history, so by $h$ in particular. \
 ■
 --MATH_END--
 
-[//]: # Coq (94-111)
+[//]: # Rocq (94-111)

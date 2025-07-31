@@ -18,7 +18,7 @@ Throughout this page, let $T$ be the set of instants in the unfolding of time. I
 Let $S$ be the set of states.
 --MATH_END--
 
-[//]: # Coq (9-13)
+[//]: # Rocq (9-13)
 
 
 ## Histories and events
@@ -36,7 +36,7 @@ Let $t_0 \in T$, $h \in H$ and ${hu} \in H_{t_0}$. \
 $h$ is said to extend ${hu}$ if $\forall t \le t_0, h(t) = {hu}(t)$.
 --MATH_END--
 
-[//]: # Coq (16-26)
+[//]: # Rocq (16-26)
 
 As a history contains all the information, it can report which events happened and which didn't.
 
@@ -45,7 +45,7 @@ $\mathbf{Definition}$\
 The set $E$ of events is ${\{⊥, ⊤\}}^H$, provided $e(h) = ⊤$ when the event $e \in E$ happens in history $h \in H$.
 --MATH_END--
 
-[//]: # Coq (28-31)
+[//]: # Rocq (28-31)
 
 
 ## Physical theories
@@ -61,7 +61,7 @@ $\mathbf{Definition}$\
 A history $h \in H$ is said to satisfy a physical theory $pt \in PT$ if $pt(h) = ⊤$
 --MATH_END--
 
-[//]: # Coq (33-35)
+[//]: # Rocq (33-35)
 
 An event is possible if there exists a physically possible history in which it happens.
 
@@ -70,7 +70,7 @@ $\mathbf{Definition}$\
 An event $e \in E$ is said possible in a physical theory $pt \in PT$ if $\exists h \in H$ which satisfies $pt$ such that $e(h)=⊤$.
 --MATH_END--
 
-[//]: # Coq (37-38)
+[//]: # Rocq (37-38)
 
 A physical theory is deterministic when a given state at a given instant determines all the other states after that instant: if we know everything at the present moment, we can describe all that's going to happen. For example, classical and relativistic mechanics are deterministic.
 
@@ -79,6 +79,6 @@ $\mathbf{Definition}$\
 A physical theory $pt \in PT$ is said deterministic if $\forall h_1, h_2 \in H$ which satisfy $pt$ and such that $h_1(t_0) = h_2(t_0)$ for a given $t_0 \in T$, then $\forall t \ge t_0, h_1(t) = h_2(t)$.
 --MATH_END--
 
-[//]: # Coq (40-47)
+[//]: # Rocq (40-47)
 
 I encounter an issue with Rocq to formalize the notion of stochastic physical theory: see [this question](https://proofassistants.stackexchange.com/questions/5163/notation-for-random-variable-unrecognized) if you are willingful to help.

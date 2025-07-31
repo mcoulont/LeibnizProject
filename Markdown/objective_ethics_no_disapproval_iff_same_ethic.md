@@ -19,7 +19,7 @@ One relies on [this article](https://leibnizproject.com/Articles/ethics_in_socie
 Throughout this page, let $I$ the finite set of individuals of a society, $S$ be the set of states and $A$ the set of actions.
 --MATH_END--
 
-[//]: # Coq (9-11)
+[//]: # Rocq (9-11)
 
 
 ## Objectivity
@@ -36,7 +36,7 @@ Let $(s, i)$ be an individual state and $\sigma$ a permutation of $S_I$.
 Then $(s, i)_\sigma$ is defined as $(s_\sigma, \sigma (i))$.
 --MATH_END--
 
-[//]: # Coq (13-40)
+[//]: # Rocq (13-40)
 
 An individual ethic is said objective if it does not depend on persons (only on states). To be more concrete, if the state is "Alice is in jail and Bob is free" and if one's ethic specifies that someone in jail should be able to have a job, this ethical rule must apply whether it's Alice or Bob who's in jail. An objective ethic requires in some way an equality of rights, but an objective ethic can include something like "the richest one can do whatever (s)he wants", provided it applies whoever is the richest one.
 
@@ -46,7 +46,7 @@ An individual ethic $e$ is said objective if
 $$\forall state \in S, i \in I, \sigma \in S_I, a \in A, e((s, i)_\sigma, a) = e((s, i), a)$$
 --MATH_END--
 
-[//]: # Coq (42-51)
+[//]: # Rocq (42-51)
 
 
 ## Disapproval
@@ -62,7 +62,7 @@ $i$ may disapprove $j$ in state $s$ if
 $$\exists a \in A, e_j((s, j), a) = ⊤ \text{ and } e_j((s, i), a) = ⊥$$
 --MATH_END--
 
-[//]: # Coq (53-68)
+[//]: # Rocq (53-68)
 
 
 ## Disapproval with objective individual ethics
@@ -79,7 +79,7 @@ As $e_i((s, j), a) = e_j((s, j), a)$, it's not possible that $e_j((s, j), a) = �
 ■
 --MATH_END--
 
-[//]: # Coq (70-80)
+[//]: # Rocq (70-80)
 
 If two individuals are objective and may not disapprove with one another, then they have the same ethic.
 
@@ -107,7 +107,7 @@ Together with $(1)$, this gives that $j$ may disapprove $i$, which is in contrad
 ■
 --MATH_END--
 
-[//]: # Coq (82-169)
+[//]: # Rocq (82-169)
 
 Overall, in a society where everyone is objective in his ethic, there is no possible disapproval if and only everyone has the same ethic.
 
@@ -122,4 +122,4 @@ $\Leftarrow$ is obtained by generalizing the last lemma on all individuals and s
 ■
 --MATH_END--
 
-[//]: # Coq (171-198)
+[//]: # Rocq (171-198)

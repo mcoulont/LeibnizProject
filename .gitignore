@@ -11,7 +11,7 @@ index.html
 # For Lean4
 .lake
 
-# For Coq
+# For Coq/Rocq
 .*.aux
 .*.d
 *.a

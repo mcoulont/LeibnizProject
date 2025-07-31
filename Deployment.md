@@ -1,6 +1,6 @@
 
 - Check that:
-    * `make` run in the `Coq/` folder doesn't return an error
+    * `make` run in the `Rocq/` folder doesn't return an error
     * `lake build` run in the `Lean4/` folder doesn't return an error
     * `Scripts/Generation.sh` feeds the `Articles/` folder
 

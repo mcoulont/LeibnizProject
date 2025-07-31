@@ -2,7 +2,7 @@
 
 import sys
 
-from InsertCodeInMarkdown import TOKEN_COQ_CODE, TOKEN_LEAN_CODE
+from InsertCodeInMarkdown import TOKEN_ROCQ_CODE, TOKEN_LEAN_CODE
 
 
 SUFFIXE_MARKDOWN = ".md"
@@ -40,9 +40,9 @@ if __name__ == "__main__":
 		TOKEN_SWITCH_PROVER,
 		template_switch_prover
 	).replace(
-		TOKEN_CODE_TAGS + TOKEN_COQ_CODE,
-		"""<pre class='code-block coq-code'>
-		<img src='../Images/Coq_logo.png' height='20' width='13' title='Coq code' class='prover-icon'>
+		TOKEN_CODE_TAGS + TOKEN_ROCQ_CODE,
+		"""<pre class='code-block rocq-code'>
+		<img src='../Images/Rocq_logo.ico' height='20' width='20' title='Rocq code' class='prover-icon'>
 		<code>"""
 	).replace(
 		TOKEN_CODE_TAGS + TOKEN_LEAN_CODE,

@@ -20,7 +20,7 @@ An ethic is a function from $S × A$ to $\{⊥ ,⊤\}$, where $⊥$ is the image
 Let $E = {$\{⊥ ,⊤\}}^{S × A}$ be the set of ethics.
 --MATH_END--
 
-[//]: # Coq (6-10)
+[//]: # Rocq (6-10)
 [//]: # Lean4 (4-7)
 
 
@@ -36,7 +36,7 @@ And $e_1$ is said strictly more restrictive than $e_2$ in a state $s \in S$ if $
 Obviously, every ethic is more restrictive than itself and is not strictly more restrictive than itself.
 --MATH_END--
 
-[//]: # Coq (12-36)
+[//]: # Rocq (12-36)
 [//]: # Lean4 (9-14)
 
 A void ethic allows every action. An ethicless person has a void ethic. The void ethic is the least restrictive of all.
@@ -52,5 +52,5 @@ $$\begin{align*}
 Obviously, every ethic is more restrictive than the void ethic.
 --MATH_END--
 
-[//]: # Coq (38-45)
+[//]: # Rocq (38-45)
 [//]: # Lean4 (23-24)

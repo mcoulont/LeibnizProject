@@ -6,11 +6,11 @@ from re import finditer
 
 
 SUFFIXE_MARKDOWN = ".md"
-REGEX_COQ_INSERTION = "\\[//\\]: # Coq \\((\\d+)-(\\d+)\\)"
+REGEX_ROCQ_INSERTION = "\\[//\\]: # Rocq \\((\\d+)-(\\d+)\\)"
 REGEX_LEAN_INSERTION = "\\[//\\]: # Lean4 \\((\\d+)-(\\d+)\\)"
 TOKEN_MATH_START = "--MATH_START--"
 TOKEN_MATH_END = "--MATH_END--"
-TOKEN_COQ_CODE = "$coq_code$"
+TOKEN_ROCQ_CODE = "$rocq_code$"
 TOKEN_LEAN_CODE = "$lean_code$"
 START_MATH_BLOCK = "<div class='math-block'>"
 END_MATH_BLOCK = "</div>"
@@ -18,7 +18,7 @@ END_MATH_BLOCK = "</div>"
 
 if __name__ == "__main__":
 	file_article_md = sys.argv[1]
-	folder_coq = sys.argv[2]
+	folder_rocq = sys.argv[2]
 	folder_lean = sys.argv[3]
 
 
@@ -39,16 +39,16 @@ if __name__ == "__main__":
 
 	basename = file_article_md.split('/')[-1][:-len(SUFFIXE_MARKDOWN)]
 
-	if basename + ".v" in listdir(folder_coq + "/"):
-		coq_lines = open(folder_coq + "/" + basename + ".v").readlines()
+	if basename + ".v" in listdir(folder_rocq + "/"):
+		rocq_lines = open(folder_rocq + "/" + basename + ".v").readlines()
 
-		for coq_occurrence in finditer(REGEX_COQ_INSERTION, article_md):
+		for rocq_occurrence in finditer(REGEX_ROCQ_INSERTION, article_md):
 			article_md = article_md.replace(
-				coq_occurrence.group(0),
-				'```\n' + TOKEN_COQ_CODE +
-				''.join(coq_lines[
-					int(coq_occurrence.group(1)) - 1 :
-					int(coq_occurrence.group(2))
+				rocq_occurrence.group(0),
+				'```\n' + TOKEN_ROCQ_CODE +
+				''.join(rocq_lines[
+					int(rocq_occurrence.group(1)) - 1 :
+					int(rocq_occurrence.group(2))
 				]) + "\n```\n"
 			)
 

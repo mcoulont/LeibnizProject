@@ -111,7 +111,7 @@ a {
 	margin: 0.5em 0;
 }
 
-/* For the (Coq or Lean) code */
+/* For the (Rocq or Lean) code */
 .code-block {
 	margin: 0.5em 0 1.2em;
 }
@@ -160,7 +160,7 @@ mjx-itable {
 	margin-right: 0.5em;
 }
 
-#coq-bottom-icon {
+#rocq-bottom-icon {
 	grid-row: 1;
 	grid-column: 2;
 }

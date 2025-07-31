@@ -19,7 +19,7 @@ The context is the same as in [this article](https://leibnizproject.com/Articles
 Throughout this page, let $S$ be the set of states and $A$ the set of actions.
 --MATH_END--
 
-[//]: # Coq (11-13)
+[//]: # Rocq (11-13)
 [//]: # Lean4 (8-9)
 
 
@@ -33,7 +33,7 @@ Let $s$ in $S$. An ethic $e$ leaves no freedom in state $s$ if
 $$\exists! a, e(s, a) = ⊤$$
 --MATH_END--
 
-[//]: # Coq (15-16)
+[//]: # Rocq (15-16)
 [//]: # Lean4 (14-15)
 
 An ethic is said to never leave freedom if it leaves no freedom in every situation.
@@ -43,7 +43,7 @@ $\mathbf{Definition}$\
 An ethic $e$ never leaves freedom if $\forall s \in S$, $e$ leaves no freedom in $s$.
 --MATH_END--
 
-[//]: # Coq (18-19)
+[//]: # Rocq (18-19)
 [//]: # Lean4 (17-18)
 
 
@@ -62,7 +62,7 @@ Then this action $a$ is allowed by $e$ in $s$, which means that $s$ is not a dea
 ■
 --MATH_END--
 
-[//]: # Coq (21-29)
+[//]: # Rocq (21-29)
 [//]: # Lean4 (20-31)
 
 Therefore, if an ethic never leaves freedom, then it is without dead end.
@@ -78,7 +78,7 @@ By the previous lemma, $\forall s \in S$, $s$ is not a dead end for $e$, which m
 ■
 --MATH_END--
 
-[//]: # Coq (31-36)
+[//]: # Rocq (31-36)
 [//]: # Lean4 (33-40)
 
 
@@ -93,7 +93,7 @@ $$\begin{cases*}
 \end{cases*}$$
 --MATH_END--
 
-[//]: # Coq (38-40)
+[//]: # Rocq (38-40)
 [//]: # Lean4 (42-44)
 
 --MATH_START--
@@ -101,7 +101,7 @@ $\mathbf{Definition}$\
 An utilitarian ethic $e$ is said to always have a unique action maximizing its utility if $\forall s \in S$, $e$ has a unique maximum action maximizing its utility
 --MATH_END--
 
-[//]: # Coq (42-44)
+[//]: # Rocq (42-44)
 [//]: # Lean4 (46-48)
 
 
@@ -118,7 +118,7 @@ Let $e$ be a utilitarian ethic, $uf$ its utility function and $s$ a state. \
 ■
 --MATH_END--
 
-[//]: # Coq (46-82)
+[//]: # Rocq (46-82)
 [//]: # Lean4 (50-106)
 
 --MATH_START--
@@ -134,5 +134,5 @@ $\iff e$ never leaves freedom \
 ■
 --MATH_END--
 
-[//]: # Coq (84-96)
+[//]: # Rocq (84-96)
 [//]: # Lean4 (108-127)

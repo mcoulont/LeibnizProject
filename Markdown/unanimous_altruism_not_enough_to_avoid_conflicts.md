@@ -19,7 +19,7 @@ One relies on [this article](https://leibnizproject.com/Articles/more_restrictiv
 Throughout this page, let $I$ be the finite set of individuals of a society containing at least two of them, $S$ be the set of states, $A$ be the set of actions, $SubjStates = S × I$ be the set of individual states and $E = \{⊤, ⊥\}^{SubjStates \times A}$ the set of ethics. $feasible: S × A^I -> \{⊤, ⊥\}$ is the function of practical feasibility.
 --MATH_END--
 
-[//]: # Coq (13-16)
+[//]: # Rocq (13-16)
 
 
 ## Altruism
@@ -34,7 +34,7 @@ $\mathbf{Definition}$\
 An ethic $e$ is said altruist in $s$ if $\exists (a_i) \in A^I$ such that there is no conflict if $e$ is generalized to the whole society.
 --MATH_END--
 
-[//]: # Coq (18-27)
+[//]: # Rocq (18-27)
 
 If there is an altruist ethic, then no one is in an ethical dead end (as everyone can follow this altruist ethic)
 
@@ -48,7 +48,7 @@ We conclude with [Lemma 2 in this article](https://www.leibnizproject.com/Articl
 ■
 --MATH_END--
 
-[//]: # Coq (29-44)
+[//]: # Rocq (29-44)
 
 
 ## Bipartite contest
@@ -66,7 +66,7 @@ $$\begin{cases*}
 \end{cases*}$$
 --MATH_END--
 
-[//]: # Coq (46-64)
+[//]: # Rocq (46-64)
 
 
 ## Unanimous altruism is not enough to avoid conflicts
@@ -114,4 +114,4 @@ $$\begin{cases*}
 ■
 --MATH_END--
 
-[//]: # Coq (66-270)
+[//]: # Rocq (66-270)

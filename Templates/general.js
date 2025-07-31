@@ -3,26 +3,26 @@ if (
     localStorage.getItem("prover") != "Lean4" ||
     ! leanIsUsed()
 ) {
-    localStorage.setItem("prover", "Coq");
+    localStorage.setItem("prover", "Rocq");
 }
 
-if (coqIsUsed() && leanIsUsed()) {
+if (rocqIsUsed() && leanIsUsed()) {
     const proversIcons = document.getElementsByClassName("prover-icon");
 
     for (let i = 0; i < proversIcons.length; i++) {
         proversIcons[i].onclick = switchProver;
         proversIcons[i].style.cursor = "pointer";
 
-        if ("coq-code" == proversIcons[i].parentElement.className) {
+        if ("rocq-code" == proversIcons[i].parentElement.className) {
             proversIcons[i].title += "\nClick to switch to Lean4";
         } else {
-            proversIcons[i].title += "\nClick to switch to Coq";
+            proversIcons[i].title += "\nClick to switch to Rocq";
         }
     }
 
-    document.getElementById("coq-bottom-icon").onclick = switchProver;
+    document.getElementById("rocq-bottom-icon").onclick = switchProver;
     document.getElementById("lean-bottom-icon").onclick = switchProver;
-    document.getElementById("coq-bottom-icon").style.cursor = "pointer";
+    document.getElementById("rocq-bottom-icon").style.cursor = "pointer";
     document.getElementById("lean-bottom-icon").style.cursor = "pointer";
 
     document.getElementById("links-provers").style.marginTop = "1em";
@@ -38,23 +38,23 @@ function getProver() {
 }
 
 function getOtherProver() {
-    if (proverIsCoq()) {
+    if (proverIsRocq()) {
         return "Lean4";
     } else {
-        return "Coq";
+        return "Rocq";
     }
 }
 
-function proverIsCoq() {
-    return "Coq" == getProver();
+function proverIsRocq() {
+    return "Rocq" == getProver();
 }
 
 function proverIsLean() {
     return "Lean4" == getProver();
 }
 
-function coqIsUsed() {
-    return 0 != document.getElementsByClassName("coq-code").length;
+function rocqIsUsed() {
+    return 0 != document.getElementsByClassName("rocq-code").length;
 }
 
 function leanIsUsed() {
@@ -88,22 +88,22 @@ function switchProver() {
 
 
 function refreshDisplay() {
-    let coqUsed = coqIsUsed();
+    let rocqUsed = rocqIsUsed();
     let leanUsed = leanIsUsed();
 
-    if (coqUsed) {
-        setDisplay("links-coq", "inline");
+    if (rocqUsed) {
+        setDisplay("links-rocq", "inline");
 
-        if (proverIsCoq()) {
-            setDisplayByClassName("coq-code", "grid");
-            setDisplay("coq-bottom-icon", "none");
+        if (proverIsRocq()) {
+            setDisplayByClassName("rocq-code", "grid");
+            setDisplay("rocq-bottom-icon", "none");
         } else {
-            setDisplayByClassName("coq-code", "none");
-            setDisplay("coq-bottom-icon", "inline");
+            setDisplayByClassName("rocq-code", "none");
+            setDisplay("rocq-bottom-icon", "inline");
         }
     } else {
-        setDisplayByClassName("coq-code", "none");
-        setDisplay("links-coq", "none");
+        setDisplayByClassName("rocq-code", "none");
+        setDisplay("links-rocq", "none");
     }
 
     if (leanUsed) {
@@ -121,7 +121,7 @@ function refreshDisplay() {
         setDisplay("links-lean", "none");
     }
 
-    if (coqUsed && leanUsed) {
+    if (rocqUsed && leanUsed) {
         document.getElementById("prover").innerText = getProver();
         document.getElementById("other-prover").innerText = getOtherProver();
 
