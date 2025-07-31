@@ -18,7 +18,7 @@ Throughout this page, let $T$ be the time, $S$ the set of states, $A$ the set of
 
 $\mathbf{Definition}$\
 Let $H = (S \times A^I)^T$ be the set of histories ([let $S = S \times A^I$ in this article](https://leibnizproject.com/Articles/deterministic_stochastic_physics.html)). \
-For $t \in T, ap \in A^I$ and $h(t) = (s, ap)$, let $h_S(t) = s$ and $h_AP(t) = ap$.
+For $t \in T, ap \in A^I$ and $h(t) = (s, ap)$, let $h_S(t) = s$ and $h_{AP}(t) = ap$.
 
 $\mathbf{Definition}$\
 Let $G = {\{⊥ ,⊤\}}^H$ be the set of goals (which are events in [this article with $S = S \times A^I$](https://leibnizproject.com/Articles/deterministic_stochastic_physics.html)).
