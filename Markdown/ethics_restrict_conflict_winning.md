@@ -55,7 +55,7 @@ An individual $i \in I$ can win a conflict relative to goals $gp \in GP$ if all 
 An individual $i \in I$ can't win a conflict relative to goals $gp \in GP$ if all the goals of $gp$ can't be achieved and $i$'s goal $gp(i)$ can't either.
 --MATH_END--
 
-[//]: # Rocq (3-42)
+[//]: # Rocq (30-42)
 
 
 ## Following one's ethic

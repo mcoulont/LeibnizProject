@@ -17,7 +17,7 @@ Throughout this page, let $S$ be the set of states and $A$ the set of actions.
 
 $\mathbf{Definition}$\
 An ethic is a function from $S × A$ to $\{⊥ ,⊤\}$, where $⊥$ is the image for actions being unethical and $⊤$ the one for ethical actions. \
-Let $E = {$\{⊥ ,⊤\}}^{S × A}$ be the set of ethics.
+Let $E = {\{⊥ ,⊤\}}^{S × A}$ be the set of ethics.
 --MATH_END--
 
 [//]: # Rocq (6-10)
