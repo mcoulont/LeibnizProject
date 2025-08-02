@@ -25,8 +25,8 @@ if __name__ == "__main__":
 	# We set the links common to all the articles pages
 	# (links to the index and to the Github Rocq and Lean pages),
 	# the buttons to switch prover and the logos of provers
-	template_links_provers = open(file_template_links_provers).read()
-	template_switch_prover = open(file_template_switch_prover).read()
+	template_links_provers = open(file_template_links_provers, encoding="utf-8").read()
+	template_switch_prover = open(file_template_switch_prover, encoding="utf-8").read()
 
 	template_links_provers = template_links_provers.replace(
 		TOKEN_ARTICLE,
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
 	html_article = html_article.replace(
 		TOKEN_LINK_INDEX,
-		open(file_template_link_index).read()
+		open(file_template_link_index, encoding="utf-8").read()
 	).replace(
 		TOKEN_LINKS_PROVERS,
 		template_links_provers

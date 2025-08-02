@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
 
 	# We also insert HTML tags to manage the math blocks
-	article_md = open(file_article_md).read().replace(
+	article_md = open(file_article_md, encoding="utf-8").read().replace(
 		TOKEN_MATH_START,
 		START_MATH_BLOCK
 	).replace(
@@ -40,7 +40,10 @@ if __name__ == "__main__":
 	basename = file_article_md.split('/')[-1][:-len(SUFFIXE_MARKDOWN)]
 
 	if basename + ".v" in listdir(folder_rocq + "/"):
-		rocq_lines = open(folder_rocq + "/" + basename + ".v").readlines()
+		rocq_lines = open(
+			folder_rocq + "/" + basename + ".v",
+			encoding="utf-8"
+		).readlines()
 
 		for rocq_occurrence in finditer(REGEX_ROCQ_INSERTION, article_md):
 			article_md = article_md.replace(
@@ -53,7 +56,10 @@ if __name__ == "__main__":
 			)
 
 	if basename + ".lean" in listdir(folder_lean + "/"):
-		lean_lines = open(folder_lean + "/" + basename + ".lean").readlines()
+		lean_lines = open(
+			folder_lean + "/" + basename + ".lean",
+			encoding="utf-8"
+		).readlines()
 
 		for lean_occurrence in finditer(REGEX_LEAN_INSERTION, article_md):
 			article_md = article_md.replace(

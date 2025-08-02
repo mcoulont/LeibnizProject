@@ -57,7 +57,7 @@ articles_in_rocq = []
 
 for occurrence_article_basename in finditer(
     REGEX_BASENAME_ROCQ_PROJECT,
-    open(file_rocq_project).read()
+    open(file_rocq_project, encoding="utf-8").read()
 ):
     if not occurrence_article_basename.group(0).startswith("#"):
         articles_in_rocq.append(occurrence_article_basename.group(2))
@@ -66,7 +66,7 @@ articles_in_lean = []
 
 for occurrence_article_basename in finditer(
     REGEX_BASENAME_LEAN_PROJECT,
-    open(file_lean_project).read()
+    open(file_lean_project, encoding="utf-8").read()
 ):
     if not occurrence_article_basename.group(0).startswith("--"):
         articles_in_lean.append(occurrence_article_basename.group(2))
@@ -83,8 +83,10 @@ for article_basename in articles:
         '<li><a href="' + FOLDER_HTML + article_basename +
         '.html">' + search(
             REGEX_TITLE_MD,
-            open(folder_markdown + '/' + article_basename +
-            ".md").read()
+            open(
+                folder_markdown + '/' + article_basename + ".md",
+                encoding="utf-8"
+            ).read()
         ).group(1) + '</a></li>'
     )
 
@@ -94,7 +96,7 @@ print(
     sub(
         REGEX_MATHJAX,
         "",
-        open(file_general_template).read().replace(
+        open(file_general_template, encoding="utf-8").read().replace(
             "$title$",
             INDEX_TITLE
         ).replace(
