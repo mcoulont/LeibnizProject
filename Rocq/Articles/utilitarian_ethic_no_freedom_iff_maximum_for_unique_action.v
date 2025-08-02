@@ -10,15 +10,14 @@ Section utilitarian_ethic_no_freedom_iff_maximum_for_unique_action.
 
 Context {State : Type}.
 Context {Action : Type}.
-Definition Ethic : Type := @ethics_first_steps.Ethic State Action.
 
-Definition leaves_no_freedom (ethic: Ethic) (state: State) : Prop :=
+Definition leaves_no_freedom (ethic: @Ethic State Action) (state: State) : Prop :=
   exists! (action: Action), ethic state action = true.
 
-Definition never_leaves_freedom (ethic: Ethic) : Prop :=
+Definition never_leaves_freedom (ethic: @Ethic State Action) : Prop :=
   forall (state: State), leaves_no_freedom ethic state.
 
-Lemma no_freedom_implies_no_dead_end (ethic: Ethic) (state: State) :
+Lemma no_freedom_implies_no_dead_end (ethic: @Ethic State Action) (state: State) :
   leaves_no_freedom ethic state -> ~ dead_end ethic state.
 Proof.
   intro. unfold leaves_no_freedom in H.
@@ -28,7 +27,8 @@ Proof.
   rewrite H in H2. inversion H2.
 Qed.
 
-Corollary never_leaves_freedom_implies_never_has_dead_end (ethic: Ethic) :
+Corollary never_leaves_freedom_implies_never_has_dead_end
+(ethic: @Ethic State Action) :
   never_leaves_freedom ethic -> without_dead_end ethic.
 Proof.
   unfold without_dead_end. unfold never_leaves_freedom. intro.
@@ -45,7 +45,7 @@ Definition utilitarian_ethic_always_unique_maximum {ps : PreferenceSpace}
 
 Proposition utilitarian_ethic_no_freedom_iff_maximum_for_unique_action
 {ps : PreferenceSpace} :
-  forall (ethic: Ethic) (uf : UtilityFunction)
+  forall (ethic: @Ethic State Action) (uf : UtilityFunction)
   (ethic_maximizes_uf : maximizes ethic uf) (state: State),
     @utilitarian_ethic_unique_maximum ps uf state <->
     leaves_no_freedom ethic state.
@@ -83,12 +83,13 @@ Qed.
 
 Corollary utilitarian_ethic_never_freedom_iff_always_maximum_for_unique_action
 {ps : PreferenceSpace} :
-  forall (ethic: Ethic) (uf : UtilityFunction)
+  forall (ethic: @Ethic State Action) (uf : UtilityFunction)
   (ethic_maximizes_uf : maximizes ethic uf),
     @utilitarian_ethic_always_unique_maximum ps uf <->
     never_leaves_freedom ethic.
 Proof.
-  intros. unfold utilitarian_ethic_always_unique_maximum. unfold never_leaves_freedom.
+  intros. unfold utilitarian_ethic_always_unique_maximum.
+  unfold never_leaves_freedom.
   split ; intros; pose proof (H state) ; 
   apply @utilitarian_ethic_no_freedom_iff_maximum_for_unique_action with
   (ps:=ps) (ethic:=ethic) (uf:=uf) ;

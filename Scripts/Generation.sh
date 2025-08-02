@@ -17,8 +17,9 @@ file_lean_project=$folder_current_script/../Lean4/Articles.lean
 index_file=$folder_current_script/../index.html
 
 script_insert_code=$folder_current_script/InsertCodeInMarkdown.py
-script_insert_links_provers=$folder_current_script/InsertLinksProvers.py
+script_manage_common_html=$folder_current_script/ManageCommonHtml.py
 script_generate_index=$folder_current_script/GenerateIndex.py
+script_insert_cross_article_links=$folder_current_script/InsertCrossArticleLinks.py
 
 mkdir -p $folder_html
 
@@ -28,7 +29,8 @@ for file_article_md in $folder_markdown/*; do
 
     python3 $script_insert_code $file_article_md $folder_rocq $folder_lean | \
     pandoc -f markdown --mathjax --template=$file_general_template | \
-    python3 $script_insert_links_provers $file_template_link_index $file_template_links_provers $file_template_switch_prover $basename_without_extension > $folder_html/$basename_without_extension.html
+    python3 $script_manage_common_html $file_template_link_index $file_template_links_provers $file_template_switch_prover $basename_without_extension > $folder_html/$basename_without_extension.html
 done
 
+python3 $script_insert_cross_article_links $folder_html
 python3 $script_generate_index $file_general_template $folder_markdown $file_rocq_project $file_lean_project > $root_folder/index.html

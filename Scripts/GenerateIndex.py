@@ -3,7 +3,7 @@
 import sys
 from re import finditer, search, sub
 
-from InsertLinksProvers import (
+from ManageCommonHtml import (
     TOKEN_LINK_INDEX,
     TOKEN_LINKS_PROVERS,
     TOKEN_SWITCH_PROVER

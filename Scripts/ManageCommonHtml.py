@@ -22,6 +22,9 @@ if __name__ == "__main__":
 	html_article = sys.stdin.read()
 
 
+	# We set the links common to all the articles pages
+	# (links to the index and to the Github Rocq and Lean pages),
+	# the buttons to switch prover and the logos of provers
 	template_links_provers = open(file_template_links_provers).read()
 	template_switch_prover = open(file_template_switch_prover).read()
 

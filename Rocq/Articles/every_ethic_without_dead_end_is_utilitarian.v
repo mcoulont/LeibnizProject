@@ -10,12 +10,11 @@ Section every_ethic_without_dead_end_is_utilitarian.
 
 Context {State : Type}.
 Context {Action : Type}.
-Definition Ethic : Type := @ethics_first_steps.Ethic State Action.
 
-Definition dead_end (ethic : Ethic) (state : State) : Prop :=
+Definition dead_end (ethic : @Ethic State Action) (state : State) : Prop :=
   forall (action : Action), ethic state action = false.
 
-Definition without_dead_end (ethic : Ethic) : Prop :=
+Definition without_dead_end (ethic : @Ethic State Action) : Prop :=
   forall (state : State), ~ dead_end ethic state.
 
 Definition UtilityFunction {ps : PreferenceSpace} : Type :=
@@ -31,15 +30,16 @@ Definition is_maximum {ps : PreferenceSpace}
   forall (action : Action), get_preference_order ps utility (uf state action).
 
 Definition maximizes {ps : PreferenceSpace}
-(ethic : Ethic) (uf : @UtilityFunction ps) : Prop :=
+(ethic : @Ethic State Action) (uf : @UtilityFunction ps) : Prop :=
   forall (state : State) (action : Action),
     Is_true (ethic state action) <->
     is_maximum uf state (uf state action).
 
-Definition is_utilitarian (ethic : Ethic) : Prop :=
+Definition is_utilitarian (ethic : @Ethic State Action) : Prop :=
   exists (ps : PreferenceSpace) (uf : UtilityFunction), @maximizes ps ethic uf.
 
-Definition associated_utility (ethic : Ethic) : State -> Action -> nat :=
+Definition associated_utility (ethic : @Ethic State Action) :
+State -> Action -> nat :=
   fun state => (fun action => if ethic state action then 0 else 1).
 
 Lemma le_transitive : Relation_Definitions.transitive nat le.
@@ -74,7 +74,8 @@ Definition associatedPreferenceSpace : PreferenceSpace := {|
 |}.
 
 Proposition every_ethic_without_dead_end_is_utilitarian :
-  forall (ethic : Ethic), without_dead_end ethic -> is_utilitarian ethic.
+  forall (ethic : @Ethic State Action),
+    without_dead_end ethic -> is_utilitarian ethic.
 Proof.
   intros. unfold is_utilitarian.
   exists associatedPreferenceSpace. exists (associated_utility ethic).
