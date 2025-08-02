@@ -329,7 +329,7 @@ Let $a \in A$ other than $b$ and $b'$. Then $i$ and $i'$ are both dictators for 
 ■
 --MATH_END--
 
-[//]: # Rocq (1527-1642)
+[//]: # Rocq (1527-1644)
 
 --MATH_START--
 $\mathbf{Arrow's\text{ }theorem}$\
@@ -341,4 +341,4 @@ Every alternative has a pivot by lemma 2. Then lemma 4 immediately gives a dicta
 ■
 --MATH_END--
 
-[//]: # Rocq (1644-1654)
+[//]: # Rocq (1646-1656)

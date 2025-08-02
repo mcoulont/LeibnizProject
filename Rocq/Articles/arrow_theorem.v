@@ -1524,7 +1524,7 @@ Proof.
   }
 Qed.
 
-Definition b (alt3 : #|Alternative| >= 3) : Alternative :=
+Definition third_alt (alt3 : #|Alternative| >= 3) : Alternative :=
   enum_val (Ordinal (n:=#|Alternative|) (m:=2) alt3).
 
 Lemma pivot_implies_dictator (constitution : Constitution)
@@ -1533,16 +1533,16 @@ Lemma pivot_implies_dictator (constitution : Constitution)
 (h_piv : forall (b : Alternative), has_pivot constitution b) :
   exists (i : Individual), dictator constitution i.
 Proof.
-  pose proof (h_piv (b alt3)).
+  pose proof (h_piv (third_alt alt3)).
   unfold has_pivot in H. destruct H as [i].
-  assert (forall(a : Alternative), a <> b alt3 ->
+  assert (forall(a : Alternative), a <> third_alt alt3 ->
     forall (pp : PreferenceProfile),
-      (strict (pp i) a (b alt3) -> strict (constitution pp) a (b alt3)) /\
-      (strict (pp i) (b alt3) a -> strict (constitution pp) (b alt3) a)
+      (strict (pp i) a (third_alt alt3) -> strict (constitution pp) a (third_alt alt3)) /\
+      (strict (pp i) (third_alt alt3) a -> strict (constitution pp) (third_alt alt3) a)
   ).
   {
     intros.
-    specialize (exists_3rd_distinct a (b alt3) alt3). intro.
+    specialize (exists_3rd_distinct a (third_alt alt3) alt3). intro.
     destruct H1 as [c]. destruct H1.
     pose proof (h_piv c).
     unfold has_pivot in H3. destruct H3 as [j].
@@ -1557,24 +1557,25 @@ Proof.
       specialize (not_eq_sym H2). intro.
       specialize (not_eq_sym H1). intro.
       unfold dictator_except in H4.
-      pose proof (H4 (b alt3) a H12 H13 pp2). pose proof (H4 a (b alt3) H13 H12 pp1).
+      pose proof (H4 (third_alt alt3) a H12 H13 pp2).
+      pose proof (H4 a (third_alt alt3) H13 H12 pp1).
       unfold very_top_choice in H11. pose proof (H11 a H0).
-      assert (~ strict (constitution pp2) a (b alt3)).
+      assert (~ strict (constitution pp2) a (third_alt alt3)).
       {
         intro.
-        apply strict_asymmetric with (po:= constitution pp2) (a:=a) (b:= b alt3) ;
+        apply strict_asymmetric with (po:= constitution pp2) (a:=a) (b:= third_alt alt3) ;
         tauto.
       }
-      assert (~ strict (pp2 j) a (b alt3)).
+      assert (~ strict (pp2 j) a (third_alt alt3)).
       { tauto. }
       unfold very_bottom_choice in H10. pose proof (H10 a H0).
-      assert (~ strict (constitution pp1) (b alt3) a).
+      assert (~ strict (constitution pp1) (third_alt alt3) a).
       {
         intro.
-        apply strict_asymmetric with (po:= constitution pp1) (a:=a) (b:= b alt3) ;
+        apply strict_asymmetric with (po:= constitution pp1) (a:=a) (b:= third_alt alt3) ;
         tauto.
       }
-      assert (~ strict (pp1 j) (b alt3) a).
+      assert (~ strict (pp1 j) (third_alt alt3) a).
       { tauto. }
       assert (j != i).
       { by apply/eqP. }
@@ -1594,32 +1595,32 @@ Proof.
       - unfold dictator_except in H4.
         specialize (not_eq_sym H1). intro.
         specialize (not_eq_sym H2). intro.
-        specialize (H4 (b alt3) a H7 H6).
+        specialize (H4 (third_alt alt3) a H7 H6).
         rewrite H5 in H4. apply H4.
       - unfold dictator_except in H4.
         specialize (not_eq_sym H1). intro.
         specialize (not_eq_sym H2). intro.
-        specialize (H4 a (b alt3) H6 H7).
+        specialize (H4 a (third_alt alt3) H6 H7).
         rewrite H5 in H4. apply H4.
     }
   }
   exists i. unfold dictator. intros.
-  assert (b alt3 = a \/ b alt3 <> a).
+  assert (third_alt alt3 = a \/ third_alt alt3 <> a).
   { tauto. }
-  assert (b alt3 = b0 \/ b alt3 <> b0).
+  assert (third_alt alt3 = b \/ third_alt alt3 <> b).
   { tauto. }
   destruct H2.
   {
     destruct H3.
     {
       rewrite H2 in H3. rewrite H3 in H1.
-      assert (~ strict (pp i) b0 b0).
+      assert (~ strict (pp i) b b).
       { apply strict_never_reflexive. }
       exfalso. apply H4. exact H1.
     }
     {
       rewrite H2 in H0. rewrite H2 in H3.
-      specialize (not_eq_sym H3). intro. specialize (H0 b0 H4 pp).
+      specialize (not_eq_sym H3). intro. specialize (H0 b H4 pp).
       tauto.
     }
   }
@@ -1631,11 +1632,12 @@ Proof.
       tauto.
     }
     {
-      specialize (pivot_implies_dictator_except constitution iia (b alt3) i H). intro.
+      specialize (pivot_implies_dictator_except constitution iia (third_alt alt3) i H).
+      intro.
       unfold dictator_except in H4.
       specialize (not_eq_sym H3). intro.
       specialize (not_eq_sym H2). intro.
-      specialize (H4 b0 a H5 H6).
+      specialize (H4 b a H5 H6).
       apply H4. exact H1.
     }
   }
