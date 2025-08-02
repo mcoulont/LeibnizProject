@@ -1092,7 +1092,7 @@ Proof.
   }
 Qed.
 
-Definition pp' (i : Individual) (pp pp1 : PreferenceProfile)
+Definition profile_III (i : Individual) (pp pp1 : PreferenceProfile)
 (a b : Alternative) : PreferenceProfile :=
   fun (j : Individual) => (
     if j == i then make_above_preference (pp j) a b else (
@@ -1113,10 +1113,10 @@ Proof.
   assert (
     forall j, j <> i ->
     very_bottom_choice (pp1 j) b ->
-    pp' i pp pp1 a b j = make_very_bottom_preference (pp j) b
+    profile_III i pp pp1 a b j = make_very_bottom_preference (pp j) b
   ).
   {
-    unfold pp'. intros.
+    unfold profile_III. intros.
     destruct (j == i) eqn:Eji.
     {
       exfalso. apply H9.
@@ -1130,10 +1130,10 @@ Proof.
   assert (
     forall j, j <> i ->
     ~ very_bottom_choice (pp1 j) b ->
-    pp' i pp pp1 a b j = make_very_top_preference (pp j) b
+    profile_III i pp pp1 a b j = make_very_top_preference (pp j) b
   ).
   {
-    unfold pp'. intros.
+    unfold profile_III. intros.
     destruct (j == i) eqn:Eji.
     {
       exfalso. apply H10.
@@ -1147,19 +1147,19 @@ Proof.
     reflexivity.
   }
   assert (
-    pp' i pp pp1 a b i = make_above_preference (pp i) a b
+    profile_III i pp pp1 a b i = make_above_preference (pp i) a b
   ).
   {
-    unfold pp'.
+    unfold profile_III.
     assert ((i == i) = true).
     { by apply/eqP. }
     rewrite H11. reflexivity.
   }
   assert ( forall (j : Individual),
-    same_order (pp j) (pp' i pp pp1 a b j ) c a
+    same_order (pp j) (profile_III i pp pp1 a b j ) c a
   ).
   {
-    unfold pp'. intros.
+    unfold profile_III. intros.
     rewrite same_order_characterization.
     unfold make_above_preference. unfold make_above.
     unfold strict. unfold non_strict.
@@ -1333,7 +1333,7 @@ Proof.
       }
     }
   }
-  assert (same_order (constitution pp) (constitution (pp' i pp pp1 a b)) c a).
+  assert (same_order (constitution pp) (constitution (profile_III i pp pp1 a b)) c a).
   {
     apply iia.
     unfold unanimously_same_order. exact H12.
@@ -1343,7 +1343,7 @@ Proof.
   {
     assert (strict (constitution pp1) c b).
     { unfold very_bottom_choice in H7. apply H7. exact H0. }
-    assert (same_order (constitution pp1) (constitution (pp' i pp pp1 a b)) c b).
+    assert (same_order (constitution pp1) (constitution (profile_III i pp pp1 a b)) c b).
     {
       apply iia.
       unfold unanimously_same_order. intro j.
@@ -1354,9 +1354,9 @@ Proof.
         rewrite H17.
         assert (strict (pp1 i) c b).
         { unfold very_bottom_choice in H5. apply H5. exact H0. }
-        assert (strict (pp' i pp pp1 a b i) c b).
+        assert (strict (profile_III i pp pp1 a b i) c b).
         {
-          unfold pp'.
+          unfold profile_III.
           assert ((i == i) = true).
           { by apply/eqP. }
           rewrite H19.
@@ -1386,7 +1386,7 @@ Proof.
           specialize (H9 j H17 H18).
           unfold very_bottom_choice in H18.
           specialize (H18 c H0).
-          assert (strict (pp' i pp pp1 a b j) c b).
+          assert (strict (profile_III i pp pp1 a b j) c b).
           {
             rewrite H9.
             unfold make_very_bottom_preference. unfold make_very_bottom.
@@ -1408,7 +1408,7 @@ Proof.
           specialize (H10 j H17 H18).
           unfold very_top_choice in H19.
           specialize (H19 c H0).
-          assert (strict (pp' i pp pp1 a b j) b c).
+          assert (strict (profile_III i pp pp1 a b j) b c).
           {
             rewrite H10.
             unfold make_very_top_preference. unfold make_very_top.
@@ -1430,7 +1430,7 @@ Proof.
   {
     assert (strict (constitution pp2) b a).
     { unfold very_top_choice in H8. apply H8. exact H. }
-    assert (same_order (constitution pp2) (constitution (pp' i pp pp1 a b)) b a).
+    assert (same_order (constitution pp2) (constitution (profile_III i pp pp1 a b)) b a).
     {
       apply iia.
       unfold unanimously_same_order. intro j.
@@ -1441,9 +1441,9 @@ Proof.
         rewrite H17.
         assert (strict (pp2 i) b a).
         { unfold very_top_choice in H6. apply H6. exact H. }
-        assert (strict (pp' i pp pp1 a b i) b a).
+        assert (strict (profile_III i pp pp1 a b i) b a).
         {
-          unfold pp'.
+          unfold profile_III.
           assert ((i == i) = true).
           { by apply/eqP. }
           rewrite H19.
@@ -1475,7 +1475,7 @@ Proof.
           specialize (H9 j H17 H18).
           unfold very_bottom_choice in H18.
           specialize (H18 a H).
-          assert (strict (pp' i pp pp1 a b j) a b).
+          assert (strict (profile_III i pp pp1 a b j) a b).
           {
             rewrite H9.
             unfold make_very_bottom_preference. unfold make_very_bottom.
@@ -1500,7 +1500,7 @@ Proof.
           specialize (H10 j H17 H18).
           unfold very_top_choice in H19.
           specialize (H19 a H).
-          assert (strict (pp' i pp pp1 a b j) b a).
+          assert (strict (profile_III i pp pp1 a b j) b a).
           {
             rewrite H10.
             unfold make_very_top_preference. unfold make_very_top.
