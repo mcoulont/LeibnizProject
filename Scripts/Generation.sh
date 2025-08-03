@@ -6,6 +6,7 @@ root_folder=$folder_current_script/../
 folder_markdown=$folder_current_script/../Markdown
 folder_html=$folder_current_script/../Articles
 folder_rocq=$folder_current_script/../Rocq/Articles
+folder_rocq_tools=$folder_current_script/../Rocq/Tools
 folder_lean=$folder_current_script/../Lean4/Articles
 
 file_general_template=$folder_current_script/../Templates/general.html
@@ -32,5 +33,5 @@ for file_article_md in $folder_markdown/*; do
     python3 $script_manage_common_html $file_template_link_index $file_template_links_provers $file_template_switch_prover $basename_without_extension > $folder_html/$basename_without_extension.html
 done
 
-python3 $script_insert_cross_article_links $folder_html
+python3 $script_insert_cross_article_links $folder_html $folder_rocq_tools
 python3 $script_generate_index $file_general_template $folder_markdown $file_rocq_project $file_lean_project > $root_folder/index.html

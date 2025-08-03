@@ -7,10 +7,26 @@ from re import findall, sub
 from time import time
 
 
+class ToolLine:
+	def __init__(self, tool: str, line: int):
+		self._tool = tool
+		self._line = line
+
+	def __repr__(self):
+		return self._tool + "#L" + str(self._line)
+
+	# def get_tool(self):
+	# 	return self._tool
+
+	# def get_line(self):
+	# 	return self._line
+
+
 if __name__ == "__main__":
 	start = time()
 
 	folder_html = sys.argv[1]
+	folder_rocq_tools = sys.argv[2]
 
 	# We wrap Rocq identifiers in a tag and then create hyperlinks
 	# to point to them
@@ -37,7 +53,9 @@ if __name__ == "__main__":
 		"(\\s+)(" + ROCQ_REGEX_IDENTIFIER + ")([\\s:\\(])"
 	)
 	rocq_object_to_article: dict[str, str] = dict()
+	rocq_object_to_tool: dict[str, ToolLine] = dict()
 
+	# Detecting the rocq objects to point to in articles
 	for html_article in listdir(folder_html):
 		soup = BeautifulSoup(
 			open(folder_html + '/' + html_article, encoding="utf-8").read(),
@@ -57,7 +75,7 @@ if __name__ == "__main__":
 					if res_search_object[3] in rocq_object_to_article:
 						print(
 							"Error: duplicate name " +
-							res_search_object[2] + " in " +
+							res_search_object[3] + " in " +
 							rocq_object_to_article[res_search_object[3]] +
 							" and " + html_article +
 							" (we try to avoid this)"
@@ -67,6 +85,40 @@ if __name__ == "__main__":
 					rocq_object_to_article[
 						res_search_object[3]
 					] = html_article
+
+	# Detecting the rocq objects to point to in the Tools folder
+	for rocq_tool in listdir(folder_rocq_tools):
+		if rocq_tool.endswith(".v"):
+			file_rocq_tool = open(
+				folder_rocq_tools + '/' + rocq_tool,
+				'r',
+				encoding="utf-8"
+			)
+
+			line_number = 0
+
+			for line_rocq_tool in file_rocq_tool.readlines():
+				line_number += 1
+
+				for res_search_object in findall(
+					REGEX_ROCQ_OBJECT_POINTED_TO,
+					line_rocq_tool
+				):
+					if res_search_object[3] in rocq_object_to_tool:
+						print(
+							"Error: duplicate name " +
+							res_search_object[3] + " in " +
+							str(rocq_object_to_tool[res_search_object[3]]) +
+							" and " + str(ToolLine(rocq_tool, line_number)) +
+							" (we try to avoid this)"
+						)
+						exit(1)
+
+					rocq_object_to_tool[
+						res_search_object[3]
+					] = ToolLine(rocq_tool, line_number)
+
+			file_rocq_tool.close()
 
 	for html_article in listdir(folder_html):
 		content_html_article = open(
@@ -92,15 +144,20 @@ if __name__ == "__main__":
 				)
 
 				for object_to_point in rocq_object_to_article:
-					regex_object_to_point = (
-						"([^\\w'>/\"])(" + object_to_point + ")([^\\w'/])"
-					)
-
 					html_rocq_code_block = sub(
-						regex_object_to_point,
+						"([^\\w'>/\"])(" + object_to_point + ")([^\\w'/])",
 						'\\g<1><a href="https://leibnizproject.com/Articles/' +
 						rocq_object_to_article[object_to_point] +
 						'#\\g<2>">\\g<2></a>\\g<3>',
+						html_rocq_code_block
+					)
+
+				for object_to_point in rocq_object_to_tool:
+					html_rocq_code_block = sub(
+						"([^\\w'>/\"])(" + object_to_point + ")([^\\w'/])",
+						'\\g<1><a href="https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/' +
+						str(rocq_object_to_tool[object_to_point]) +
+						'">\\g<2></a>\\g<3>',
 						html_rocq_code_block
 					)
 
