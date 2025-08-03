@@ -80,5 +80,3 @@ A physical theory $pt \in PT$ is said deterministic if $\forall h_1, h_2 \in H$ 
 --MATH_END--
 
 [//]: # Rocq (39-46)
-
-I encounter an issue with Rocq to formalize the notion of stochastic physical theory: see [this question](https://proofassistants.stackexchange.com/questions/5163/notation-for-random-variable-unrecognized) if you are willingful to help.
