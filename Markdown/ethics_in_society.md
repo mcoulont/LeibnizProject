@@ -73,7 +73,7 @@ We will be led in the future to replace an individual ethic with another.
 
 --MATH_START--
 $\mathbf{Definition}$\
-Ethical profiles $ep_1, ep_2 \in EP$ coincide for all individuals but $i \in I$ if $\forall j \neq i \in I, ep_1(j) = ep_2(j).
+Ethical profiles $ep_1, ep_2 \in EP$ coincide for all individuals but $i \in I$ if $\forall j \neq i \in I, ep_1(j) = ep_2(j)$.
 
 $\mathbf{Definition}$\
 Being given an ethical profile $ep \in EP$, an individual $i \in I$ and an individual ethic $e \in IE$, $ep_{i/e}$ is the ethical profile obtained by replacing the individual ethic $ep(i)$ with $e$. More formally,
