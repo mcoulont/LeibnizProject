@@ -18,6 +18,30 @@ Proof.
   tauto.
 Qed.
 
+Lemma total_order_is_antisymmetric_preference {T : Type} (R : relation T) :
+  total_order R <-> (
+    preference_order R /\
+    Relation_Definitions.antisymmetric T R
+  ).
+Proof.
+  unfold total_order.
+  split.
+  {
+    intro.
+    destruct H. destruct H0.
+    unfold preference_order. tauto.
+  }
+  {
+    intro.
+    destruct H.
+    repeat split.
+    { unfold preference_order in H. tauto. }
+    { apply preference_order_reflexive. exact H. }
+    { unfold preference_order in H. tauto. }
+    { exact H0. }
+  }
+Qed.
+
 Lemma second_equal_or_1st_unequal_preference_order {T : eqType} (min : T) :
   preference_order (second_equal_or_1st_unequal min).
 Proof.

@@ -1,7 +1,6 @@
 -R . LeibnizProject
 ./Tools/relation_facts.v
 ./Tools/preference.v
-./Tools/total_order.v
 ./Tools/finType_facts.v
 ./Articles/ethics_first_steps.v
 ./Articles/every_ethic_without_dead_end_is_utilitarian.v

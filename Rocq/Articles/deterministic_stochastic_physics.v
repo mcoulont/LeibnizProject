@@ -2,7 +2,6 @@
 From mathcomp Require Import reals measure probability.
 
 Require Import relation_facts.
-Require Import total_order.
 
 Section deterministic_stochastic_physics.
 
