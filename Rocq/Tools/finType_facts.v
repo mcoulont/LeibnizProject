@@ -35,6 +35,23 @@ Proof.
   reflexivity.
 Qed.
 
+Lemma instance_makes_card_nonnull {T : finType} (t : T) :
+  0 < #|T|.
+Proof.
+  specialize (fintype0 t). intro.
+  induction #|T|.
+  { exfalso. apply H. reflexivity. }
+  { auto. }
+Qed.
+
+Lemma max_enum_rank {T : finType} (t : T) :
+  enum_rank t < #|T| = true.
+Proof.
+  assert (enum_rank t < #|T|).
+  { auto. }
+  intuition.
+Qed.
+
 Lemma exists_two_distinct (T : finType) :
   #|T| >= 2 -> exists (x y : T), x <> y.
 Proof.

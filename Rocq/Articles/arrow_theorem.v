@@ -47,6 +47,15 @@ Definition unanimously_same_order (pp1 pp2 : PreferenceProfile)
 (a b : Alternative) : Prop :=
   forall (i : Individual), same_order (pp1 i) (pp2 i) a b.
 
+Lemma unanimously_same_order_symmetric (pp1 pp2 : PreferenceProfile)
+(a b : Alternative) :
+  unanimously_same_order pp1 pp2 a b <->
+  unanimously_same_order pp1 pp2 b a.
+Proof.
+  unfold unanimously_same_order.
+  split; intro; intro; specialize (H i); rewrite same_order_symmetric; exact H.
+Qed.
+
 Definition independence_irrelevant_alternatives (constitution : Constitution) : Prop :=
   forall (pp1 pp2 : PreferenceProfile) (a b : Alternative),
     unanimously_same_order pp1 pp2 a b ->
@@ -1615,7 +1624,7 @@ Proof.
     {
       rewrite H2 in H3. rewrite H3 in H1.
       assert (~ strict (pp i) b b).
-      { apply strict_never_reflexive. }
+      { apply strict_irreflexive. }
       exfalso. apply H4. exact H1.
     }
     {

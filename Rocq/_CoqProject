@@ -1,7 +1,10 @@
 -R . LeibnizProject
+./Tools/basics.v
 ./Tools/relation_facts.v
-./Tools/preference.v
+./Tools/eqType_facts.v
 ./Tools/finType_facts.v
+./Tools/ssrnat_facts.v
+./Tools/preference.v
 ./Articles/ethics_first_steps.v
 ./Articles/every_ethic_without_dead_end_is_utilitarian.v
 ./Articles/utilitarian_ethic_no_freedom_iff_maximum_for_unique_action.v
@@ -13,4 +16,5 @@
 ./Articles/deterministic_stochastic_physics.v
 ./Articles/ethics_restrict_goal_achieving.v
 ./Articles/ethics_restrict_conflict_winning.v
+./Articles/gibbard_theorem.v
 ./gather.v

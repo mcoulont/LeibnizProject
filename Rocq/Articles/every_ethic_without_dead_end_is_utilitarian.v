@@ -1,6 +1,6 @@
 
 Require Import Bool.Bool.
-Require Import Arith.PeanoNat.
+(* Require Import Arith.PeanoNat. *)
 
 Require Import relation_facts.
 Require Import preference.
@@ -41,37 +41,6 @@ Definition is_utilitarian (ethic : @Ethic State Action) : Prop :=
 Definition associated_utility (ethic : @Ethic State Action) :
 State -> Action -> nat :=
   fun state => (fun action => if ethic state action then 0 else 1).
-
-Lemma le_transitive : Relation_Definitions.transitive nat le.
-Proof.
-  intros n m o Hnm Hmo.
-  induction Hmo.
-  - apply Hnm.
-  - apply le_S. apply IHHmo.
-Qed.
-
-Lemma le_total : total le.
-Proof.
-  intros n m.
-  assert (le n m \/ gt n m).
-  { apply Nat.le_gt_cases. }
-  destruct H.
-  - left. tauto.
-  - right. unfold gt in H. apply Nat.lt_le_incl. tauto.
-Qed.
-
-Lemma le_preference_order : preference_order le.
-Proof.
-  unfold preference_order. split.
-  - apply le_transitive.
-  - apply le_total.
-Qed.
-
-Definition associatedPreferenceSpace : PreferenceSpace := {|
-  carrier := nat ;
-  order := Nat.le ;
-  is_preference_order := le_preference_order
-|}.
 
 Proposition every_ethic_without_dead_end_is_utilitarian :
   forall (ethic : @Ethic State Action),

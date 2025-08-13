@@ -3,6 +3,10 @@ Require Import Classical.
 Require Import Sets.Image.
 Require Import Relations.Relation_Definitions.
 Require Import Program.Basics.
+Require Import Logic.FunctionalExtensionality.
+Require Import Logic.PropExtensionality.
+Require Import Arith.Compare_dec.
+Require Import Classes.RelationClasses.
 From mathcomp Require Import all_ssreflect.
 
 Require Import relation_facts.
@@ -77,6 +81,15 @@ Definition PreferenceOrder (T : Type) : Type :=
 Definition indifferent {T : Type} (po : PreferenceOrder T) (a b : T) : Prop :=
   ~ strict po a b /\ ~ strict po b a.
 
+Lemma indifferent_if_non_strict_both_ways
+{T : Type} (po : PreferenceOrder T) (a b : T) :
+  non_strict po a b ->
+  non_strict po b a ->
+  indifferent po a b.
+Proof.
+  unfold indifferent. unfold strict. tauto.
+Qed.
+
 Definition top_choice {T : Type} (po : PreferenceOrder T) (max : T) : Prop :=
   forall (t : T), non_strict po max t.
 
@@ -120,8 +133,7 @@ Proof.
   apply trans with (y:=y) ; tauto.
 Qed.
 
-Lemma total_stable_by_flip {T : Type} {R : relation T}
-(tot : total R) :
+Lemma total_stable_by_flip {T : Type} {R : relation T} (tot : total R) :
   total (flip R).
 Proof.
   unfold total in *. intros. unfold flip in *.
@@ -143,7 +155,33 @@ Definition reverse {T : Type} (po : PreferenceOrder T) : PreferenceOrder T :=
     Basics.flip (non_strict po)
   ) (preference_order_stable_by_flip (proj2_sig po)).
 
-Lemma strict_never_reflexive {T : Type} (po : PreferenceOrder T) (a : T) :
+Lemma reverse_very_bottom {T : Type} (po : PreferenceOrder T) (t : T) :
+  very_bottom_choice po t ->
+  very_top_choice (reverse po) t.
+Proof.
+  unfold very_bottom_choice. unfold very_top_choice.
+  intros.
+  unfold reverse. unfold strict. unfold non_strict. simpl.
+  specialize (H u H0).
+  unfold strict in H. unfold non_strict in H.
+  unfold flip. exact H.
+Qed.
+
+Definition switch_strictness {T : Type} (R : relation T) : relation T :=
+  complement (flip R).
+
+Lemma switch_strictness_involutive (T : Type) :
+  involutive (@switch_strictness T).
+Proof.
+  unfold involutive. unfold cancel. unfold switch_strictness.
+  unfold complement. unfold flip.
+  intros. apply functional_extensionality.
+  intros. apply functional_extensionality.
+  intro.
+  apply propositional_extensionality. tauto.
+Qed.
+
+Lemma strict_irreflexive {T : Type} (po : PreferenceOrder T) (a : T) :
   ~ strict po a a.
 Proof.
   intro. unfold strict in H. unfold non_strict in H.
@@ -245,10 +283,94 @@ Proof.
   destruct H1 ; tauto.
 Qed.
 
+Lemma indifferent_reflexive {T : Type} (po : PreferenceOrder T) :
+  Relation_Definitions.reflexive T (indifferent po).
+Proof.
+  unfold Relation_Definitions.reflexive. intro.
+  unfold indifferent.
+  split; apply strict_irreflexive.
+Qed.
+
+Lemma indifferent_symmetric {T : Type} (po : PreferenceOrder T) :
+  Relation_Definitions.symmetric T (indifferent po).
+Proof.
+  unfold Relation_Definitions.symmetric. unfold indifferent.
+  tauto.
+Qed.
+
+Lemma indifferent_transitive {T : Type} (po : PreferenceOrder T) :
+  Relation_Definitions.transitive T (indifferent po).
+Proof.
+  unfold Relation_Definitions.transitive. unfold indifferent.
+  intros.
+  destruct H. destruct H0.
+  unfold strict in *.
+  apply NNPP in H, H1, H0, H2.
+  split;
+  intro; apply H3;
+  destruct po as [R]; simpl in *;
+  unfold preference_order in p; destruct p;
+  apply H4 with (y:=y); tauto.
+Qed.
+
+Lemma non_strict_stable_by_indifferent {T : Type} (po : PreferenceOrder T)
+(a b c : T) :
+  non_strict po a b ->
+  indifferent po b c ->
+  non_strict po a c.
+Proof.
+  intros.
+  unfold indifferent in H0. unfold strict in H0.
+  destruct H0. apply NNPP in H0. apply NNPP in H1.
+  apply non_strict_transitive with (b:=b); try tauto.
+Qed.
+
+Lemma non_strict_stable_by_indifferent' {T : Type} (po : PreferenceOrder T)
+(a b c : T) :
+  non_strict po a c ->
+  indifferent po a b ->
+  non_strict po b c.
+Proof.
+  intros.
+  unfold indifferent in H0. unfold strict in H0.
+  destruct H0. apply NNPP in H0. apply NNPP in H1.
+  apply non_strict_transitive with (b:=a); try tauto.
+Qed.
+
 Definition same_order {T : Type} (po1 po2 : PreferenceOrder T) (a b : T) : Prop :=
   (strict po1 a b <-> strict po2 a b) /\
   (strict po1 b a <-> strict po2 b a) /\
-  (indifferent po1 b a <-> indifferent po2 b a).
+  (indifferent po1 a b <-> indifferent po2 a b).
+
+Lemma same_order_reflexive {T : Type} (po1 po2 : PreferenceOrder T) (a: T) :
+  same_order po1 po2 a a.
+Proof.
+  unfold same_order.
+  split.
+  {
+    specialize (strict_irreflexive po1 a).
+    specialize (strict_irreflexive po2 a).
+    tauto.
+  }
+  split.
+  {
+    specialize (strict_irreflexive po1 a).
+    specialize (strict_irreflexive po2 a).
+    tauto.
+  }
+  {
+    specialize (indifferent_reflexive po1 a).
+    specialize (indifferent_reflexive po2 a).
+    tauto.
+  }
+Qed.
+
+Lemma same_order_symmetric {T : Type} (po1 po2 : PreferenceOrder T) (a b: T) :
+  same_order po1 po2 a b <-> same_order po1 po2 b a.
+Proof.
+  unfold same_order. unfold indifferent.
+  tauto.
+Qed.
 
 Lemma same_order_strict_case {T : Type} (po1 po2 : PreferenceOrder T) (a b : T) :
   strict po1 a b ->
@@ -267,22 +389,15 @@ Proof.
   { unfold indifferent. tauto. }
 Qed.
 
-Lemma same_order_symmetric {T : Type} (po1 po2 : PreferenceOrder T) (a b: T) :
-  same_order po1 po2 a b <-> same_order po1 po2 b a.
-Proof.
-  unfold same_order. unfold indifferent.
-  tauto.
-Qed.
-
 Lemma same_order_non_strict {T : Type} (po1 po2 : PreferenceOrder T) (a b: T) :
   same_order po1 po2 a b ->
-  non_strict po1 a b ->
-  non_strict po2 a b.
+  (non_strict po1 a b <-> non_strict po2 a b).
 Proof.
   intros.
   unfold same_order in H.
-  destruct H. destruct H1.
-  unfold strict in H1. tauto.
+  destruct H.
+  split; destruct H0;
+  unfold strict in H0; tauto.
 Qed.
 
 Lemma same_order_characterization {T : Type} (po1 po2 : PreferenceOrder T) (a b : T) :
@@ -304,6 +419,112 @@ Proof.
     unfold indifferent. tauto.
   }
 Qed.
+
+Definition strict_preference {T : Type} (P : relation T) : Prop :=
+  (forall (x y : T), ~ (P x y /\ P y x)) /\
+  (forall (x y z : T), P x z -> (P x y \/ P y z)).
+
+Lemma switch_strict_preference_is_preference {T : Type} (P : relation T) :
+  strict_preference P -> preference_order (switch_strictness P).
+Proof.
+  unfold strict_preference. unfold preference_order.
+  intros. destruct H.
+  unfold Relation_Definitions.transitive. unfold switch_strictness.
+  unfold complement. unfold flip.
+  split.
+  {
+    intros.
+    specialize (H0 z y x).
+    tauto.
+  }
+  {
+    unfold total. intros.
+    specialize (H x y).
+    tauto.
+  }
+Qed.
+
+Definition single_top_others_indifferent {T : eqType} (max : T) :
+PreferenceOrder T :=
+  exist preference_order (flip (second_equal_or_1st_unequal max)) (
+    preference_order_stable_by_flip (
+      second_equal_or_1st_unequal_preference_order max
+    )
+  ).
+
+Definition single_bottom_others_indifferent {T : eqType} (min : T) :
+PreferenceOrder T :=
+  exist preference_order (second_equal_or_1st_unequal min) (
+    second_equal_or_1st_unequal_preference_order min
+  ).
+
+Lemma single_top_very_top {T : eqType} (max : T) :
+  very_top_choice (single_top_others_indifferent max) max.
+Proof.
+  unfold single_top_others_indifferent. unfold very_top_choice.
+  intros.
+  unfold second_equal_or_1st_unequal. unfold strict. unfold non_strict.
+  simpl. intro.
+  destruct (u == max) eqn:Eumax.
+  {
+    assert (u = max).
+    { by apply/eqP. }
+    apply H. exact H1.
+  }
+  {
+    unfold flip in H0. rewrite Eumax in H0.
+    rewrite eq_refl in H0.
+    inversion H0.
+  }
+Qed.
+
+Lemma single_bottom_very_bottom {T : eqType} (min : T) :
+  very_bottom_choice (single_bottom_others_indifferent min) min.
+Proof.
+  unfold single_bottom_others_indifferent. unfold very_bottom_choice.
+  intros.
+  unfold second_equal_or_1st_unequal. unfold strict. unfold non_strict.
+  simpl. intro.
+  destruct (u == min) eqn:Eumin.
+  {
+    assert (u = min).
+    { by apply/eqP. }
+    apply H. exact H1.
+  }
+  {
+    rewrite eq_refl in H0.
+    inversion H0.
+  }
+Qed.
+
+Lemma preference_antisym_iff_total_order {T : Type} {R : relation T}
+(p_o : preference_order R) :
+  Relation_Definitions.antisymmetric T R <-> total_order R.
+Proof.
+  unfold total_order.
+  split.
+  {
+    intros.
+    split.
+    {
+      destruct p_o.
+      exact H1.
+    }
+    {
+      split.
+      { apply preference_order_reflexive. exact p_o. }
+      { destruct p_o. exact H0. }
+      { exact H. }
+    }
+  }
+  {
+    intros.
+    destruct H. destruct H0.
+    exact ord_antisym.
+  }
+Qed.
+
+(* Preference order mapping *)
 
 Lemma preference_order_stable_by_map {T U : Type} (f : T -> U)
 (R : relation U) (prefo : preference_order R) :
@@ -333,58 +554,7 @@ Definition map_PreferenceOrder {T U : Type} (f : T -> U)
     preference_order_stable_by_map f (proj1_sig po) (proj2_sig po)
   ).
 
-Lemma preference_antisym_iff_total_order {T : Type} {R : relation T}
-(p_o : preference_order R) :
-  Relation_Definitions.antisymmetric T R <-> total_order R.
-Proof.
-  unfold total_order.
-  split.
-  {
-    intros.
-    split.
-    {
-      destruct p_o.
-      exact H1.
-    }
-    {
-      split.
-      { apply preference_order_reflexive. exact p_o. }
-      { destruct p_o. exact H0. }
-      { exact H. }
-    }
-  }
-  {
-    intros.
-    destruct H. destruct H0.
-    exact ord_antisym.
-  }
-Qed.
-
-Definition single_bottom_others_indifferent {T : eqType} (min : T) :
-PreferenceOrder T :=
-  exist preference_order (second_equal_or_1st_unequal min) (
-    second_equal_or_1st_unequal_preference_order min
-  ).
-
-Lemma single_bottom_very_bottom {T : eqType} (min : T) :
-  very_bottom_choice (single_bottom_others_indifferent min) min.
-Proof.
-  unfold single_bottom_others_indifferent. unfold very_bottom_choice.
-  intros.
-  unfold second_equal_or_1st_unequal. unfold strict. unfold non_strict.
-  simpl. intro.
-  destruct (u == min) eqn:Eumin.
-  {
-    assert (u = min).
-    { by apply/eqP. }
-    apply H. exact H1.
-  }
-  {
-    assert ((min == min) = true).
-    { rewrite eq_refl. reflexivity. }
-    rewrite H1 in H0. inversion H0.
-  }
-Qed.
+(* Preference space *)
 
 Structure PreferenceSpace : Type := {
     carrier :> Type ;
@@ -397,3 +567,72 @@ Definition get_carrier : PreferenceSpace -> Type:=
 
 Definition get_preference_order (ps : PreferenceSpace) : relation (get_carrier ps) :=
   ps.(order).
+
+(* le as a preference order on nat *)
+
+Lemma le_transitive : Relation_Definitions.transitive nat le.
+Proof.
+  intros n m o Hnm Hmo.
+  induction Hmo.
+  - apply Hnm.
+  - apply le_S. apply IHHmo.
+Qed.
+
+Lemma le_total : total le.
+Proof.
+  intros n m.
+  assert (le n m \/ gt n m).
+  { apply Nat.le_gt_cases. }
+  destruct H.
+  - left. tauto.
+  - right. unfold gt in H. apply Nat.lt_le_incl. tauto.
+Qed.
+
+Lemma le_preference_order : preference_order le.
+Proof.
+  unfold preference_order. split.
+  - apply le_transitive.
+  - apply le_total.
+Qed.
+
+Definition le_PreferenceOrder : PreferenceOrder nat :=
+  exist preference_order le le_preference_order.
+
+Lemma strict_le_is_lt :
+  strict le_PreferenceOrder = lt.
+Proof.
+  unfold le_PreferenceOrder. unfold strict.
+  apply functional_extensionality. intro.
+  apply functional_extensionality. intro.
+  simpl.
+  unfold lt.
+  apply propositional_extensionality.
+  destruct x0 eqn:Hx0.
+  {
+    intuition.
+    { exfalso. apply H. apply Nat.le_0_l. }
+    { inversion H. }
+  }
+  {
+    rewrite <- Nat.succ_le_mono.
+    split.
+    {
+      pose proof (not_le x n). unfold gt in H. unfold lt in H.
+      tauto.
+    }
+    {
+      unfold not. intros.
+      pose proof (le_transitive). unfold Relation_Definitions.transitive in H1.
+      specialize (H1 n.+1 x n H0 H).
+      assert ((n < n)%coq_nat).
+      { unfold lt. exact H1. }
+      { apply (Nat.lt_irrefl n). exact H2. }
+    }
+  }
+Qed.
+
+Definition associatedPreferenceSpace : PreferenceSpace := {|
+  carrier := nat ;
+  order := Nat.le ;
+  is_preference_order := le_preference_order
+|}.

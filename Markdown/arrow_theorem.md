@@ -105,7 +105,7 @@ $\mathbf{Definition}$\
 Two alternatives $a$ and $b$ are unanimously in the same order in preference profiles $p_1$ and $p_2$ if they are in the same order for every individual.
 --MATH_END--
 
-[//]: # Rocq (46-48)
+[//]: # Rocq (46-57)
 
 We say that the independance of irrelevant alternatives is respected if the social preference between two alternatives only depends on the individual preferences between them.
 
@@ -115,7 +115,7 @@ A constitution $constit$ respects the independance of irrelevant alternatives if
 $$a \text{ and } b \text{ are unanimously in the same order in } p_1 \text{ and } p_2 \Rightarrow a \text{ and } b \text{ are in the same order in } constit(p_1) \text{ and } constit(p_2)$$
 --MATH_END--
 
-[//]: # Rocq (50-53)
+[//]: # Rocq (59-62)
 
 
 ## First lemmas, some useful definitions
@@ -131,7 +131,7 @@ Obvious \
 ■
 --MATH_END--
 
-[//]: # Rocq (55-68)
+[//]: # Rocq (64-77)
 
 An alternative is said to be an unanimous top (resp. bottom) choice if it's the top (resp. bottom) choice for every individual. It's said to be an unanimous extremal choice if it's one of them.
 
@@ -144,7 +144,7 @@ $$\forall i \in I, \forall a \neq b \in A, b \prec_i a$$
 An alternativeis is an unanimous extremal choice if it's either an unanimous top choice or an unanimous bottom choice.
 --MATH_END--
 
-[//]: # Rocq (70-79)
+[//]: # Rocq (79-88)
 
 In a constitution respecting unanimity, an unanimous top (resp. bottom) choice is the top (resp. bottom) choice for the society.
 
@@ -162,7 +162,7 @@ Let $i \in I$. We indeed have $b \succ_i a$ because $b$ in an unanimous top choi
 ■
 --MATH_END--
 
-[//]: # Rocq (81-101)
+[//]: # Rocq (90-110)
 
 
 ## Transformations on preference orders
@@ -183,7 +183,7 @@ We denote: \
 - $p_{b \uparrow a} = (i \in I) \mapsto p(i)_{b \uparrow a}$
 --MATH_END--
 
-[//]: # Rocq (103-419)
+[//]: # Rocq (112-428)
 
 
 # Proof of Arrow's theorem
@@ -202,7 +202,7 @@ Else, we have $d \succeq b$, so $d \succeq b \succeq c$ where $b, c, d$ are pair
 ■
 --MATH_END--
 
-[//]: # Rocq (421-450)
+[//]: # Rocq (430-459)
 
 The following lemma is already puzzling: unanimity and the independence of irrelevant alternatives being respected, if an alternative is an extremal choice for every individual, then it must be extremal for the society as well (alhtough one could think that, if half of the citizens adore it and the other half abhor it, the society would rank it somewhere in the middle).
 
@@ -220,7 +220,7 @@ But, making $c$ above $a$ for every individual makes $c \succ a$ for the whole s
 ■
 --MATH_END--
 
-[//]: # Rocq (452-691)
+[//]: # Rocq (461-700)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -235,7 +235,7 @@ $i$ is pivotal for $b$ if there are $p, p' \in P$ such that: \
 $b$ has a pivot if $\exists i \in I$ such that $i$ is pivotal for $b$.
 --MATH_END--
 
-[//]: # Rocq (693-705)
+[//]: # Rocq (702-714)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }1}$\
@@ -259,7 +259,7 @@ Here $i$ is pivotal just by definition (considering $p'$ as the profile by makin
 ■
 --MATH_END--
 
-[//]: # Rocq (707-1052)
+[//]: # Rocq (716-1061)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }2}$\
@@ -273,7 +273,7 @@ There, $b$ is the bottom choice for the society by unanimity, and we can conclud
 ■
 --MATH_END--
 
-[//]: # Rocq (1054-1093)
+[//]: # Rocq (1063-1102)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }3}$\
@@ -309,7 +309,7 @@ For individuals $j \neq i$ such that $b$ is not the bottom choice in $p_1$, $b$ 
 ■
 --MATH_END--
 
-[//]: # Rocq (1095-1525)
+[//]: # Rocq (1104-1534)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }4}$\
@@ -329,7 +329,7 @@ Let $a \in A$ other than $b$ and $b'$. Then $i$ and $i'$ are both dictators for 
 ■
 --MATH_END--
 
-[//]: # Rocq (1527-1644)
+[//]: # Rocq (1536-1653)
 
 --MATH_START--
 $\mathbf{Arrow's\text{ }theorem}$\
@@ -341,4 +341,4 @@ Every alternative has a pivot by lemma 2. Then lemma 4 immediately gives a dicta
 ■
 --MATH_END--
 
-[//]: # Rocq (1646-1656)
+[//]: # Rocq (1655-1665)
