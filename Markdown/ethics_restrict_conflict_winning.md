@@ -24,7 +24,7 @@ $\mathbf{Definition}$\
 Let $G = {\{⊥ ,⊤\}}^H$ be the set of goals (which are events in [this article with $S = S \times A^I$](https://leibnizproject.com/Articles/deterministic_stochastic_physics.html)).
 --MATH_END--
 
-[//]: # Rocq (12-19)
+[//]: # Rocq (14-21)
 
 
 ## Conflicts
@@ -36,7 +36,7 @@ $\mathbf{Definition}$\
 The set $GP$ of action profiles is $G^I$.
 --MATH_END--
 
-[//]: # Rocq (21-22)
+[//]: # Rocq (23-24)
 
 A conflict arises when not everyone can achieve its goal.
 
@@ -45,7 +45,7 @@ $\mathbf{Definition}$\
 All the goals of $gp \in GP$ can be achieved if $\exists h \in H$ compatible with the laws of physics in which all the individual goals of $gp$ are achieved.
 --MATH_END--
 
-[//]: # Rocq (24-28)
+[//]: # Rocq (26-30)
 
 Someone wins a conflict when its goal is achieved. There may be more than one individual who achieves its goal.
 
@@ -55,7 +55,7 @@ An individual $i \in I$ can win a conflict relative to goals $gp \in GP$ if all 
 An individual $i \in I$ can't win a conflict relative to goals $gp \in GP$ if all the goals of $gp$ can't be achieved and $i$'s goal $gp(i)$ can't either.
 --MATH_END--
 
-[//]: # Rocq (30-42)
+[//]: # Rocq (32-44)
 
 
 ## Following one's ethic
@@ -66,7 +66,7 @@ Everyone follows its ethic in a history $h \in H$ for an ehtical profile $ep$ at
 And everyone always follows its ethic in $h$ for $ep$ if $\forall t \in T$ everyone follows its ethic in $h$ for $ep$ at time $t$.
 --MATH_END--
 
-[//]: # Rocq (44-74)
+[//]: # Rocq (46-76)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -75,7 +75,7 @@ All the goals of $gp \in GP$ can be achieved according to $ep \in EP$ if there i
 - Everyone always follows its ethic in $h$ for $ep$
 --MATH_END--
 
-[//]: # Rocq (76-81)
+[//]: # Rocq (78-83)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -84,7 +84,7 @@ An individual $i \in I$ can achieve a goal $g \in G$ according to $ep \in EP$ if
 - Everyone always follows its ethic in $h$ for $ep$
 --MATH_END--
 
-[//]: # Rocq (83-89)
+[//]: # Rocq (85-91)
 
 
 ## Restrictiveness and conflict achieving
@@ -97,7 +97,7 @@ An individual $i \in I$ can win a conflict relative to goals $gp \in GP$ accordi
 And it can't win a conflict relative to goals $gp \in GP$ according to $ep \in EP$ if not all the goals of $gp$ can be achieved according to $ep$ and $i$ can't achieve its goal $gp(i)$ according to $ep$.
 --MATH_END--
 
-[//]: # Rocq (91-103)
+[//]: # Rocq (93-105)
 
 Winning a conflict ethically means here winning a conflict while everyone follows its own ethic.
 
@@ -116,7 +116,7 @@ And so does $i$ because $ep(i)$ is more restrictive than $e$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (105-155)
+[//]: # Rocq (107-158)
 
 Winning a conflict ethically means here winning a conflict while everyone follows its own ethic.
 
@@ -130,4 +130,4 @@ By definition of winning a conflict, we have $i$ who can achieve its goal $gp(i)
 ■
 --MATH_END--
 
-[//]: # Rocq (157-177)
+[//]: # Rocq (160-180)

@@ -49,28 +49,4 @@ Definition everyone_always_same_ethic (ethical_profile : EthicalProfile) : Prop 
   forall (subjective_state : SubjectiveState),
     everyone_same_ethic ethical_profile subjective_state.
 
-Definition coincide_for_all_but (ep1 ep2 : EthicalProfile)
-(i : Individual) : Prop :=
-  forall (j : Individual), j <> i -> ep1 j = ep2 j.
-
-Definition replace_individual_ethic (ep : EthicalProfile) (i : Individual)
-(ethic : IndividualEthic) : EthicalProfile :=
-  fun (j : Individual) => if j == i then ethic else ep j.
-
-Lemma replace_individual_coincide_for_all_but (ep : EthicalProfile)
-(i : Individual) (ethic : IndividualEthic) :
-  coincide_for_all_but ep (replace_individual_ethic ep i ethic) i.
-Proof.
-  unfold coincide_for_all_but. intro.
-  unfold replace_individual_ethic.
-  intro.
-  destruct (j == i) eqn:Eji.
-  {
-    exfalso. apply H.
-    rewrite <- eq_opE.
-    rewrite Eji. intuition.
-  }
-  { reflexivity. }
-Qed.
-
 End ethics_in_society.

@@ -1,4 +1,5 @@
 
+Require Import Classical.
 Require Import Logic.FunctionalExtensionality.
 From mathcomp Require Import all_ssreflect.
 
@@ -6,6 +7,38 @@ Lemma eq_mathcomp_equivalent {T : eqType} (m n : T) :
   m == n = true <-> m = n.
 Proof.
   split; intro; by apply/eqP.
+Qed.
+
+Definition replace {A: eqType} {B : A -> Type}
+(before_replace : forall a : A, B a) (a : A) (b : B a) :
+  forall a : A, B a.
+Proof.
+  intro.
+  pose proof (eq_comparable a a0).
+  unfold decidable in H.
+  destruct H.
+  - rewrite <- e. exact b.
+  - exact (before_replace a0).
+Defined.
+
+Lemma replace_changes {A: eqType} {B : A -> Type}
+(before_replace : forall a : A, B a) (a : A) (b : B a) :
+  replace before_replace a b a = b.
+Proof.
+  unfold replace.
+  destruct (eq_comparable (T:=A) a a).
+  - rewrite <- eq_rect_eq. reflexivity.
+  - exfalso. apply n. reflexivity.
+Qed.
+
+Lemma replace_unchanges {A: eqType} {B : A -> Type}
+(before_replace : forall a : A, B a) (a a' : A) (b : B a) (Eaa' : a <> a') :
+  replace before_replace a b a' = before_replace a'.
+Proof.
+  unfold replace.
+  destruct (eq_comparable (T:=A) a a').
+  - tauto.
+  - reflexivity.
 Qed.
 
 Definition pair {T : eqType} (x y : T) : pred T :=

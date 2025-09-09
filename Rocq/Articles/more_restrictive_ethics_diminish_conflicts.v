@@ -1,7 +1,8 @@
 
-Require Import Classical_Pred_Type.
+Require Import Classical.
 From mathcomp Require Import all_ssreflect.
 
+Require Import eqType_facts.
 Require Import ethics_first_steps.
 Require Import every_ethic_without_dead_end_is_utilitarian.
 Require Import ethics_in_society.
@@ -75,20 +76,25 @@ Proposition more_restrictive_ethic_diminishes_conflicts (ep : EthicalProfile)
 (ethic : @IndividualEthic State Action Individual) (state : State) :
   more_restrictive (ep i) ethic (get_SubjectiveState state i) ->
   conflict ep ap state ->
-  conflict (replace_individual_ethic ep i ethic) ap state.
+  conflict (replace ep i ethic) ap state.
 Proof.
   intros. unfold conflict in *.
   destruct H0. split.
   { apply H0. }
-  intro. unfold replace_individual_ethic.
-  destruct (i0 == i) eqn:H2.
-  2: { apply H1. }
-  assert (i0 = i).
-  { by apply/eqP. }
-  rewrite H3.
-  unfold more_restrictive in H. pose proof (H (ap i)).
-  apply H4.
-  apply H1.
+  intro.
+  assert (i0 = i \/ i0 <> i). { apply classic. }
+  destruct H2.
+  {
+    rewrite H2.
+    unfold more_restrictive in H. pose proof (H (ap i)).
+    rewrite replace_changes.
+    apply H3. apply H1.
+  }
+  {
+    rewrite replace_unchanges.
+    { apply H1. }
+    { intro. rewrite H3 in H2. apply H2. reflexivity. }
+  }
 Qed.
 
 Proposition more_restrictive_ethic_strictly_diminishes_conflicts (state : State)
@@ -98,7 +104,7 @@ Proposition more_restrictive_ethic_strictly_diminishes_conflicts (state : State)
   (ethic : @IndividualEthic State Action Individual),
     strictly_more_restrictive (ep i) ethic (get_SubjectiveState state i) /\
     ~ conflict ep ap state /\
-    conflict (replace_individual_ethic ep i ethic) ap state.
+    conflict (replace ep i ethic) ap state.
 Proof.
   intro. unfold with_constraints in H. destruct H as [ap].
   exists (ap).
@@ -142,8 +148,18 @@ Proof.
   { tauto. }
   {
     intro.
-    unfold replace_individual_ethic.
-    destruct (i0 == i) ; reflexivity.
+    assert (i0 = i \/ i0 <> i). { apply classic. }
+    destruct H0.
+    { rewrite H0. rewrite replace_changes. reflexivity. }
+    {
+      rewrite replace_unchanges.
+      {
+        assert (i0 == i = false).
+        { by apply/eqP. }
+        rewrite H1. reflexivity.
+      }
+      { intro. rewrite H1 in H0. apply H0. reflexivity. }
+    }
   }
 Qed.
 

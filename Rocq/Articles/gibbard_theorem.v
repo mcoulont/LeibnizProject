@@ -30,42 +30,10 @@ Definition StrategyProfile : Type := forall (i : Individual), Strategies i.
 
 Definition GameForm : Type := StrategyProfile -> Outcome.
 
-Definition replace_individual_strategy (sp : StrategyProfile) (i : Individual)
-(strategy : Strategies i) :
-  StrategyProfile.
-Proof.
-  unfold StrategyProfile. intro j.
-  pose proof (eq_comparable i j).
-  unfold decidable in H.
-  destruct H.
-  - rewrite <- e. exact strategy.
-  - exact (sp j).
-Defined.
-
-Lemma replace_individual_strategy_changes (sp : StrategyProfile)
-(i : Individual) (strategy : Strategies i) :
-  replace_individual_strategy sp i strategy i = strategy.
-Proof.
-  unfold replace_individual_strategy.
-  destruct (eq_comparable (T:=Individual) i i).
-  - rewrite <- eq_rect_eq. reflexivity.
-  - exfalso. apply n. reflexivity.
-Qed.
-
-Lemma replace_individual_strategy_unchanges (sp : StrategyProfile)
-(i j : Individual) (strategy : Strategies i) (Eij : i <> j) :
-  replace_individual_strategy sp i strategy j = sp j.
-Proof.
-  unfold replace_individual_strategy.
-  destruct (eq_comparable (T:=Individual) i j).
-  - tauto.
-  - reflexivity.
-Qed.
-
 Definition dominant {k : Individual} (strategy : Strategies k)
 (po : PreferenceOrder Outcome) (gf : GameForm) : Prop :=
   forall (sp : StrategyProfile), non_strict po (
-    gf (replace_individual_strategy sp k strategy)
+    gf (replace sp k strategy)
   ) (gf sp).
 
 Definition straightforward (gf : GameForm) : Prop :=
@@ -802,27 +770,6 @@ Qed.
 Definition IndividualRank : finType :=
   fintype_ordinal__canonical__eqtype_SubType #|[eta Individual]|.
 
-Definition replace_strategies_until (n : nat)
-(sp1 sp2 : StrategyProfile) : StrategyProfile :=
-  fun (i : Individual) =>
-  if (enum_rank i < n) then sp2 i else sp1 i.
-
-Lemma replace_0_strategy (sp1 sp2 : StrategyProfile) :
-  replace_strategies_until 0 sp1 sp2 = sp1.
-Proof.
-  unfold replace_strategies_until.
-  apply functional_extensionality_dep. intro.
-  rewrite ltn0. reflexivity.
-Qed.
-
-Lemma replace_all_strategies (sp1 sp2 : StrategyProfile) :
-  replace_strategies_until #|Individual| sp1 sp2 = sp2.
-Proof.
-  unfold replace_strategies_until.
-  apply functional_extensionality_dep. intro.
-  rewrite max_enum_rank. reflexivity.
-Qed.
-
 Lemma assertion_1 {gf : GameForm} (straightforward_gf : straightforward gf)
 (inh : 0 < #|Individual|) (pp : @PreferenceProfile Outcome Individual)
 (sp : StrategyProfile) (x y : Outcome) (Exy : x <> y) :
@@ -846,27 +793,27 @@ Proof.
   clear H4.
   assert (
     x = gf (
-      replace_strategies_until 0 sp (
+      replace_until 0 sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
       )
     )
   ).
-  { rewrite replace_0_strategy. exact H2. }
+  { rewrite replace_none. exact H2. }
   assert (
     x <> gf (
-      replace_strategies_until #|Individual| sp (
+      replace_until #|Individual| sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
       )
     )
   ).
-  { rewrite replace_all_strategies. exact H1. }
+  { rewrite replace_all. exact H1. }
   assert (Minimization_Property (
     fun (k : nat) => x <> gf (
-      replace_strategies_until k sp (
+      replace_until k sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
@@ -918,14 +865,14 @@ Proof.
   }
   assert (
     (
-      gf (replace_strategies_until k sp (
+      gf (replace_until k sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
       )) = y /\
       strict (pp (enum_val (Ordinal H12))) y x
     ) \/ (
-      gf (replace_strategies_until k sp (
+      gf (replace_until k sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
@@ -936,7 +883,7 @@ Proof.
   { tauto. }
   assert (
     gf (
-      replace_strategies_until k.-1 sp (
+      replace_until k.-1 sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
@@ -967,12 +914,12 @@ Proof.
       rewrite <- H14 in H16.
       rewrite <- H15 in H16 at 2.
       assert (
-        replace_strategies_until k.-1 sp (
+        replace_until k.-1 sp (
           dominant_strategies_profile straightforward_gf (
             remove_indifference_PreferenceProfile pp (pair y x)
           )
-        ) = replace_individual_strategy (
-          replace_strategies_until k sp (
+        ) = replace (
+          replace_until k sp (
             dominant_strategies_profile straightforward_gf (
               remove_indifference_PreferenceProfile pp (pair y x)
             )
@@ -984,7 +931,7 @@ Proof.
         )
       ).
       {
-        unfold replace_strategies_until.
+        unfold replace_until.
         apply functional_extensionality_dep. intro.
         destruct (enum_rank x0 < k.-1) eqn:Hx0k.
         {
@@ -997,7 +944,7 @@ Proof.
             simpl in Hx0k.
             apply Nat.lt_irrefl with (x:=k.-1). exact Hx0k.
           }
-          rewrite replace_individual_strategy_unchanges.
+          rewrite replace_unchanges.
           2: { exact H17. }
           assert (enum_rank x0 < k = true).
           {
@@ -1026,7 +973,7 @@ Proof.
                 reflexivity.
               }
               rewrite H17.
-              rewrite replace_individual_strategy_changes.
+              rewrite replace_changes.
               reflexivity.
             }
             {
@@ -1059,7 +1006,7 @@ Proof.
             }
             assert (enum_val (Ordinal H12) <> x0).
             { intuition. }
-            rewrite replace_individual_strategy_unchanges.
+            rewrite replace_unchanges.
             2: { exact H18. }
             destruct (enum_rank x0 < k) eqn:Ex0k.
             {
@@ -1081,7 +1028,7 @@ Proof.
       ).
       {
         unfold dominant. intro.
-        specialize (H18 (replace_strategies_until k sp (
+        specialize (H18 (replace_until k sp (
           dominant_strategies_profile straightforward_gf (
             remove_indifference_PreferenceProfile pp (pair y x)
           )
@@ -1107,7 +1054,7 @@ Proof.
     strict (
       remove_indifference_PreferenceProfile pp (pair y x) (enum_val (Ordinal H12))
     ) x (gf (
-      replace_strategies_until k sp (
+      replace_until k sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
@@ -1116,12 +1063,12 @@ Proof.
   ).
   {
     assert (
-      gf (replace_strategies_until k sp (
+      gf (replace_until k sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
       )) = y \/
-      gf (replace_strategies_until k sp (
+      gf (replace_until k sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
@@ -1153,7 +1100,7 @@ Proof.
       { apply pair_snd. }
       unfold negb.
       destruct (pair y x (gf (
-        replace_strategies_until k sp (
+        replace_until k sp (
           dominant_strategies_profile straightforward_gf (
             remove_indifference_PreferenceProfile pp (pair y x)
           )
@@ -1170,12 +1117,12 @@ Proof.
   }
   rewrite <- H15 in H16 at 2.
   assert (
-    replace_strategies_until k sp (
+    replace_until k sp (
       dominant_strategies_profile straightforward_gf (
         remove_indifference_PreferenceProfile pp (pair y x)
       )
-    ) = replace_individual_strategy (
-      replace_strategies_until k.-1 sp (
+    ) = replace (
+      replace_until k.-1 sp (
         dominant_strategies_profile straightforward_gf (
           remove_indifference_PreferenceProfile pp (pair y x)
         )
@@ -1189,7 +1136,7 @@ Proof.
     )
   ).
   {
-    unfold replace_strategies_until.
+    unfold replace_until.
     apply functional_extensionality_dep. intro.
     destruct (enum_rank x0 < k.-1) eqn:Hx0k.
     {
@@ -1202,7 +1149,7 @@ Proof.
         simpl in Hx0k.
         apply Nat.lt_irrefl with (x:=k.-1). exact Hx0k.
       }
-      rewrite replace_individual_strategy_unchanges.
+      rewrite replace_unchanges.
       2: { exact H17. }
       assert (enum_rank x0 < k = true).
       {
@@ -1232,7 +1179,7 @@ Proof.
             reflexivity.
           }
           rewrite H17.
-          rewrite replace_individual_strategy_changes.
+          rewrite replace_changes.
           reflexivity.
         }
         {
@@ -1263,7 +1210,7 @@ Proof.
           apply Arith_base.lt_pred_n_n_stt.
           exact H10.
         }
-        rewrite replace_individual_strategy_unchanges.
+        rewrite replace_unchanges.
         2: { exact H18. }
         rewrite <- lt_mathcomp_equivalent_not in Hx0k. rewrite Hx0k.
         reflexivity.
@@ -1284,7 +1231,7 @@ Proof.
   ).
   {
     unfold dominant. intro.
-    specialize (H18 (replace_strategies_until k.-1 sp (
+    specialize (H18 (replace_until k.-1 sp (
       dominant_strategies_profile straightforward_gf (
         remove_indifference_PreferenceProfile pp (pair y x)
       )
@@ -1568,10 +1515,10 @@ Proof.
       unfold strictly_preferred_when_dominant_strategies in H11.
       tauto.
     }
-    assert (y = x \/ y <> x). { apply lem. }
+    assert (y = x \/ y <> x). { apply classic. }
     destruct H13.
     { rewrite H13. rewrite H13 in H11. right. exact H11. }
-    assert (y = z \/ y <> z). { apply lem. }
+    assert (y = z \/ y <> z). { apply classic. }
     destruct H14.
     { rewrite -> H14 at 2. left. exact H11. }
     assert (
@@ -1623,7 +1570,7 @@ Proof.
       x <> outcome_when_dominant_strategies straightforward_gf (
         remove_indifference_PreferenceProfile pp (triple x y z)
       )
-    ). { apply lem. }
+    ). { apply classic. }
     destruct H18.
     {
       left.
@@ -1967,7 +1914,7 @@ Definition manipulable (vs : VotingScheme) : Prop :=
   exists (k : Individual) (pp : @PreferenceProfile Alternative Individual)
   (true_po : PreferenceOrder Alternative),
     strict true_po (vs pp) (vs (
-      replace_individual_strategy pp k true_po
+      replace pp k true_po
     )).
 
 Corollary GibbardSatterthwaite : forall (vs : VotingScheme),

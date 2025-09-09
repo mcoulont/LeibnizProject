@@ -28,7 +28,8 @@ Throughout this section, let $I$ the finite set of individuals (voters) of a soc
 
 --MATH_START--
 $\mathbf{Definition}$\
-A strategy profile is an element of $\bigtimes_{i \in I} S_i$.
+A strategy profile is an element of $\bigtimes_{i \in I} S_i$. \
+Being given ${\vec s}$ a strategy profile, $i$ an individual and $s \in S_i$, ${\vec s}_{i/s}$ is the strategy profile obtained by replacing ${\vec s}_i$ with $s$ in ${\vec s}$.
 --MATH_END--
 
 [//]: # Rocq (29-29)
@@ -40,13 +41,6 @@ A game form is a function of $\bigtimes_{i \in I} S_i \rightarrow X$.
 
 [//]: # Rocq (31-31)
 
---MATH_START--
-$\mathbf{Definition}$\
-Being given ${\vec s}$ a strategy profile, $i$ an individual and $s \in S_i$, ${\vec s}_{i/s}$ is the strategy profile obtained by replacing ${\vec s}_i$ with $s$ in ${\vec s}$.
---MATH_END--
-
-[//]: # Rocq (33-63)
-
 A vote is said dominant when it defends the best its opinions regardless of the other votes.
 
 --MATH_START--
@@ -56,14 +50,14 @@ least as high in preference ordering as does any other, that is:
 $$\forall \vec s \in \bigtimes_{i \in I} S_i \text{ such that } {\vec s}_i = t, g({\vec s}_{k/t}) R g(\vec s)$$
 --MATH_END--
 
-[//]: # Rocq (65-69)
+[//]: # Rocq (33-37)
 
 --MATH_START--
 $\mathbf{Definition}$\
 A game form is straightforward if every player has a dominant strategy, whatever its preference order.
 --MATH_END--
 
-[//]: # Rocq (71-74)
+[//]: # Rocq (39-42)
 
 A voter is said omnipotent if its vote can decide the issue of the election, regardless of the other votes. We deviate from the term "dictator" used by Gibbard in order to stand out from the "dictator" of [Arrow's theorem](https://www.leibnizproject.com/Articles/arrow_theorem.html), which is analog but different.
 
@@ -74,7 +68,7 @@ strategy $\vec s(x)$ for k such that $g(\vec s) = x$ whenever ${\vec s}_k = \vec
 A game form $g$ admits an omnipotent player if one of the $k \in I$ is omnipotent for $g$.
 --MATH_END--
 
-[//]: # Rocq (76-93)
+[//]: # Rocq (44-61)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -83,7 +77,7 @@ For each $\vec P$ giving a preference order for each individual, let $\sigma(\ve
 Then let $v$ will be the composition of $g$ and $\sigma$, so that $\forall \vec P, v(\vec P) = g(\sigma(\vec P))$.
 --MATH_END--
 
-[//]: # Rocq (95-126)
+[//]: # Rocq (63-94)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -99,7 +93,7 @@ For each $i \in I$ we have defined a two-place relation $P_i * Z$ between member
 Let $\vec P * Z = (P_i * Z)_{i \in I}$.
 --MATH_END--
 
-[//]: # Rocq (128-433)
+[//]: # Rocq (96-401)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }(i)}$\
@@ -110,7 +104,7 @@ Immediate by case analysis. \
 ■
 --MATH_END--
 
-[//]: # Rocq (435-488)
+[//]: # Rocq (403-456)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }(ii)}$\
@@ -121,7 +115,7 @@ Immediate by case analysis. \
 ■
 --MATH_END--
 
-[//]: # Rocq (490-597)
+[//]: # Rocq (458-565)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }(iii)}$\
@@ -134,7 +128,7 @@ Immediate by case analysis. \
 ■
 --MATH_END--
 
-[//]: # Rocq (599-666)
+[//]: # Rocq (567-634)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -142,7 +136,7 @@ If $g$ is a straightforward game form and $\vec P$ a preference profile, let $f(
 $$x \neq y \text{ and } x = v(\vec P * \{x, y\})$$
 --MATH_END--
 
-[//]: # Rocq (668-730)
+[//]: # Rocq (636-698)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }(pairwise\text{ }determination)}$\
@@ -158,7 +152,7 @@ which is to say $x f(\vec P) y \Leftrightarrow x (\vec {P'}) y$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (732-800)
+[//]: # Rocq (700-768)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -179,7 +173,7 @@ $$\vec {s}^2=(\vec {t}_1, \vec {t}_2, \vec {s'}_3, ...,\vec {s'}_n)$$
 and so forth.
 --MATH_END--
 
-[//]: # Rocq (802-824)
+[//]: # Rocq (770-771)
 
 --MATH_START--
 $\mathbf{Assertion\text{ }1}$\
@@ -209,7 +203,7 @@ Since by (4b), $\neg x I_k y$, the two cases exhaust the possibilities.Therefore
 ■
 --MATH_END--
 
-[//]: # Rocq (826-1306)
+[//]: # Rocq (773-1253)
 
 --MATH_START--
 $\mathbf{Corollary\text{ }1}$\
@@ -222,7 +216,7 @@ Therefore (4c) is false, and $x f(\vec P) y$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (1308-1358)
+[//]: # Rocq (1255-1305)
 
 --MATH_START--
 $\mathbf{Corollary\text{ }2}$\
@@ -236,7 +230,7 @@ Thus since $g(\vec {s'}) = g(\sigma(\vec P)) = v(\vec P)$, we have $v(\vec P) \n
 ■
 --MATH_END--
 
-[//]: # Rocq (1360-1389)
+[//]: # Rocq (1307-1336)
 
 --MATH_START--
 $\mathbf{Corollary\text{ }3}$\
@@ -247,7 +241,7 @@ This is the contrapositive of Corollary 2. \
 ■
 --MATH_END--
 
-[//]: # Rocq (1391-1406)
+[//]: # Rocq (1338-1353)
 
 --MATH_START--
 $\mathbf{Assertion\text{ }2}$\
@@ -286,7 +280,7 @@ Since $x f(\vec {P'}) z$, by Corollary 2 to Assertion 1, $z \neq v(\vec {P'})$. 
 ■
 --MATH_END--
 
-[//]: # Rocq (1408-1758)
+[//]: # Rocq (1355-1705)
 
 --MATH_START--
 $\mathbf{Assertion\text{ }3}$\
@@ -302,7 +296,7 @@ Therefore, since the Arrow theorem says that no social welfare function satisfie
 ■
 --MATH_END--
 
-[//]: # Rocq (1760-1821)
+[//]: # Rocq (1707-1768)
 
 --MATH_START--
 $\mathbf{Assertion\text{ }4}$\
@@ -322,7 +316,7 @@ We have shown, then, that if $s(y) = \sigma_k(P^y)$, then (6) is satisfied. Thus
 ■
 --MATH_END--
 
-[//]: # Rocq (1823-1924)
+[//]: # Rocq (1770-1871)
 
 --MATH_START--
 $\mathbf{Gibbard's\text{ }theorem}$\
@@ -334,7 +328,7 @@ By Arrow's theorem together with Assertion 3, $f$ admits a dictator, which is om
 ■
 --MATH_END--
 
-[//]: # Rocq (1926-1949)
+[//]: # Rocq (1873-1896)
 
 
 ## Gibbard-Satterthwaite theorem
@@ -346,7 +340,7 @@ Throughout this section, let $I$ the finite set of individuals (voters) of a soc
 The strategies are prefence orders on the set of alternatives (for every voter).
 --MATH_END--
 
-[//]: # Rocq (1955-1964)
+[//]: # Rocq (1902-1911)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -355,7 +349,7 @@ $$v(\vec {P'}) P_k v(\vec {P})$$
 For, then, if $P_k$ is $k$'s real preference ordering, given the way the others vote, $k$ prefers the result of expressing preference ordering $P'_k$ to that of expressing $P_k$.
 --MATH_END--
 
-[//]: # Rocq (1966-1971)
+[//]: # Rocq (1913-1918)
 
 --MATH_START--
 $\mathbf{Gibbard-Satterthwaite\text{ }theorem}$\
@@ -369,7 +363,7 @@ But since $v(\vec P) \in X$ and $v(\vec {P}_{k/P^*}) \in X$, from (2), $v(\vec P
 ■
 --MATH_END--
 
-[//]: # Rocq (1973-2013)
+[//]: # Rocq (1920-1960)
 
 
 ## An illustrative example

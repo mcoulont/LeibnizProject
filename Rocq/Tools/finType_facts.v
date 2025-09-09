@@ -212,3 +212,16 @@ Proof.
     }
   }
 Qed.
+
+Definition replace_until {A: finType} {B : A -> Type}
+(n : nat) (profile1 profile2 : forall a : A, B a) : forall a : A, B a :=
+  fun (a : A) => if (enum_rank a < n) then profile2 a else profile1 a.
+
+Lemma replace_none {A: finType} {B : A -> Type}
+(profile1 profile2 : forall a : A, B a) :
+  replace_until 0 profile1 profile2 = profile1.
+Proof.
+  unfold replace_until.
+  apply functional_extensionality_dep. intro.
+  rewrite ltn0. reflexivity.
+Qed.

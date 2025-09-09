@@ -19,7 +19,7 @@ One relies on [this article](https://leibnizproject.com/Articles/ethics_in_socie
 Throughout this page, let $I$ be the finite set of individuals of a society, $S$ be the set of states, $A$ be the set of actions, $SubjS = S × I$ be the set of subjective states and $E = \{⊤, ⊥\}^{SubjS \times A}$ the set of ethics.
 --MATH_END--
 
-[//]: # Rocq (11-13)
+[//]: # Rocq (12-14)
 
 
 ## Feasability
@@ -37,7 +37,7 @@ $\mathbf{Definition}$\
 $feasible$ is said to involve constraints in $s$ if $\exists (a_i) \in A^I, \neg feasible(s, (a_i))$.
 --MATH_END--
 
-[//]: # Rocq (14-26)
+[//]: # Rocq (15-27)
 
 
 ## Conflicts
@@ -59,7 +59,7 @@ As $i$ follows its own ethic, there is an $a \in A$ such that $e_i((s, i), a_i)$
 ■
 --MATH_END--
 
-[//]: # Rocq (28-41)
+[//]: # Rocq (29-42)
 
 A conflict occurs when not every individual (following its own ethic) can do the action (s)he wants.
 
@@ -78,7 +78,7 @@ $$\begin{cases*}
 \end{cases*}$$
 --MATH_END--
 
-[//]: # Rocq (43-51)
+[//]: # Rocq (44-52)
 
 Conflict (and the absence of conflict) presuppose that everyone follows its own ethic, which is possible only if no one is an ethical dead end.
 
@@ -93,7 +93,7 @@ In both cases, everyone follows its own ethic by definition, and we conclude wit
 ■
 --MATH_END--
 
-[//]: # Rocq (53-71)
+[//]: # Rocq (54-72)
 
 
 ## More restrictive individual ethics diminish the risk of conflicts
@@ -112,7 +112,7 @@ We can cconclude that $s, (e_i)_{j/e}, (a_i)$ conflict. \
 ■
 --MATH_END--
 
-[//]: # Rocq (73-92)
+[//]: # Rocq (74-98)
 
 And if not everything is feasible, one can create a conflict by unrestricting a single individual ethic.
 
@@ -140,4 +140,4 @@ Now, $(e_i)_{j/e}((s, i), a) = ⊤ \text{ } \forall (s, i) \in SubjS, a \in A$, 
 ■
 --MATH_END--
 
-[//]: # Rocq (94-148)
+[//]: # Rocq (100-164)

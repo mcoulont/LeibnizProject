@@ -1,7 +1,9 @@
 
 From mathcomp Require Import all_ssreflect.
 From mathcomp.classical Require Import boolp.
+Require Import Classical.
 
+Require Import eqType_facts.
 Require Import ethics_first_steps.
 Require Import ethics_in_society.
 Require Import deterministic_stochastic_physics.
@@ -113,7 +115,7 @@ Lemma ethic_restricts_goal_achieving_with_ethics (i : Individual)
   ) ->
   can_achieve_with_ethics i (goals i) ethical_profile ->
   can_achieve_with_ethics i (goals i) (
-    replace_individual_ethic ethical_profile i (
+    replace ethical_profile i (
       relaxed_ethic
     )
   ).
@@ -137,17 +139,18 @@ Proof.
     specialize (H t). specialize (H (history t).1).
     unfold more_restrictive in H.
     specialize (H (history t).2).
-    unfold replace_individual_ethic.
-    destruct (i0 == i) eqn:Ei0i.
+    assert (i0 = i \/ i0 <> i). { apply classic. }
+    destruct H3.
     {
-      assert (i0 == i).
-      { intuition. }
-      rewrite eq_opE in H3.
-      rewrite H3. apply H.
+      rewrite H3.
+      rewrite replace_changes.
+      apply H.
       specialize (H2 i t).
       exact H2.
     }
     {
+      rewrite replace_unchanges.
+      2: { intro. rewrite H4 in H3. apply H3. reflexivity. }
       specialize (H2 i0). specialize (H2 t).
       exact H2.
     }
@@ -165,7 +168,7 @@ Lemma ethic_restricts_conflict_winning (i : Individual)
   ) ->
   can_win_conflict_with_ethics i ethical_profile goals ->
   can_achieve_with_ethics i (goals i) (
-    replace_individual_ethic ethical_profile i (
+    replace ethical_profile i (
       relaxed_ethic
     )
   ).
