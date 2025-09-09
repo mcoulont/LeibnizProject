@@ -16,6 +16,45 @@ START_MATH_BLOCK = "<div class='math-block'>"
 END_MATH_BLOCK = "</div>"
 
 
+def check_first_last_lines(
+	code_occurrence,
+	lines: list[str],
+	basename: str,
+	extension_code_file
+) -> None:
+	try:
+		if lines[
+			int(code_occurrence.group(1)) - 1
+		].lstrip('\\s').startswith('\n'):
+			print(
+				"Error: in " + basename + " the line n°" +
+				code_occurrence.group(1) +
+				" starts with a space and initiates a code block\n",
+        		file=sys.stderr
+			)
+			exit(1)
+
+		if lines[
+			int(code_occurrence.group(2)) - 1
+		].lstrip('\\s').startswith('\n'):
+			print(
+				"Error: in " + basename + " the line n°" +
+				code_occurrence.group(2) +
+				" starts with a space and ends a code block\n",
+        		file=sys.stderr
+			)
+			exit(1)
+
+	except Exception:
+		print(
+			"Error while getting lines " + code_occurrence.group(1) + "-" +
+			code_occurrence.group(2) + " in " + basename + "." +
+			extension_code_file + ":\n",
+			file=sys.stderr
+		)
+		raise
+
+
 if __name__ == "__main__":
 	file_article_md = sys.argv[1]
 	folder_rocq = sys.argv[2]
@@ -23,7 +62,10 @@ if __name__ == "__main__":
 
 
 	if not file_article_md.endswith(SUFFIXE_MARKDOWN):
-		print(file_article_md + " should be a Markdown file")
+		print(
+			file_article_md + " should be a Markdown file\n",
+			file=sys.stderr
+		)
 		exit(1)
 
 
@@ -46,6 +88,13 @@ if __name__ == "__main__":
 		).readlines()
 
 		for rocq_occurrence in finditer(REGEX_ROCQ_INSERTION, article_md):
+			check_first_last_lines(
+				rocq_occurrence,
+				rocq_lines,
+				basename,
+				"v"
+			)
+
 			article_md = article_md.replace(
 				rocq_occurrence.group(0),
 				'```\n' + TOKEN_ROCQ_CODE +
@@ -62,6 +111,13 @@ if __name__ == "__main__":
 		).readlines()
 
 		for lean_occurrence in finditer(REGEX_LEAN_INSERTION, article_md):
+			check_first_last_lines(
+				lean_occurrence,
+				lean_lines,
+				basename,
+				"lean"
+			)
+
 			article_md = article_md.replace(
 				lean_occurrence.group(0),
 				'```\n' + TOKEN_LEAN_CODE +

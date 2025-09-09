@@ -74,8 +74,12 @@ for occurrence_article_basename in finditer(
 articles = order_articles(articles_in_rocq, articles_in_lean)
 
 if contains_duplicate(articles):
-    print("Error: the list of articles contains duplicate values")
-    print(articles)
+    print(
+        "Error: the list of articles contains duplicate values",
+        articles,
+        '\n',
+        file=sys.stderr
+    )
     exit(1)
 
 for article_basename in articles:

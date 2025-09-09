@@ -78,7 +78,8 @@ if __name__ == "__main__":
 							res_search_object[3] + " in " +
 							rocq_object_to_article[res_search_object[3]] +
 							" and " + html_article +
-							" (we try to avoid this)"
+							" (we try to avoid this)\n",
+							file=sys.stderr
 						)
 						exit(1)
 
@@ -110,7 +111,8 @@ if __name__ == "__main__":
 							res_search_object[3] + " in " +
 							str(rocq_object_to_tool[res_search_object[3]]) +
 							" and " + str(ToolLine(rocq_tool, line_number)) +
-							" (we try to avoid this)"
+							" (we try to avoid this)\n",
+							file=sys.stderr
 						)
 						exit(1)
 
