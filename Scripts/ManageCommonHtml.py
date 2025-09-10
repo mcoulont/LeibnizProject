@@ -12,13 +12,17 @@ TOKEN_LINKS_PROVERS = "--links_provers--"
 TOKEN_SWITCH_PROVER = "--switch_prover--"
 TOKEN_ARTICLE = "$article$"
 TOKEN_CODE_TAGS = "<pre><code>"
+TOKEN_HEART = '<div class="heart">'
 
 
 if __name__ == "__main__":
-	file_template_link_index = sys.argv[1]
-	file_template_links_provers = sys.argv[2]
-	file_template_switch_prover = sys.argv[3]
-	basename_without_extension = sys.argv[4]
+	basename_without_extension = sys.argv[1]
+	file_template_link_index = sys.argv[2]
+	file_template_links_provers = sys.argv[3]
+	file_template_switch_prover = sys.argv[4]
+	file_template_switch_visibility_math_code = sys.argv[5]
+	file_template_image_rocq = sys.argv[6]
+	file_template_image_lean = sys.argv[7]
 	html_article = sys.stdin.read()
 
 
@@ -44,14 +48,14 @@ if __name__ == "__main__":
 		template_switch_prover
 	).replace(
 		TOKEN_CODE_TAGS + TOKEN_ROCQ_CODE,
-		"""<pre class='code-block rocq-code'>
-		<img src='../Images/Rocq_logo.ico' height='20' width='20' title='Rocq code' class='prover-icon'>
-		<code>"""
+		open(file_template_image_rocq, encoding="utf-8").read()
 	).replace(
 		TOKEN_CODE_TAGS + TOKEN_LEAN_CODE,
-		"""<pre class='code-block lean-code'>
-		<img src='../Images/Lean_logo.jpg' height='20' width='20' title='Lean4 code' class='prover-icon'>
-		<code>"""
+		open(file_template_image_lean, encoding="utf-8").read()
+	).replace(
+		TOKEN_HEART,
+		TOKEN_HEART +
+		open(file_template_switch_visibility_math_code, encoding="utf-8").read()
 	)
 
 

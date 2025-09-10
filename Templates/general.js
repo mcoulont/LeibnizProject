@@ -1,9 +1,19 @@
 
+// Initialization
+
 if (
-    localStorage.getItem("prover") != "Lean4" ||
-    ! leanIsUsed()
+    ! leanIsUsed() ||
+    localStorage.getItem("prover") != "Lean4"
 ) {
     localStorage.setItem("prover", "Rocq");
+}
+
+if (localStorage.getItem("showMath") != "false") {
+    localStorage.setItem("showMath", "true");
+}
+
+if (localStorage.getItem("showCode") != "false") {
+    localStorage.setItem("showCode", "true");
 }
 
 if (rocqIsUsed() && leanIsUsed()) {
@@ -30,19 +40,27 @@ if (rocqIsUsed() && leanIsUsed()) {
     setDisplay("switch-prover", "none");
 }
 
+const buttonShowMath = document.getElementById("switch-visibility-math");
+const buttonShowCode = document.getElementById("switch-visibility-code");
+
+buttonShowMath.onclick = switchShowMath;
+buttonShowCode.onclick = switchShowCode;
+
 refreshDisplay();
 
+
+// Getters
 
 function getProver() {
     return localStorage.getItem("prover");
 }
 
-function getOtherProver() {
-    if (proverIsRocq()) {
-        return "Lean4";
-    } else {
-        return "Rocq";
-    }
+function mathIsShown() {
+    return "true" == localStorage.getItem("showMath");
+}
+
+function codeIsShown() {
+    return "true" == localStorage.getItem("showCode");
 }
 
 function proverIsRocq() {
@@ -53,6 +71,14 @@ function proverIsLean() {
     return "Lean4" == getProver();
 }
 
+function getOtherProver() {
+    if (proverIsRocq()) {
+        return "Lean4";
+    } else {
+        return "Rocq";
+    }
+}
+
 function rocqIsUsed() {
     return 0 != document.getElementsByClassName("rocq-code").length;
 }
@@ -61,6 +87,38 @@ function leanIsUsed() {
     return 0 != document.getElementsByClassName("lean-code").length;
 }
 
+
+// Events
+
+function switchProver() {
+    localStorage.setItem(
+        "prover",
+        getOtherProver()
+    );
+
+    refreshDisplay();
+}
+
+function switchShowMath() {
+    localStorage.setItem(
+        "showMath",
+        (localStorage.getItem("showMath") == "true") ? "false" : "true"
+    );
+
+    refreshDisplay();
+}
+
+function switchShowCode() {
+    localStorage.setItem(
+        "showCode",
+        (localStorage.getItem("showCode") == "true") ? "false" : "true"
+    );
+
+    refreshDisplay();
+}
+
+
+// Setters used in refreshDisplay
 
 function setDisplay(id, display) {
     if (null != document.getElementById(id)) {
@@ -77,24 +135,30 @@ function setDisplayByClassName(className, display) {
 }
 
 
-function switchProver() {
-    localStorage.setItem(
-        "prover",
-        getOtherProver()
-    );
-
-    refreshDisplay();
-}
-
+// Variables/display synchronization
 
 function refreshDisplay() {
+    if (codeIsShown()) {
+        buttonShowCode.textContent = "Hide the code";
+    } else {
+        buttonShowCode.textContent = "Display the code";
+    }
+
+    if (mathIsShown()) {
+        buttonShowMath.textContent = "Hide the math";
+        setDisplayByClassName("math-block", "block");
+    } else {
+        buttonShowMath.textContent = "Display the math";
+        setDisplayByClassName("math-block", "none");
+    }
+
     let rocqUsed = rocqIsUsed();
     let leanUsed = leanIsUsed();
 
     if (rocqUsed) {
         setDisplay("links-rocq", "inline");
 
-        if (proverIsRocq()) {
+        if (proverIsRocq() && codeIsShown()) {
             setDisplayByClassName("rocq-code", "grid");
             setDisplay("rocq-bottom-icon", "none");
         } else {
@@ -109,7 +173,7 @@ function refreshDisplay() {
     if (leanUsed) {
         setDisplay("links-lean", "inline");
 
-        if (proverIsLean()) {
+        if (proverIsLean() && codeIsShown()) {
             setDisplayByClassName("lean-code", "grid");
             setDisplay("lean-bottom-icon", "none");
         } else {
