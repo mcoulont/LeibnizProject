@@ -225,3 +225,13 @@ Proof.
   apply functional_extensionality_dep. intro.
   rewrite ltn0. reflexivity.
 Qed.
+
+Lemma replace_all {A: finType} {B : A -> Type}
+(profile1 profile2 : forall a : A, B a) :
+  replace_until #|A| profile1 profile2 = profile2.
+Proof.
+  unfold replace_until.
+  apply functional_extensionality_dep. intro.
+  rewrite max_enum_rank. reflexivity.
+Qed.
+
