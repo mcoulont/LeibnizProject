@@ -7,26 +7,32 @@ from re import findall, sub
 from time import time
 
 
-class ToolLine:
-	def __init__(self, tool: str, line: int):
-		self._tool = tool
-		self._line = line
+class LinkToRocqObject:
+	def __init__(
+		self,
+		object_type: str,
+		url: str
+	):
+		self.__object_type = object_type
+		self.__url = url
 
-	def __repr__(self):
-		return self._tool + "#L" + str(self._line)
+	def get_object_type(self) -> str:
+		return self.__object_type
 
-	# def get_tool(self):
-	# 	return self._tool
-
-	# def get_line(self):
-	# 	return self._line
+	def get_url(self) -> str:
+		return self.__url
 
 
 if __name__ == "__main__":
 	start = time()
 
 	folder_html = sys.argv[1]
-	folder_rocq_tools = sys.argv[2]
+	folder_rocq_articles = sys.argv[2]
+	folder_rocq_tools = sys.argv[3]
+	file_homepage = sys.argv[4]
+
+
+	TOKEN_ROCQ_INDEX = '<div id="rocq-index">'
 
 	# We wrap Rocq identifiers in a tag and then create hyperlinks
 	# to point to them
@@ -52,75 +58,82 @@ if __name__ == "__main__":
 		"Proposition|Property|Record|Structure|Fixpoint|Inductive)" +
 		"(\\s+)(" + ROCQ_REGEX_IDENTIFIER + ")([\\s:\\(])"
 	)
-	rocq_object_to_article: dict[str, str] = dict()
-	rocq_object_to_tool: dict[str, ToolLine] = dict()
 
-	# Detecting the rocq objects to point to in articles
-	for html_article in listdir(folder_html):
-		soup = BeautifulSoup(
-			open(folder_html + '/' + html_article, encoding="utf-8").read(),
-			'html.parser'
-		)
 
-		rocq_blocks = soup.find_all("pre", class_="rocq-code")
+	links_to_rocq_objects: dict[str, LinkToRocqObject] = dict()
 
-		for rocq_block in rocq_blocks:
-			rocq_code_blocks = rocq_block.find_all("code")
 
-			for rocq_code_block in rocq_code_blocks:
-				for res_search_object in findall(
-					REGEX_ROCQ_OBJECT_POINTED_TO,
-					str(rocq_code_block)
-				):
-					if res_search_object[3] in rocq_object_to_article:
-						print(
-							"Error: duplicate name " +
-							res_search_object[3] + " in " +
-							rocq_object_to_article[res_search_object[3]] +
-							" and " + html_article +
-							" (we try to avoid this)\n",
-							file=sys.stderr
-						)
-						exit(1)
+	# Detect the Rocq objects to point to
 
-					rocq_object_to_article[
-						res_search_object[3]
-					] = html_article
-
-	# Detecting the rocq objects to point to in the Tools folder
-	for rocq_tool in listdir(folder_rocq_tools):
-		if rocq_tool.endswith(".v"):
-			file_rocq_tool = open(
-				folder_rocq_tools + '/' + rocq_tool,
-				'r',
-				encoding="utf-8"
-			)
-
+	for rocq_tool_file in listdir(folder_rocq_tools):
+		if rocq_tool_file.endswith(".v"):
 			line_number = 0
 
-			for line_rocq_tool in file_rocq_tool.readlines():
+			for line_rocq_tool in open(
+				folder_rocq_tools + '/' + rocq_tool_file,
+				'r',
+				encoding="utf-8"
+			).readlines():
 				line_number += 1
 
 				for res_search_object in findall(
 					REGEX_ROCQ_OBJECT_POINTED_TO,
 					line_rocq_tool
 				):
-					if res_search_object[3] in rocq_object_to_tool:
+					if res_search_object[3] in links_to_rocq_objects:
 						print(
 							"Error: duplicate name " +
 							res_search_object[3] + " in " +
-							str(rocq_object_to_tool[res_search_object[3]]) +
-							" and " + str(ToolLine(rocq_tool, line_number)) +
+							links_to_rocq_objects[
+								res_search_object[3]
+							].get_url().split('/')[-1] +
+							" and " + rocq_tool_file +
 							" (we try to avoid this)\n",
 							file=sys.stderr
 						)
 						exit(1)
 
-					rocq_object_to_tool[
+					links_to_rocq_objects[
 						res_search_object[3]
-					] = ToolLine(rocq_tool, line_number)
+					] = LinkToRocqObject(
+						res_search_object[1],
+						"https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/" +
+						rocq_tool_file + "#L" + str(line_number)
+					)
 
-			file_rocq_tool.close()
+	for rocq_article_file in listdir(folder_rocq_articles):
+		if rocq_article_file.endswith(".v"):
+			for res_search_object in findall(
+				REGEX_ROCQ_OBJECT_POINTED_TO,
+				open(
+					folder_rocq_articles + '/' + rocq_article_file,
+					'r',
+					encoding="utf-8"
+				).read()
+			):
+				if res_search_object[3] in links_to_rocq_objects:
+					print(
+						"Error: duplicate name " +
+						res_search_object[3] + " in " +
+						links_to_rocq_objects[
+							res_search_object[3]
+						].get_url().split('/')[-1] +
+						" and " + rocq_article_file +
+						" (we try to avoid this)\n",
+						file=sys.stderr
+					)
+					exit(1)
+
+				links_to_rocq_objects[
+					res_search_object[3]
+				] = LinkToRocqObject(
+					res_search_object[1],
+					"Articles/" + rocq_article_file.split('.')[0] + ".html#" +
+					res_search_object[3]
+				)
+
+
+	# Insert links
 
 	for html_article in listdir(folder_html):
 		content_html_article = open(
@@ -145,20 +158,11 @@ if __name__ == "__main__":
 					str(rocq_code_block)
 				)
 
-				for object_to_point in rocq_object_to_article:
+				for object_to_point in links_to_rocq_objects:
 					html_rocq_code_block = sub(
 						"([^\\w'>/\"])(" + object_to_point + ")([^\\w'/])",
-						'\\g<1><a href="https://leibnizproject.com/Articles/' +
-						rocq_object_to_article[object_to_point] +
-						'#\\g<2>">\\g<2></a>\\g<3>',
-						html_rocq_code_block
-					)
-
-				for object_to_point in rocq_object_to_tool:
-					html_rocq_code_block = sub(
-						"([^\\w'>/\"])(" + object_to_point + ")([^\\w'/])",
-						'\\g<1><a href="https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/' +
-						str(rocq_object_to_tool[object_to_point]) +
+						'\\g<1><a href="' +
+						links_to_rocq_objects[object_to_point].get_url() +
 						'">\\g<2></a>\\g<3>',
 						html_rocq_code_block
 					)
@@ -176,7 +180,32 @@ if __name__ == "__main__":
 			"w",
 			encoding="utf-8"
 		) as f:
-  			f.write(content_html_article)
+			f.write(content_html_article)
+
+
+	# Generating the Rocq index
+
+	html_rocq_index = ""
+
+	for rocq_object in sorted(links_to_rocq_objects.keys()):
+		html_rocq_index += (
+			'<div><a href="' + links_to_rocq_objects[rocq_object].get_url() +
+			'">' + rocq_object + '</a> (' +
+			links_to_rocq_objects[rocq_object].get_object_type().lower() +
+			')</div>'
+		)
+
+	with open(file_homepage, 'r', encoding="utf-8") as file:
+		html_homepage = file.read()
+
+	with open(file_homepage, 'w') as file:
+		file.write(
+			html_homepage.replace(
+				TOKEN_ROCQ_INDEX,
+				TOKEN_ROCQ_INDEX + html_rocq_index
+			)
+		)
+
 
 	end = time()
 	print("InsertCrossArticleLinks took " + str(end - start) + " seconds")

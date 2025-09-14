@@ -7,7 +7,7 @@ from InsertCodeInMarkdown import TOKEN_ROCQ_CODE, TOKEN_LEAN_CODE
 
 SUFFIXE_MARKDOWN = ".md"
 
-TOKEN_LINK_INDEX = "--link_index--"
+TOKEN_LINK_HOMEPAGE = "--link_homepage--"
 TOKEN_LINKS_PROVERS = "--links_provers--"
 TOKEN_SWITCH_PROVER = "--switch_prover--"
 TOKEN_ARTICLE = "$article$"
@@ -17,7 +17,7 @@ TOKEN_HEART = '<div class="heart">'
 
 if __name__ == "__main__":
 	basename_without_extension = sys.argv[1]
-	file_template_link_index = sys.argv[2]
+	file_template_link_homepage = sys.argv[2]
 	file_template_links_provers = sys.argv[3]
 	file_template_switch_prover = sys.argv[4]
 	file_template_switch_visibility_math_code = sys.argv[5]
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
 
 	# We set the links common to all the articles pages
-	# (links to the index and to the Github Rocq and Lean pages),
+	# (links to the homepage and to the Github Rocq and Lean pages),
 	# the buttons to switch prover and the logos of provers
 	template_links_provers = open(file_template_links_provers, encoding="utf-8").read()
 	template_switch_prover = open(file_template_switch_prover, encoding="utf-8").read()
@@ -38,8 +38,8 @@ if __name__ == "__main__":
 	)
 
 	html_article = html_article.replace(
-		TOKEN_LINK_INDEX,
-		open(file_template_link_index, encoding="utf-8").read()
+		TOKEN_LINK_HOMEPAGE,
+		open(file_template_link_homepage, encoding="utf-8").read()
 	).replace(
 		TOKEN_LINKS_PROVERS,
 		template_links_provers

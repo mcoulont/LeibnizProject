@@ -73,7 +73,7 @@ a {
 	text-align: right;
 }
 
-.link-index {
+.link-homepage {
 	grid-row: 1;
 	grid-column: 1;
 
@@ -85,8 +85,13 @@ a {
 	border-radius: 1em;
 	text-align: center;
 }
-.link-index:hover {
+.link-homepage:hover {
 	background-color: #84B315;
+}
+
+.heart-container {
+	grid-row: 3;
+	grid-column: 1;
 }
 
 .heart {
@@ -99,9 +104,18 @@ a {
 	align-items: center;
 }
 
-.heart-container {
-	grid-row: 3;
-	grid-column: 1;
+.choose-display {
+	margin: 0.8em 0;
+	display: flex;
+	background-color: #0C151C;
+	font-weight: bold;
+	border-radius: 0.1em;
+}
+
+.choose-display-item {
+	cursor: pointer;
+	padding: 0.2em 0.5em 0.6em;
+	border-radius: 0.1em;
 }
 
 .container-switch-visibility-math-code {
