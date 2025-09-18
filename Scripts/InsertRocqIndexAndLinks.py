@@ -189,7 +189,7 @@ if __name__ == "__main__":
 
 	for rocq_object in sorted(links_to_rocq_objects.keys()):
 		html_rocq_index += (
-			'<div><a href="Articles/' +
+			'<div class="index-item"><a href="Articles/' +
 			links_to_rocq_objects[rocq_object].get_url() +
 			'">' + rocq_object + '</a> (' +
 			links_to_rocq_objects[rocq_object].get_object_type().lower() +

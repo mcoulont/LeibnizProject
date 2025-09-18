@@ -229,6 +229,10 @@ mjx-itable {
 	margin: 2em 0 0.5em;
 }
 
+.index-item {
+	margin-bottom: 0.2em;
+}
+
 .footer {
 	grid-row: 4;
 	grid-column: 1;
