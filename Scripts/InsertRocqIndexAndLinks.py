@@ -11,16 +11,21 @@ class LinkToRocqObject:
 	def __init__(
 		self,
 		object_type: str,
-		url: str
+		url: str,
+		is_relative: bool
 	):
 		self.__object_type = object_type
 		self.__url = url
+		self.__is_relative = is_relative
 
 	def get_object_type(self) -> str:
 		return self.__object_type
 
 	def get_url(self) -> str:
 		return self.__url
+
+	def is_relative(self) -> bool:
+		return self.__is_relative
 
 
 if __name__ == "__main__":
@@ -98,7 +103,8 @@ if __name__ == "__main__":
 					] = LinkToRocqObject(
 						res_search_object[1],
 						"https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/" +
-						rocq_tool_file + "#L" + str(line_number)
+						rocq_tool_file + "#L" + str(line_number),
+						False
 					)
 
 	for rocq_article_file in listdir(folder_rocq_articles):
@@ -129,7 +135,8 @@ if __name__ == "__main__":
 				] = LinkToRocqObject(
 					res_search_object[1],
 					rocq_article_file.split('.')[0] + ".html#" +
-					res_search_object[3]
+					res_search_object[3],
+					True
 				)
 
 
@@ -188,8 +195,13 @@ if __name__ == "__main__":
 	html_rocq_index = ""
 
 	for rocq_object in sorted(links_to_rocq_objects.keys()):
+		if links_to_rocq_objects[rocq_object].is_relative():
+			url_prefix = "Articles/"
+		else:
+			url_prefix = ""
+
 		html_rocq_index += (
-			'<div class="index-item"><a href="Articles/' +
+			'<div class="index-item"><a href="' + url_prefix +
 			links_to_rocq_objects[rocq_object].get_url() +
 			'">' + rocq_object + '</a> (' +
 			links_to_rocq_objects[rocq_object].get_object_type().lower() +
