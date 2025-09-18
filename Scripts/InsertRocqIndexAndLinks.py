@@ -128,12 +128,12 @@ if __name__ == "__main__":
 					res_search_object[3]
 				] = LinkToRocqObject(
 					res_search_object[1],
-					"Articles/" + rocq_article_file.split('.')[0] + ".html#" +
+					rocq_article_file.split('.')[0] + ".html#" +
 					res_search_object[3]
 				)
 
 
-	# Insert links
+	# Insert links in articles
 
 	for html_article in listdir(folder_html):
 		content_html_article = open(
@@ -189,7 +189,8 @@ if __name__ == "__main__":
 
 	for rocq_object in sorted(links_to_rocq_objects.keys()):
 		html_rocq_index += (
-			'<div><a href="' + links_to_rocq_objects[rocq_object].get_url() +
+			'<div><a href="Articles/' +
+			links_to_rocq_objects[rocq_object].get_url() +
 			'">' + rocq_object + '</a> (' +
 			links_to_rocq_objects[rocq_object].get_object_type().lower() +
 			')</div>'
