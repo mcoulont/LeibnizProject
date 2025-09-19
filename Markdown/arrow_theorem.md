@@ -9,7 +9,7 @@ keywords:
 
 ## Presentation
 
-Here is what's probably the most famous result in voting theory: [Arrow's impossibility theorem.](https://en.wikipedia.org/wiki/Arrow's_impossibility_theorem)
+Here is what's probably the most famous result in voting theory: [Arrow's impossibility theorem](https://en.wikipedia.org/wiki/Arrow's_impossibility_theorem).
 
 Let's say that at least 3 candidates compete at an election. Each voter has a preference order (possibly with ties) on the candidates. We wish some kind of a recipe (a general one, used at each election) to sum up all these preference orders into a single one (called social preference). Then it is quite natural to require that:\
 - if every one prefers a candidate to another, then so does the social preference\

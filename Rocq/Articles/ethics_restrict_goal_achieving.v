@@ -2,7 +2,7 @@
 From mathcomp Require Import all_ssreflect.
 
 Require Import ethics_first_steps.
-Require Import deterministic_stochastic_physics.
+Require Import physical_theories.
 
 Section ethics_restrict_goal_achieving.
 

@@ -12,7 +12,7 @@ keywords:
 
 The present article formalizes the fact that, the more you're ethical, the less room to maneuver you have and the less easy it is to reach your goals.
 
-One relies on [this article](https://leibnizproject.com/Articles/ethics_first_steps.html) and [this article](https://leibnizproject.com/Articles/deterministic_stochastic_physics.html).
+One relies on [this article](https://leibnizproject.com/Articles/ethics_first_steps.html) and [this article](https://leibnizproject.com/Articles/physical_theories.html).
 
 --MATH_START--
 Throughout this page, let $T$ be the time, $S$ the set of states, $A$ the set of actions and $pt$ the physical theory we adopt.
@@ -25,11 +25,11 @@ $\mathbf{Definition}$\
 Let $E = {\{⊥ ,⊤\}}^{SD × A}$ be the set of ethics ([let $S = SD$ in this article](https://leibnizproject.com/Articles/ethics_first_steps.html)).
 
 $\mathbf{Definition}$\
-Let $H = (S \times A)^T$ be the set of histories ([let $S = S \times A$ in this article](https://leibnizproject.com/Articles/deterministic_stochastic_physics.html)). \
+Let $H = (S \times A)^T$ be the set of histories ([let $S = S \times A$ in this article](https://leibnizproject.com/Articles/physical_theories.html)). \
 For $t \in T$ and $h(t) = (s, a)$, let $h_S(t) = s$ and $h_A(t) = a$.
 
 $\mathbf{Definition}$\
-Let $G = {\{⊥ ,⊤\}}^H$ be the set of goals (which are events in [this article with $S = S \times A$](https://leibnizproject.com/Articles/deterministic_stochastic_physics.html)).
+Let $G = {\{⊥ ,⊤\}}^H$ be the set of goals (which are events in [this article with $S = S \times A$](https://leibnizproject.com/Articles/physical_theories.html)).
 --MATH_END--
 
 [//]: # Rocq (9-23)

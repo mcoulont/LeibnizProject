@@ -1,7 +1,7 @@
 
 Require Import Relations.Relation_Definitions.
 Require Import Program.Basics.
-Require Import Sets.Image.
+From Stdlib Require Import Sets.Image.
 From mathcomp Require Import all_ssreflect.
 
 Definition total {T : Type} (R : relation T) : Prop :=
