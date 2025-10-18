@@ -18,12 +18,6 @@ FOLDER_HTML = "Articles/"
 REGEX_BASENAME_ROCQ_PROJECT = "(#\\s*)?\\./Articles/([a-z0-9_]+)\\.v($|\\s)"
 REGEX_BASENAME_LEAN_PROJECT = "(--\\s*)?import\\s+Articles\\.([a-z0-9_]+)($|\\s)"
 
-file_general_template = sys.argv[1]
-folder_markdown = sys.argv[2]
-file_rocq_project = sys.argv[3]
-file_lean_project = sys.argv[4]
-file_homepage = sys.argv[5]
-
 
 # To be consistent with imports, the articles must be in the table of contents
 # in an order consistent with the ones in _CoqProject and Articles.lean
@@ -54,6 +48,12 @@ def contains_duplicate(l: list) -> bool:
 
 
 if __name__ == "__main__":
+    file_general_template = sys.argv[1]
+    folder_markdown = sys.argv[2]
+    file_rocq_project = sys.argv[3]
+    file_lean_project = sys.argv[4]
+    file_homepage = sys.argv[5]
+
     body_html = """<div>
         <div class="choose-display">
             <div class="choose-display-item" id="choose-table">Table of contents</div>

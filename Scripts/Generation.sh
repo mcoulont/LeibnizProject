@@ -38,4 +38,4 @@ for file_article_md in $folder_markdown/*; do
 done
 
 python3 $script_generate_table_contents $file_general_template $folder_markdown $file_rocq_project $file_lean_project $homepage_file
-python3 $script_insert_rocq_index_and_links $folder_html $folder_rocq_articles $folder_rocq_tools $homepage_file
+python3 $script_insert_rocq_index_and_links $folder_html $folder_rocq_articles $folder_rocq_tools $file_rocq_project $homepage_file

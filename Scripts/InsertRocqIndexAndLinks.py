@@ -3,11 +3,14 @@
 import sys
 from os import listdir
 from bs4 import BeautifulSoup
-from re import findall, sub
+from re import findall, sub, finditer
 from time import time
 
 
 TOKEN_ROCQ_INDEX = '<div id="rocq-index">'
+
+REGEX_BASENAME_ROCQ_ARTICLE = "(#\\s*)?\\./Articles/([a-z0-9_]+)\\.v($|\\s)"
+REGEX_BASENAME_ROCQ_TOOL = "(#\\s*)?\\./Tools/([a-z0-9_]+)\\.v($|\\s)"
 
 # We wrap Rocq identifiers in a tag and then create hyperlinks
 # to point to them
@@ -61,107 +64,107 @@ class LinkToRocqObject:
 
 def detect_rocq_objects_to_point_to(
 	folder_rocq_files: str,
+	rocq_files: list[str],
 	links_to_rocq_objects: dict[str, LinkToRocqObject],
 	for_tools: bool
 ):
-	for rocq_file in listdir(folder_rocq_files):
-		if rocq_file.endswith(".v"):
-			line_number = 0
-			depth_out_comment = 0
+	for rocq_file in rocq_files:
+		line_number = 0
+		depth_out_comment = 0
 
-			for line_rocq_file in open(
-				folder_rocq_files + '/' + rocq_file,
-				'r',
-				encoding="utf-8"
-			).readlines():
-				line_number += 1
+		for line_rocq_file in open(
+			folder_rocq_files + '/' + rocq_file + ".v",
+			'r',
+			encoding="utf-8"
+		).readlines():
+			line_number += 1
 
-				while 0 < len(line_rocq_file):
-					not_outcommented_piece = ""
+			while 0 < len(line_rocq_file):
+				not_outcommented_piece = ""
 
-					pos_comment_start = line_rocq_file.find(TOKEN_ROCQ_COMMENT_START)
-					pos_comment_end = line_rocq_file.find(TOKEN_ROCQ_COMMENT_END)
+				pos_comment_start = line_rocq_file.find(TOKEN_ROCQ_COMMENT_START)
+				pos_comment_end = line_rocq_file.find(TOKEN_ROCQ_COMMENT_END)
 
-					if -1 == pos_comment_start and -1 == pos_comment_end:
-						if 0 == depth_out_comment:
-							not_outcommented_piece = line_rocq_file
+				if -1 == pos_comment_start and -1 == pos_comment_end:
+					if 0 == depth_out_comment:
+						not_outcommented_piece = line_rocq_file
 
-						line_rocq_file = ""
+					line_rocq_file = ""
 
-					elif (
-						-1 == pos_comment_end or
-						pos_comment_start < pos_comment_end
-					):
-						if 0 == depth_out_comment:
-							not_outcommented_piece = line_rocq_file[0:pos_comment_start]
+				elif (
+					-1 == pos_comment_end or
+					pos_comment_start < pos_comment_end
+				):
+					if 0 == depth_out_comment:
+						not_outcommented_piece = line_rocq_file[0:pos_comment_start]
 
-						line_rocq_file = line_rocq_file[
-							pos_comment_start + len(TOKEN_ROCQ_COMMENT_START):
-						]
+					line_rocq_file = line_rocq_file[
+						pos_comment_start + len(TOKEN_ROCQ_COMMENT_START):
+					]
 
-						depth_out_comment += 1
+					depth_out_comment += 1
 
-					elif (
-						-1 == pos_comment_start or
-						pos_comment_end < pos_comment_start
-					):
-						line_rocq_file = line_rocq_file[
-							pos_comment_end + len(TOKEN_ROCQ_COMMENT_END):
-						]
+				elif (
+					-1 == pos_comment_start or
+					pos_comment_end < pos_comment_start
+				):
+					line_rocq_file = line_rocq_file[
+						pos_comment_end + len(TOKEN_ROCQ_COMMENT_END):
+					]
 
-						depth_out_comment -= 1
+					depth_out_comment -= 1
 
+				else:
+					print(
+						"Error: internal error while parsing comments in " +
+						rocq_file + ".v line " + str(line_number) + "\n",
+						file=sys.stderr
+					)
+					exit(1)
+
+				if depth_out_comment < 0:
+					print(
+						"Error: unmatched comment end in " +
+						rocq_file + ".v line " + str(line_number) + "\n",
+						file=sys.stderr
+					)
+					exit(1)
+
+				for res_search_object in findall(
+					REGEX_ROCQ_OBJECT_POINTED_TO,
+					not_outcommented_piece
+				):
+					if res_search_object[3] in links_to_rocq_objects:
+						print(
+							"Error: duplicate name " +
+							res_search_object[3] + " in " +
+							links_to_rocq_objects[
+								res_search_object[3]
+							].get_url().split('/')[-1] +
+							" and " + rocq_file +
+							".v (we try to avoid this)\n",
+							file=sys.stderr
+						)
+						exit(1)
+
+					if for_tools:
+						links_to_rocq_objects[
+							res_search_object[3]
+						] = LinkToRocqObject(
+							res_search_object[1],
+							"https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/" +
+							rocq_file + ".v#L" + str(line_number),
+							False
+						)
 					else:
-						print(
-							"Error: internal error while parsing comments in " +
-							rocq_file + " line " + str(line_number) + "\n",
-							file=sys.stderr
+						links_to_rocq_objects[
+							res_search_object[3]
+						] = LinkToRocqObject(
+							res_search_object[1],
+							rocq_file + ".html#" +
+							res_search_object[3],
+							True
 						)
-						exit(1)
-
-					if depth_out_comment < 0:
-						print(
-							"Error: unmatched comment end in " +
-							rocq_file + " line " + str(line_number) + "\n",
-							file=sys.stderr
-						)
-						exit(1)
-
-					for res_search_object in findall(
-						REGEX_ROCQ_OBJECT_POINTED_TO,
-						not_outcommented_piece
-					):
-						if res_search_object[3] in links_to_rocq_objects:
-							print(
-								"Error: duplicate name " +
-								res_search_object[3] + " in " +
-								links_to_rocq_objects[
-									res_search_object[3]
-								].get_url().split('/')[-1] +
-								" and " + rocq_file +
-								" (we try to avoid this)\n",
-								file=sys.stderr
-							)
-							exit(1)
-
-						if for_tools:
-							links_to_rocq_objects[
-								res_search_object[3]
-							] = LinkToRocqObject(
-								res_search_object[1],
-								"https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/" +
-								rocq_file + "#L" + str(line_number),
-								False
-							)
-						else:
-							links_to_rocq_objects[
-								res_search_object[3]
-							] = LinkToRocqObject(
-								res_search_object[1],
-								rocq_file.split('.')[0] + ".html#" +
-								res_search_object[3],
-								True
-							)
 
 
 if __name__ == "__main__":
@@ -170,21 +173,45 @@ if __name__ == "__main__":
 	folder_html = sys.argv[1]
 	folder_rocq_articles = sys.argv[2]
 	folder_rocq_tools = sys.argv[3]
-	file_homepage = sys.argv[4]
+	file_rocq_project = sys.argv[4]
+	file_homepage = sys.argv[5]
 
 	links_to_rocq_objects: dict[str, LinkToRocqObject] = dict()
+
+
+	# List the active Rocq files
+
+	rocq_articles = []
+
+	for occurrence_article_basename in finditer(
+        REGEX_BASENAME_ROCQ_ARTICLE,
+        open(file_rocq_project, encoding="utf-8").read()
+    ):
+		if not occurrence_article_basename.group(0).startswith("#"):
+			rocq_articles.append(occurrence_article_basename.group(2))
+
+	rocq_tools = []
+
+	for occurrence_article_basename in finditer(
+        REGEX_BASENAME_ROCQ_TOOL,
+        open(file_rocq_project, encoding="utf-8").read()
+    ):
+		if not occurrence_article_basename.group(0).startswith("#"):
+			rocq_tools.append(occurrence_article_basename.group(2))
 
 
 	# Detect the Rocq objects to point to
 
 	detect_rocq_objects_to_point_to(
 		folder_rocq_tools,
+		rocq_tools,
 		links_to_rocq_objects,
 		True
 	)
 
 	detect_rocq_objects_to_point_to(
 		folder_rocq_articles,
+		rocq_articles,
 		links_to_rocq_objects,
 		False
 	)
