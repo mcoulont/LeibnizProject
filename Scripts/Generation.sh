@@ -26,6 +26,7 @@ script_generate_table_contents=$folder_current_script/GenerateTableContents.py
 script_insert_rocq_index_and_links=$folder_current_script/InsertRocqIndexAndLinks.py
 
 mkdir -p $folder_html
+rm -rf $folder_html/*
 
 for file_article_md in $folder_markdown/*; do
     base_name=$(basename $file_article_md)
