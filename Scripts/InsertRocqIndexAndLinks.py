@@ -7,6 +7,37 @@ from re import findall, sub
 from time import time
 
 
+TOKEN_ROCQ_INDEX = '<div id="rocq-index">'
+
+# We wrap Rocq identifiers in a tag and then create hyperlinks
+# to point to them
+
+# In Rocq, objects we will point to are "Definition", "Axiom", "Example",
+# "Theorem", "Lemma", "Fact", "Remark", "Corollary", "Proposition", "Property",
+# "Record", "Structure", "Fixpoint", "Inductive"
+# (see https://rocq-prover.org/doc/V8.20.1/refman/language/core/definitions.html,
+# https://rocq-prover.org/doc/V8.20.1/refman/language/core/records.html and
+# https://rocq-prover.org/doc/V8.20.1/refman/language/core/inductive.html)
+
+ROCQ_ALPHABET_FIRST_LETTER = "[^\\W\\d]"
+ROCQ_ALPHABET_SUBSEQUENT_LETTER = "[\\w']"
+ROCQ_REGEX_IDENTIFIER = (
+	ROCQ_ALPHABET_FIRST_LETTER + "(" +
+	ROCQ_ALPHABET_SUBSEQUENT_LETTER + ")*"
+)
+# (see https://rocq-prover.org/doc/V8.20.1/refman/language/core/basic.html#grammar-token-unicode_letter)
+
+REGEX_ROCQ_OBJECT_POINTED_TO = (
+	'(^|\\s|>)' +
+	"(Definition|Axiom|Example|Theorem|Lemma|Fact|Remark|Corollary|" +
+	"Proposition|Property|Record|Structure|Fixpoint|Inductive)" +
+	"(\\s+)(" + ROCQ_REGEX_IDENTIFIER + ")([\\s:\\(])"
+)
+
+TOKEN_ROCQ_COMMENT_START = "(*"
+TOKEN_ROCQ_COMMENT_END = "*)"
+
+
 class LinkToRocqObject:
 	def __init__(
 		self,
@@ -28,6 +59,111 @@ class LinkToRocqObject:
 		return self.__is_relative
 
 
+def detect_rocq_objects_to_point_to(
+	folder_rocq_files: str,
+	links_to_rocq_objects: dict[str, LinkToRocqObject],
+	for_tools: bool
+):
+	for rocq_file in listdir(folder_rocq_files):
+		if rocq_file.endswith(".v"):
+			line_number = 0
+			depth_out_comment = 0
+
+			for line_rocq_file in open(
+				folder_rocq_files + '/' + rocq_file,
+				'r',
+				encoding="utf-8"
+			).readlines():
+				line_number += 1
+
+				while 0 < len(line_rocq_file):
+					not_outcommented_piece = ""
+
+					pos_comment_start = line_rocq_file.find(TOKEN_ROCQ_COMMENT_START)
+					pos_comment_end = line_rocq_file.find(TOKEN_ROCQ_COMMENT_END)
+
+					if -1 == pos_comment_start and -1 == pos_comment_end:
+						if 0 == depth_out_comment:
+							not_outcommented_piece = line_rocq_file
+
+						line_rocq_file = ""
+
+					elif (
+						-1 == pos_comment_end or
+						pos_comment_start < pos_comment_end
+					):
+						if 0 == depth_out_comment:
+							not_outcommented_piece = line_rocq_file[0:pos_comment_start]
+
+						line_rocq_file = line_rocq_file[
+							pos_comment_start + len(TOKEN_ROCQ_COMMENT_START):
+						]
+
+						depth_out_comment += 1
+
+					elif (
+						-1 == pos_comment_start or
+						pos_comment_end < pos_comment_start
+					):
+						line_rocq_file = line_rocq_file[
+							pos_comment_end + len(TOKEN_ROCQ_COMMENT_END):
+						]
+
+						depth_out_comment -= 1
+
+					else:
+						print(
+							"Error: internal error while parsing comments in " +
+							rocq_file + " line " + str(line_number) + "\n",
+							file=sys.stderr
+						)
+						exit(1)
+
+					if depth_out_comment < 0:
+						print(
+							"Error: unmatched comment end in " +
+							rocq_file + " line " + str(line_number) + "\n",
+							file=sys.stderr
+						)
+						exit(1)
+
+					for res_search_object in findall(
+						REGEX_ROCQ_OBJECT_POINTED_TO,
+						not_outcommented_piece
+					):
+						if res_search_object[3] in links_to_rocq_objects:
+							print(
+								"Error: duplicate name " +
+								res_search_object[3] + " in " +
+								links_to_rocq_objects[
+									res_search_object[3]
+								].get_url().split('/')[-1] +
+								" and " + rocq_file +
+								" (we try to avoid this)\n",
+								file=sys.stderr
+							)
+							exit(1)
+
+						if for_tools:
+							links_to_rocq_objects[
+								res_search_object[3]
+							] = LinkToRocqObject(
+								res_search_object[1],
+								"https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/" +
+								rocq_file + "#L" + str(line_number),
+								False
+							)
+						else:
+							links_to_rocq_objects[
+								res_search_object[3]
+							] = LinkToRocqObject(
+								res_search_object[1],
+								rocq_file.split('.')[0] + ".html#" +
+								res_search_object[3],
+								True
+							)
+
+
 if __name__ == "__main__":
 	start = time()
 
@@ -36,108 +172,22 @@ if __name__ == "__main__":
 	folder_rocq_tools = sys.argv[3]
 	file_homepage = sys.argv[4]
 
-
-	TOKEN_ROCQ_INDEX = '<div id="rocq-index">'
-
-	# We wrap Rocq identifiers in a tag and then create hyperlinks
-	# to point to them
-
-	# In Rocq, objects we will point to are "Definition", "Axiom", "Example",
-	# "Theorem", "Lemma", "Fact", "Remark", "Corollary", "Proposition", "Property",
-	# "Record", "Structure", "Fixpoint", "Inductive"
-	# (see https://rocq-prover.org/doc/V8.20.1/refman/language/core/definitions.html,
-	# https://rocq-prover.org/doc/V8.20.1/refman/language/core/records.html and
-	# https://rocq-prover.org/doc/V8.20.1/refman/language/core/inductive.html)
-
-	ROCQ_ALPHABET_FIRST_LETTER = "[^\\W\\d]"
-	ROCQ_ALPHABET_SUBSEQUENT_LETTER = "[\\w']"
-	ROCQ_REGEX_IDENTIFIER = (
-		ROCQ_ALPHABET_FIRST_LETTER + "(" +
-		ROCQ_ALPHABET_SUBSEQUENT_LETTER + ")*"
-	)
-	# (see https://rocq-prover.org/doc/V8.20.1/refman/language/core/basic.html#grammar-token-unicode_letter)
-
-	REGEX_ROCQ_OBJECT_POINTED_TO = (
-		'(^|\\s|>)' +
-		"(Definition|Axiom|Example|Theorem|Lemma|Fact|Remark|Corollary|" +
-		"Proposition|Property|Record|Structure|Fixpoint|Inductive)" +
-		"(\\s+)(" + ROCQ_REGEX_IDENTIFIER + ")([\\s:\\(])"
-	)
-
-
 	links_to_rocq_objects: dict[str, LinkToRocqObject] = dict()
 
 
 	# Detect the Rocq objects to point to
 
-	for rocq_tool_file in listdir(folder_rocq_tools):
-		if rocq_tool_file.endswith(".v"):
-			line_number = 0
+	detect_rocq_objects_to_point_to(
+		folder_rocq_tools,
+		links_to_rocq_objects,
+		True
+	)
 
-			for line_rocq_tool in open(
-				folder_rocq_tools + '/' + rocq_tool_file,
-				'r',
-				encoding="utf-8"
-			).readlines():
-				line_number += 1
-
-				for res_search_object in findall(
-					REGEX_ROCQ_OBJECT_POINTED_TO,
-					line_rocq_tool
-				):
-					if res_search_object[3] in links_to_rocq_objects:
-						print(
-							"Error: duplicate name " +
-							res_search_object[3] + " in " +
-							links_to_rocq_objects[
-								res_search_object[3]
-							].get_url().split('/')[-1] +
-							" and " + rocq_tool_file +
-							" (we try to avoid this)\n",
-							file=sys.stderr
-						)
-						exit(1)
-
-					links_to_rocq_objects[
-						res_search_object[3]
-					] = LinkToRocqObject(
-						res_search_object[1],
-						"https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/" +
-						rocq_tool_file + "#L" + str(line_number),
-						False
-					)
-
-	for rocq_article_file in listdir(folder_rocq_articles):
-		if rocq_article_file.endswith(".v"):
-			for res_search_object in findall(
-				REGEX_ROCQ_OBJECT_POINTED_TO,
-				open(
-					folder_rocq_articles + '/' + rocq_article_file,
-					'r',
-					encoding="utf-8"
-				).read()
-			):
-				if res_search_object[3] in links_to_rocq_objects:
-					print(
-						"Error: duplicate name " +
-						res_search_object[3] + " in " +
-						links_to_rocq_objects[
-							res_search_object[3]
-						].get_url().split('/')[-1] +
-						" and " + rocq_article_file +
-						" (we try to avoid this)\n",
-						file=sys.stderr
-					)
-					exit(1)
-
-				links_to_rocq_objects[
-					res_search_object[3]
-				] = LinkToRocqObject(
-					res_search_object[1],
-					rocq_article_file.split('.')[0] + ".html#" +
-					res_search_object[3],
-					True
-				)
+	detect_rocq_objects_to_point_to(
+		folder_rocq_articles,
+		links_to_rocq_objects,
+		False
+	)
 
 
 	# Insert links in articles
