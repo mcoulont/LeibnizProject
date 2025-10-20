@@ -171,7 +171,7 @@ Definition switch_strictness {T : Type} (R : relation T) : relation T :=
   complement (flip R).
 
 Lemma switch_strictness_involutive (T : Type) :
-  involutive (@switch_strictness T).
+  involutive ( @switch_strictness T).
 Proof.
   unfold involutive. unfold cancel. unfold switch_strictness.
   unfold complement. unfold flip.
@@ -181,16 +181,17 @@ Proof.
   apply propositional_extensionality. tauto.
 Qed.
 
-Lemma strict_irreflexive {T : Type} (po : PreferenceOrder T) (a : T) :
-  ~ strict po a a.
+Lemma strict_irreflexive {T : Type} (po : PreferenceOrder T) :
+  relation_facts.irreflexive (strict po).
+  (* ~ strict po a a. *)
 Proof.
-  intro. unfold strict in H. unfold non_strict in H.
+  unfold relation_facts.irreflexive.
+  intro. intro. unfold strict in H. unfold non_strict in H.
   apply H.
   destruct po.
-  assert (Relation_Definitions.reflexive T x) .
-  { apply preference_order_reflexive. exact p. }
-  unfold Relation_Definitions.reflexive in H0.
-  simpl. apply H0.
+  pose proof (preference_order_reflexive x0 p).
+  simpl.
+  apply H0.
 Qed.
 
 Lemma strict_implies_unequal {T : Type} (po : PreferenceOrder T) (a b : T) :

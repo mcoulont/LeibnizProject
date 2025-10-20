@@ -3,7 +3,9 @@
 ./Tools/relation_facts.v
 ./Tools/eqType_facts.v
 ./Tools/finType_facts.v
+./Tools/ssrfun_facts.v
 ./Tools/ssrnat_facts.v
+./Tools/boolp_facts.v
 ./Tools/preference.v
 ./Articles/ethics_first_steps.v
 ./Articles/every_ethic_without_dead_end_is_utilitarian.v
@@ -17,4 +19,5 @@
 ./Articles/ethics_restrict_goal_achieving.v
 ./Articles/ethics_restrict_conflict_winning.v
 ./Articles/gibbard_theorem.v
+./Articles/many_worlds_interpretation.v
 ./gather.v

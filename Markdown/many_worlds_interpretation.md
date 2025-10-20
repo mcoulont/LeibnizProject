@@ -1,5 +1,5 @@
 ---
-title: "Physical theories"
+title: "The many-worlds interpretation"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:

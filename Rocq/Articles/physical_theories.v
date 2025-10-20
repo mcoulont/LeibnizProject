@@ -1,6 +1,5 @@
 
-From Stdlib Require Import Logic.IndefiniteDescription.
-From mathcomp Require Import all_algebra all_ssreflect.
+From mathcomp Require Import all_algebra all_ssreflect classical_sets boolp.
 
 Require Import relation_facts.
 
@@ -42,5 +41,14 @@ Definition is_deterministic (pt : PhysicalTheory) : Prop :=
       h1 t0 = h2 t0 ->
       forall (t : Time), strict Before t0 t -> h1 t = h2 t
     ).
+
+Definition instance_indeterminism (pt : PhysicalTheory) (h1 h2 : History)
+(t1 t2 : Time) :
+Prop :=
+  strict Before t1 t2 /\
+  satisfies h1 pt /\
+  satisfies h2 pt /\
+  h1 t1 = h2 t1 /\
+  h1 t2 <> h2 t2.
 
 End physical_theories.

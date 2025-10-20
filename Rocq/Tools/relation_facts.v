@@ -22,6 +22,12 @@ Definition total_order {T : Type} (R : relation T) : Prop :=
 Definition TotalOrder (T : Type) : Type :=
   { R : relation T | total_order R }.
 
+Definition assymmetric {T : Type} (R : relation T) : Prop :=
+  forall (x y : T), ~ (R x y /\ R y x).
+
+Definition irreflexive {T : Type} (R : relation T) : Prop :=
+  forall (x : T), ~ R x x.
+
 Definition map_relation {T U : Type} (f : T -> U) (R : relation U) : relation T :=
   fun (x : T) => fun (y : T) => R (f x) (f y).
 
