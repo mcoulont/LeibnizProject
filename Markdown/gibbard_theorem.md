@@ -59,7 +59,7 @@ A game form is straightforward if every player has a dominant strategy, whatever
 
 [//]: # Rocq (39-42)
 
-A voter is said omnipotent if its vote can decide the issue of the election, regardless of the other votes. We deviate from the term "dictator" used by Gibbard in order to stand out from the "dictator" of [Arrow's theorem](https://www.leibnizproject.com/Articles/arrow_theorem.html), which is analog but different.
+A voter is said omnipotent if its vote can decide the outcome of the election, regardless of the other votes. We deviate from the term "dictator" used by Gibbard in order to stand out from the "dictator" of [Arrow's theorem](https://www.leibnizproject.com/Articles/arrow_theorem.html), which is analog but different.
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -333,7 +333,7 @@ By Arrow's theorem together with Assertion 3, $f$ admits a dictator, which is om
 
 ## Gibbard-Satterthwaite theorem
 
-If there are at least 3 (eligible) alternatives at an election where each voter provides her preference order on candidates (some information may be ignored by the voting scheme: we often consider each voter's top choice only), and if no voter can decide alone alone the outcome, then the election is manipulable (a voter can get a more favorable issue by lying on her preference).
+If there are at least 3 (eligible) alternatives at an election where each voter provides her preference order on candidates (some information may be ignored by the voting scheme: we often consider each voter's top choice only), and if no voter can decide alone alone the outcome, then the election is manipulable (a voter can get a more favorable outcome by lying on her preference).
 
 --MATH_START--
 Throughout this section, let $I$ the finite set of individuals (voters) of a society and $X$ be the set of alternatives (candidates). \

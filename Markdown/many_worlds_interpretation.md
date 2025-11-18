@@ -10,72 +10,112 @@ keywords:
 
 ## Presentation
 
-Here is proposed a formalization of the concept of physical theory, and what it is to be deterministic.
+Some phenomenons uncovered by quantum physicists have not been found to be deterministic: leading the (at least seemingly) same experiment leads to different outcomes, which apparently follow a probability distribution. As the physical world was considered deterministic until there by classical physics, an interpretation was proposed to render the results of quantum mechanics in a deterministic frame: [the many-wrolds interpretation](https://en.wikipedia.org/wiki/Many-worlds_interpretation). The idea is to claim something difficultly provable or refutable: the fact that each outcome possible according to our physical theory which does not happen in our world does indeed happen, but in another world.
 
 --MATH_START--
 Throughout this page, let $T$ be the set of instants in the unfolding of time. If $t, t' \in T$, $t \le t'$ means that the instant $t$ is before (or simultaneous with) $t'$. \
-Let $S$ be the set of states.
+Let $S$ be the set of states and $W$ the set of worlds.
+
+Some definitions in [this article](https://www.leibnizproject.com/Articles/physical_theories.html) are used.
 --MATH_END--
 
+[//]: # Rocq (13-16)
 
-## Histories and events
 
-A history is a complete description of all what happened through time (successive states). A history until a certain instant is all what happened through time until this instant. A history extends a history until a certain instant if both coincide before that instant.
+## Indeterminism
+
+According to [our definition](https://www.leibnizproject.com/Articles/physical_theories.html), we can conclude that a physical theory isn't deterministic whenever two histories of events coinciding at a certain instant must coincide every time after.
 
 --MATH_START--
 $\mathbf{Definition}$\
-The set $H$ of histories is $S^T$. \
-The set $H_{t_0}$ of histories until $t_0$ is $S^{\{t \in T | t \le t_0\}}$ (where $t_0 \in T$). \
-The set $H_{<t_0}$ of histories before $t_0$ is $S^{\{t \in T | t \lt t_0\}}$ (where $t_0 \in T$).
-
-$\mathbf{Definition}$\
-Let $t_0 \in T$, $h \in H$ and ${hu} \in H_{t_0}$. \
-$h$ is said to extend ${hu}$ if $\forall t \le t_0, h(t) = {hu}(t)$.
+Let $pt$ a physical theory in ${\{⊥ ,⊤\}}^{S^T}$. \
+An indeterminism in $pt$ is a $(h_1, h_2, t_0, t) \in {S^T \times S^T \times T \times T}$ such that:
+$$\begin{cases*}
+  t_0 \lt t \\
+  pt \text{ satisfies } h_1 \\
+  pt \text{ satisfies } h_2 \\
+  h_1(t_0) = h_2(t_0) \\
+  h_1(t) \neq h_2(t)
+\end{cases*}$$
+Let $I(pt)$ be the set of indeterminisms of $pt$. \
+And let $W = {\{⊥ ,⊤\}}^{I(pt)}$ be the set of worlds.
 --MATH_END--
 
-[//]: # Rocq (12-22)
+[//]: # Rocq (18-45)
 
-As a history contains all the information, it can report which events happened and which didn't.
+--MATH_START--
+$\mathbf{Lemma}$\
+A physical theory $pt$ is deterministic if and only if $I(pt) = \emptyset$.
+
+$\mathbf{proof:}$\
+Direct application of the definitions of a deterministic physical theory and of an indeterminism. \
+■
+--MATH_END--
+
+[//]: # Rocq (47-86)
+
+
+## A deterministic many-worlds interpretation
+
+To get rid of indeterminisms of a physical theory, we define a world for each possible outcome in each instance of indeterminism.
 
 --MATH_START--
 $\mathbf{Definition}$\
-The set $E$ of events is ${\{⊥, ⊤\}}^H$, provided $e(h) = ⊤$ when the event $e \in E$ happens in history $h \in H$.
+Let $pt$ a physical theory in ${\{⊥ ,⊤\}}^{S^T}$. \
+The many-worlds extension is the physical theory $\bar pt \in {\{⊥ ,⊤\}}^{(S^W)^T}$ defined below:
+$$\begin{align*}
+    (S^W)^T &\to \mathbb \{⊥ ,⊤\} \\
+    \bar h &\mapsto \begin{cases*}
+        ⊥ \text{ if } \exists ind=(h_1, h_2, t_0, t) \in I(pt), w \in W \text{ such that } (w(ind) \text{ and } \forall t' \in T, \bar h(t')(w) = h_2(t')) \text{ or } (\neg w(ind) \text{ and } \forall t' \in T, \bar h(t')(w) = h_1(t')) \\
+        \forall w \in W, pt(t \mapsto \bar h(t)(w)) \text{ otherwise}
+    \end{cases*}
+\end{align*}$$
 --MATH_END--
 
-[//]: # Rocq (24-27)
-
-
-## Physical theories
-
-A physical theory comes down to the ability to determine whether a given history is physically possible or not (being given this ability, we may describe its behaviour in physical laws).
+[//]: # Rocq (88-97)
 
 --MATH_START--
-$\mathbf{Definition}$\
-The set $PT$ of physical theories is ${\{⊥ ,⊤\}}^H$. \
-(it is equal to the set of events but its elements are interpreted differently)
+$\mathbf{Lemma}$\
+The many-worlds extension of any physical theory is deterministic.
 
-$\mathbf{Definition}$\
-A history $h \in H$ is said to satisfy a physical theory $pt \in PT$ if $pt(h) = ⊤$
+$\mathbf{proof:}$\
+Let $pt$ a physical theory in ${\{⊥ ,⊤\}}^{S^T}$ and $\bar pt$ its many-worlds extension. \
+Let's reason by contradiction and suppose that: \
+$$\begin{cases*}
+  t_0 \lt t \\
+  \bar pt \text{ satisfies } \bar h_1 \\
+  \bar pt \text{ satisfies } \bar h_2 \\
+  \bar h_1(t_0) = \bar h_2(t_0) \\
+  \bar h_1(t) \neq \bar h_2(t)
+\end{cases*}$$
+The two staisfiabilities and the definition of $\bar pt$ imply that
+$$\tag{1} \forall w \in W, ind=(h_1, h_2, t_0, t) \in I(pt),
+\begin{cases*}
+  \neg ((w(ind) \text{ and } \forall t' \in T, \bar h_1(t')(w) = h_2(t')) \text{ or } (\neg w(ind) \text{ and } \forall t' \in T, \bar h_1(t')(w) = h_1(t'))) \\
+  \forall w \in W, pt(t' \mapsto \bar h_1(t')(w)) \\
+  \neg ((w(ind) \text{ and } \forall t' \in T, \bar h_2(t')(w) = h_2(t')) \text{ or } (\neg w(ind) \text{ and } \forall t' \in T, \bar h_2(t')(w) = h_1(t'))) \\
+  \forall w \in W, pt(t' \mapsto \bar h_2(t')(w))
+\end{cases*}$$
+As $\bar h_1(t) \neq \bar h_2(t)$, there is a $w \in W$ such that $\bar h_1(t)(w) \neq \bar h_2(t)(w)$. And as $\bar h_1(t_0) = \bar h_2(t_0)$, we have $\bar h_1(t_0)(w) = \bar h_2(t_0)(w)$. \
+Moreover, equations 2 and 4 in $(1)$ imply that $pt$ satisfies $t' \mapsto \bar h_1(t')(w)$ and $t' \mapsto \bar h_2(t')(w)$. \
+Thus we have an indeterminism $(t' \mapsto \bar h_1(t')(w), t' \mapsto \bar h_2(t')(w), t_0, t) \in I(pt)$. \
+Applying equations 1 and 3 in $(1)$ to $w$ and this indeterminism gives
+$$\begin{cases*}
+  \neg ((w(ind) \text{ and } \forall t' \in T, \bar h_1(t')(w) = (t' \mapsto \bar h_2(t')(w))(t')) \text{ or } (\neg w(ind) \text{ and } \forall t' \in T, \bar h_1(t')(w) = (t' \mapsto \bar h_1(t')(w))(t'))) \\
+  \neg ((w(ind) \text{ and } \forall t' \in T, \bar h_2(t')(w) = (t' \mapsto \bar h_2(t')(w)(t')) \text{ or } (\neg w(ind) \text{ and } \forall t' \in T, \bar h_2(t')(w) = (t' \mapsto \bar h_1(t')(w)))(t')))
+\end{cases*}$$
+That is
+$$\begin{cases*}
+  \neg ((w(ind) \text{ and } \forall t' \in T, \bar h_1(t')(w) = \bar h_2(t')(w)) \text{ or } (\neg w(ind) \text{ and } \forall t' \in T, \bar h_1(t')(w) = \bar h_1(t')(w))) \\
+  \neg ((w(ind) \text{ and } \forall t' \in T, \bar h_2(t')(w) = \bar h_2(t')(w)) \text{ or } (\neg w(ind) \text{ and } \forall t' \in T, \bar h_2(t')(w) = h_1(t')(w)))
+\end{cases*}$$
+As $\bar h_1(t)(w) \neq \bar h_2(t)(w)$, this gives
+$$\begin{cases*}
+  \neg \neg w(ind) \\
+  \neg w(ind)
+\end{cases*}$$
+and therefore a contradiction. \
+■
 --MATH_END--
 
-[//]: # Rocq (29-31)
-
-An event is possible if there exists a physically possible history in which it happens.
-
---MATH_START--
-$\mathbf{Definition}$\
-An event $e \in E$ is said possible in a physical theory $pt \in PT$ if $\exists h \in H$ which satisfies $pt$ such that $e(h)=⊤$.
---MATH_END--
-
-[//]: # Rocq (33-34)
-
-## Determinism
-
-A physical theory is deterministic when a given state at a given instant determines all the other states after that instant: if we know everything at the present moment, we can describe all that's going to happen. For example, classical and relativistic mechanics are deterministic. See for example [the page 12 of this article](https://philsci-archive.pitt.edu/11437/1/Muller-Placek-Defining-Determinism.pdf).
-
---MATH_START--
-$\mathbf{Definition}$\
-A physical theory $pt \in PT$ is said deterministic if $\forall h_1, h_2 \in H$ which satisfy $pt$ and such that $h_1(t_0) = h_2(t_0)$ for a given $t_0 \in T$, then $\forall t \gt t_0, h_1(t) = h_2(t)$.
---MATH_END--
-
-[//]: # Rocq (36-52)
+[//]: # Rocq (99-173)

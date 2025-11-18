@@ -17,6 +17,8 @@ Throughout this page, let $T$ be the set of instants in the unfolding of time. I
 Let $S$ be the set of states.
 --MATH_END--
 
+[//]: # Rocq (8-10)
+
 
 ## Histories and events
 
@@ -71,7 +73,7 @@ An event $e \in E$ is said possible in a physical theory $pt \in PT$ if $\exists
 
 ## Determinism
 
-A physical theory is deterministic when a given state at a given instant determines all the other states after that instant: if we know everything at the present moment, we can describe all that's going to happen. For example, classical and relativistic mechanics are deterministic. See for example [the page 12 of this article](https://philsci-archive.pitt.edu/11437/1/Muller-Placek-Defining-Determinism.pdf).
+A physical theory is deterministic when a given state at a given instant determines all the other states after that instant: if we know everything at the present moment, we can (in theory) describe all that's going to happen. For example, classical and relativistic mechanics are deterministic. See for example [the page 12 of this article](https://philsci-archive.pitt.edu/11437/1/Muller-Placek-Defining-Determinism.pdf).
 
 --MATH_START--
 $\mathbf{Definition}$\
