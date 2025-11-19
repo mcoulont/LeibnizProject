@@ -271,7 +271,12 @@ if __name__ == "__main__":
 
 	html_rocq_index = ""
 
-	for rocq_object in sorted(links_to_rocq_objects.keys()):
+	for rocq_object in sorted(
+		links_to_rocq_objects.keys(),
+		# without the line below, all upper cases are rendered before
+		# all lower cases (for instance "TotalOrder" is rendered before "add1_lt")
+		key=lambda s: s.lower()
+	):
 		if links_to_rocq_objects[rocq_object].is_relative():
 			url_prefix = "Articles/"
 		else:
