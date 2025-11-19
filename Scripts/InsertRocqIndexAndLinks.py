@@ -70,7 +70,7 @@ def detect_rocq_objects_to_point_to(
 ):
 	for rocq_file in rocq_files:
 		line_number = 0
-		depth_out_comment = 0
+		depth_outcomment = 0
 
 		for line_rocq_file in open(
 			folder_rocq_files + '/' + rocq_file + ".v",
@@ -79,92 +79,112 @@ def detect_rocq_objects_to_point_to(
 		).readlines():
 			line_number += 1
 
-			while 0 < len(line_rocq_file):
-				not_outcommented_piece = ""
+			if 1 < line_rocq_file.count(TOKEN_ROCQ_COMMENT_START):
+				print(
+					"Error: multiple comment starts in " +
+					rocq_file + ".v line " + str(line_number) + "\n",
+					file=sys.stderr
+				)
+				exit(1)
 
-				pos_comment_start = line_rocq_file.find(TOKEN_ROCQ_COMMENT_START)
-				pos_comment_end = line_rocq_file.find(TOKEN_ROCQ_COMMENT_END)
+			if 1 < line_rocq_file.count(TOKEN_ROCQ_COMMENT_END):
+				print(
+					"Error: multiple comment ends in " +
+					rocq_file + ".v line " + str(line_number) + "\n",
+					file=sys.stderr
+				)
+				exit(1)
 
-				if -1 == pos_comment_start and -1 == pos_comment_end:
-					if 0 == depth_out_comment:
-						not_outcommented_piece = line_rocq_file
+			not_outcommented_piece = ""
 
-					line_rocq_file = ""
+			pos_comment_start = line_rocq_file.find(TOKEN_ROCQ_COMMENT_START)
+			pos_comment_end = line_rocq_file.find(TOKEN_ROCQ_COMMENT_END)
 
-				elif (
-					-1 == pos_comment_end or
-					pos_comment_start < pos_comment_end
-				):
-					if 0 == depth_out_comment:
-						not_outcommented_piece = line_rocq_file[0:pos_comment_start]
+			if -1 == pos_comment_start and -1 == pos_comment_end:
+				if 0 == depth_outcomment:
+					not_outcommented_piece = line_rocq_file
 
-					line_rocq_file = line_rocq_file[
-						pos_comment_start + len(TOKEN_ROCQ_COMMENT_START):
-					]
+			elif -1 == pos_comment_end:
+				if 0 == depth_outcomment:
+					not_outcommented_piece = line_rocq_file[0:pos_comment_start]
 
-					depth_out_comment += 1
+				depth_outcomment += 1
 
-				elif (
-					-1 == pos_comment_start or
-					pos_comment_end < pos_comment_start
-				):
-					line_rocq_file = line_rocq_file[
+			elif -1 == pos_comment_start:
+				if 0 == depth_outcomment:
+					not_outcommented_piece = line_rocq_file[
 						pos_comment_end + len(TOKEN_ROCQ_COMMENT_END):
 					]
 
-					depth_out_comment -= 1
+				depth_outcomment -= 1
 
+			elif pos_comment_start < pos_comment_end:
+				if 0 == depth_outcomment:
+					not_outcommented_piece = (
+						line_rocq_file[0:pos_comment_start] +
+						line_rocq_file[
+							pos_comment_end + len(TOKEN_ROCQ_COMMENT_END):
+						]
+					)
+
+			elif pos_comment_end < pos_comment_start:
+				if 0 == depth_outcomment:
+					not_outcommented_piece = line_rocq_file[
+						pos_comment_end + len(TOKEN_ROCQ_COMMENT_END):
+						pos_comment_start
+					]
+
+			else:
+				print(
+					"Error: internal error while parsing comments in " +
+					rocq_file + ".v line " + str(line_number) + "\n",
+					file=sys.stderr
+				)
+				exit(1)
+
+			if depth_outcomment < 0:
+				print(
+					"Error: unmatched comment end in " +
+					rocq_file + ".v line " + str(line_number) + "\n",
+					file=sys.stderr
+				)
+				exit(1)
+
+			for res_search_object in findall(
+				REGEX_ROCQ_OBJECT_POINTED_TO,
+				not_outcommented_piece
+			):
+				if res_search_object[3] in links_to_rocq_objects:
+					print(
+						"Error: duplicate name " +
+						res_search_object[3] + " in " +
+						links_to_rocq_objects[
+							res_search_object[3]
+						].get_url().split('/')[-1] +
+						" and " + rocq_file +
+						".v (we try to avoid this)\n",
+						file=sys.stderr
+					)
+					exit(1)
+
+				if for_tools:
+					links_to_rocq_objects[
+						res_search_object[3]
+					] = LinkToRocqObject(
+						res_search_object[1],
+						"https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/" +
+						rocq_file + ".v#L" + str(line_number),
+						False
+					)
 				else:
-					print(
-						"Error: internal error while parsing comments in " +
-						rocq_file + ".v line " + str(line_number) + "\n",
-						file=sys.stderr
+					links_to_rocq_objects[
+						res_search_object[3]
+					] = LinkToRocqObject(
+						res_search_object[1],
+						rocq_file + ".html#" +
+						res_search_object[3],
+						True
 					)
-					exit(1)
-
-				if depth_out_comment < 0:
-					print(
-						"Error: unmatched comment end in " +
-						rocq_file + ".v line " + str(line_number) + "\n",
-						file=sys.stderr
-					)
-					exit(1)
-
-				for res_search_object in findall(
-					REGEX_ROCQ_OBJECT_POINTED_TO,
-					not_outcommented_piece
-				):
-					if res_search_object[3] in links_to_rocq_objects:
-						print(
-							"Error: duplicate name " +
-							res_search_object[3] + " in " +
-							links_to_rocq_objects[
-								res_search_object[3]
-							].get_url().split('/')[-1] +
-							" and " + rocq_file +
-							".v (we try to avoid this)\n",
-							file=sys.stderr
-						)
-						exit(1)
-
-					if for_tools:
-						links_to_rocq_objects[
-							res_search_object[3]
-						] = LinkToRocqObject(
-							res_search_object[1],
-							"https://github.com/mcoulont/LeibnizProject/tree/master/Rocq/Tools/" +
-							rocq_file + ".v#L" + str(line_number),
-							False
-						)
-					else:
-						links_to_rocq_objects[
-							res_search_object[3]
-						] = LinkToRocqObject(
-							res_search_object[1],
-							rocq_file + ".html#" +
-							res_search_object[3],
-							True
-						)
 
 
 if __name__ == "__main__":
