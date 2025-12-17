@@ -8,6 +8,7 @@ Section physical_theories.
 Context {Time : Type}.
 Context {Before : TotalOrder Time}.
 Context {State : Type}.
+Context {offset : Time -> Time -> Time}.
 
 Definition History : Type := Time -> State.
 
@@ -50,5 +51,12 @@ Prop :=
   satisfies h2 pt /\
   h1 t1 = h2 t1 /\
   h1 t2 <> h2 t2.
+
+Definition History_offset (h : History) (delta_t : Time) : History :=
+  fun t => h (offset delta_t t).
+
+Definition time_translation_symmetry (pt : PhysicalTheory) : Prop :=
+  forall (delta_t : Time) (h : History),
+    satisfies h pt <-> satisfies (History_offset h delta_t) pt.
 
 End physical_theories.

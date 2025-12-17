@@ -17,7 +17,7 @@ Throughout this page, let $T$ be the set of instants in the unfolding of time. I
 Let $S$ be the set of states.
 --MATH_END--
 
-[//]: # Rocq (8-10)
+[//]: # Rocq (8-11)
 
 
 ## Histories and events
@@ -35,7 +35,7 @@ Let $t_0 \in T$, $h \in H$ and ${hu} \in H_{t_0}$. \
 $h$ is said to extend ${hu}$ if $\forall t \le t_0, h(t) = {hu}(t)$.
 --MATH_END--
 
-[//]: # Rocq (12-22)
+[//]: # Rocq (13-23)
 
 As a history contains all the information, it can report which events happened and which didn't.
 
@@ -44,7 +44,7 @@ $\mathbf{Definition}$\
 The set $E$ of events is ${\{⊥, ⊤\}}^H$, provided $e(h) = ⊤$ when the event $e \in E$ happens in history $h \in H$.
 --MATH_END--
 
-[//]: # Rocq (24-27)
+[//]: # Rocq (25-28)
 
 
 ## Physical theories
@@ -60,7 +60,7 @@ $\mathbf{Definition}$\
 A history $h \in H$ is said to satisfy a physical theory $pt \in PT$ if $pt(h) = ⊤$
 --MATH_END--
 
-[//]: # Rocq (29-31)
+[//]: # Rocq (30-32)
 
 An event is possible if there exists a physically possible history in which it happens.
 
@@ -69,7 +69,7 @@ $\mathbf{Definition}$\
 An event $e \in E$ is said possible in a physical theory $pt \in PT$ if $\exists h \in H$ which satisfies $pt$ such that $e(h)=⊤$.
 --MATH_END--
 
-[//]: # Rocq (33-34)
+[//]: # Rocq (34-35)
 
 ## Determinism
 
@@ -80,4 +80,19 @@ $\mathbf{Definition}$\
 A physical theory $pt \in PT$ is said deterministic if $\forall h_1, h_2 \in H$ which satisfy $pt$ and such that $h_1(t_0) = h_2(t_0)$ for a given $t_0 \in T$, then $\forall t \gt t_0, h_1(t) = h_2(t)$.
 --MATH_END--
 
-[//]: # Rocq (36-52)
+[//]: # Rocq (37-53)
+
+## Time-translation symmetry
+
+A physical theory is said to respect time-translation symmetry if shifting the time by a given amount does not change satisfiability.
+
+--MATH_START--
+$\mathbf{Definition}$\
+Let $h \in H$ and $\delta$ an amount of time. \
+$h_\delta$ is defined as the history $t \mapsto h(t + \delta)$.
+
+$\mathbf{Definition}$\
+$pt \in PT$ is said to respect time-translation symmetry if $\forall \delta$ amount of time and $\forall h \in H$, $h$ satisfies $pt$ if and only if $h_\delta$ satisfies $pt$.
+--MATH_END--
+
+[//]: # Rocq (55-60)
