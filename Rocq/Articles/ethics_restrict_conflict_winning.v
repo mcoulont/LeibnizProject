@@ -6,6 +6,7 @@ Require Import Classical.
 Require Import eqType_facts.
 Require Import ethics_first_steps.
 Require Import ethics_in_society.
+Require Import occam_razor.
 Require Import physical_theories.
 Require Import ethics_restrict_goal_achieving.
 

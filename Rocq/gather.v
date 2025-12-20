@@ -6,7 +6,11 @@ Require Import objective_ethics_no_disapproval_iff_same_ethic.
 Require Import more_restrictive_ethics_diminish_conflicts.
 Require Import unanimous_altruism_not_enough_to_avoid_conflicts.
 Require Import arrow_theorem.
+Require Import occam_razor.
+Require Import scientific_process.
 Require Import physical_theories.
 Require Import ethics_restrict_goal_achieving.
 Require Import ethics_restrict_conflict_winning.
 Require Import gibbard_theorem.
+Require Import many_worlds_interpretation.
+Require Import physics_with_free_will.

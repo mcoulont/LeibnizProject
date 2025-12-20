@@ -17,34 +17,7 @@ Throughout this page, let $T$ be the set of instants in the unfolding of time. I
 Let $S$ be the set of states.
 --MATH_END--
 
-[//]: # Rocq (8-11)
-
-
-## Histories and events
-
-A history is a complete description of all what happened through time (successive states). A history until a certain instant is all what happened through time until this instant. A history extends a history until a certain instant if both coincide before that instant.
-
---MATH_START--
-$\mathbf{Definition}$\
-The set $H$ of histories is $S^T$. \
-The set $H_{t_0}$ of histories until $t_0$ is $S^{\{t \in T | t \le t_0\}}$ (where $t_0 \in T$). \
-The set $H_{<t_0}$ of histories before $t_0$ is $S^{\{t \in T | t \lt t_0\}}$ (where $t_0 \in T$).
-
-$\mathbf{Definition}$\
-Let $t_0 \in T$, $h \in H$ and ${hu} \in H_{t_0}$. \
-$h$ is said to extend ${hu}$ if $\forall t \le t_0, h(t) = {hu}(t)$.
---MATH_END--
-
-[//]: # Rocq (13-23)
-
-As a history contains all the information, it can report which events happened and which didn't.
-
---MATH_START--
-$\mathbf{Definition}$\
-The set $E$ of events is ${\{⊥, ⊤\}}^H$, provided $e(h) = ⊤$ when the event $e \in E$ happens in history $h \in H$.
---MATH_END--
-
-[//]: # Rocq (25-28)
+[//]: # Rocq (9-12)
 
 
 ## Physical theories
@@ -60,7 +33,7 @@ $\mathbf{Definition}$\
 A history $h \in H$ is said to satisfy a physical theory $pt \in PT$ if $pt(h) = ⊤$
 --MATH_END--
 
-[//]: # Rocq (30-32)
+[//]: # Rocq (14-14)
 
 An event is possible if there exists a physically possible history in which it happens.
 
@@ -69,7 +42,7 @@ $\mathbf{Definition}$\
 An event $e \in E$ is said possible in a physical theory $pt \in PT$ if $\exists h \in H$ which satisfies $pt$ such that $e(h)=⊤$.
 --MATH_END--
 
-[//]: # Rocq (34-35)
+[//]: # Rocq (16-17)
 
 ## Determinism
 
@@ -80,7 +53,7 @@ $\mathbf{Definition}$\
 A physical theory $pt \in PT$ is said deterministic if $\forall h_1, h_2 \in H$ which satisfy $pt$ and such that $h_1(t_0) = h_2(t_0)$ for a given $t_0 \in T$, then $\forall t \gt t_0, h_1(t) = h_2(t)$.
 --MATH_END--
 
-[//]: # Rocq (37-53)
+[//]: # Rocq (19-35)
 
 ## Time-translation symmetry
 
@@ -95,4 +68,4 @@ $\mathbf{Definition}$\
 $pt \in PT$ is said to respect time-translation symmetry if $\forall \delta$ amount of time and $\forall h \in H$, $h$ satisfies $pt$ if and only if $h_\delta$ satisfies $pt$.
 --MATH_END--
 
-[//]: # Rocq (55-60)
+[//]: # Rocq (37-43)

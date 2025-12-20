@@ -50,3 +50,15 @@ Definition non_strict {T : Type} {property : relation T -> Prop}
 Definition strict {T : Type} {property : relation T -> Prop}
 (sig_pty : { R : relation T | property R }) : relation T :=
   fun (x y : T) => ~ non_strict sig_pty y x.
+
+Lemma strict_implies_non_strict {T : Type} (to : TotalOrder T) (a b: T) :
+  strict to a b -> non_strict to a b.
+Proof.
+  intro. unfold strict in H.
+  assert (non_strict to a b \/ non_strict to b a).
+  {
+    destruct to. simpl in *. unfold total_order in t. destruct t.
+    unfold total in H0. pose proof (H0 a b). tauto.
+  }
+  tauto.
+Qed.

@@ -21,7 +21,7 @@ Let $S$ be the set of states and $A$ be the set of actions.
 Some definitions in [this article](https://www.leibnizproject.com/Articles/physical_theories.html) are used.
 --MATH_END--
 
-[//]: # Rocq (7-10)
+[//]: # Rocq (8-11)
 
 
 ## Determinism except for free will
@@ -39,4 +39,4 @@ $\mathbf{Definition}$\
 A physical theory $pt \in {\{⊥ ,⊤\}}^{S^T}$ is said deterministic except for free will if $$\forall h_1, h_2 \in (S \times A)^T \text{ whose projections satisfy both } pt \text{ and such that } h_1(t_0) = h_2(t_0) \text{ for a given } t_0 \in T, \forall t \gt t_0, (\text{all the actions between } t_0 \text{ and } t \text{ are equal in } h_1 \text{ and } h_2 \Rightarrow h_1(t) = h_2(t))$$
 --MATH_END--
 
-[//]: # Rocq (12-34)
+[//]: # Rocq (13-35)

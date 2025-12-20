@@ -1,5 +1,6 @@
 
 Require Import relation_facts.
+Require Import occam_razor.
 Require Import physical_theories.
 
 Section deterministic_physics_free_will.

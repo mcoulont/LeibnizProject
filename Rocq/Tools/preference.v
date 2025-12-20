@@ -206,7 +206,7 @@ Proof.
   apply preference_order_reflexive. tauto.
 Qed.
 
-Lemma strict_implies_non_strict {T : Type} (po : PreferenceOrder T) (a b: T) :
+Lemma strict_preference_implies_non_strict {T : Type} (po : PreferenceOrder T) (a b: T) :
   strict po a b -> non_strict po a b.
 Proof.
   intro. unfold strict in H.
@@ -267,7 +267,7 @@ Lemma strict_transitive {T : Type} (po : PreferenceOrder T) (a b c: T) :
 Proof.
   intros.
   assert (non_strict po b c).
-  { apply strict_implies_non_strict. exact H0. }
+  { apply strict_preference_implies_non_strict. exact H0. }
   { apply strict_non_strict_transitive with (b:=b) ; tauto. }
 Qed.
 

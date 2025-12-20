@@ -19,7 +19,7 @@ Let $S$ be the set of states and $W$ the set of worlds.
 Some definitions in [this article](https://www.leibnizproject.com/Articles/physical_theories.html) are used.
 --MATH_END--
 
-[//]: # Rocq (13-16)
+[//]: # Rocq (14-17)
 
 
 ## Indeterminism
@@ -41,7 +41,7 @@ Let $I(pt)$ be the set of indeterminisms of $pt$. \
 And let $W = {\{⊥ ,⊤\}}^{I(pt)}$ be the set of worlds.
 --MATH_END--
 
-[//]: # Rocq (18-45)
+[//]: # Rocq (19-46)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -52,7 +52,7 @@ Direct application of the definitions of a deterministic physical theory and of 
 ■
 --MATH_END--
 
-[//]: # Rocq (47-86)
+[//]: # Rocq (48-87)
 
 
 ## A deterministic many-worlds interpretation
@@ -72,7 +72,7 @@ $$\begin{align*}
 \end{align*}$$
 --MATH_END--
 
-[//]: # Rocq (88-97)
+[//]: # Rocq (89-98)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -118,4 +118,4 @@ and therefore a contradiction. \
 ■
 --MATH_END--
 
-[//]: # Rocq (99-173)
+[//]: # Rocq (100-174)

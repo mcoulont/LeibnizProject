@@ -244,7 +244,7 @@ Proof.
           destruct (`[< non_strict po a z >]) eqn:Haz.
           {
             apply asboolT.
-            apply strict_implies_non_strict.
+            apply strict_preference_implies_non_strict.
             apply strict_non_strict_transitive with (b:=a).
             {
               unfold strict. intro. intuition.

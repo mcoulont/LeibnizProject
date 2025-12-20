@@ -6,6 +6,7 @@ From mathcomp Require Import all_algebra all_ssreflect classical_sets boolp.
 
 Require Import relation_facts.
 Require Import boolp_facts.
+Require Import occam_razor.
 Require Import physical_theories.
 
 Section many_worlds_interpretation.
