@@ -18,9 +18,18 @@ Definition HistoryUntil (t0 : Time) : Type :=
 Definition HistoryBefore (t0 : Time) : Type :=
   { t : Time | strict Before t t0 } -> State.
 
-Definition extends {t0 : Time} (h : History) (hu : HistoryUntil t0) : Prop :=
+Definition extends_until {t0 : Time} (h : History) (hu : HistoryUntil t0) : Prop :=
   forall (t : { t : Time | non_strict Before t t0 }),
     non_strict Before (proj1_sig t) t0 -> h (proj1_sig t) = hu t.
+
+Definition extends_before {t0 : Time} (h : History) (hu : HistoryBefore t0) : Prop :=
+  forall (t : { t : Time | strict Before t t0 }),
+    strict Before (proj1_sig t) t0 -> h (proj1_sig t) = hu t.
+
+Definition History_restriction_Before (t : Time) (h : History) :
+HistoryBefore t :=
+  fun (t0 : { t0 : Time | strict Before t0 t }) =>
+    h (proj1_sig t0).
 
 Definition HistoryUntil_restriction {t1 t2 : Time}
 (le : non_strict Before t1 t2) (h2 : HistoryUntil t2) : HistoryUntil t1.
@@ -29,7 +38,7 @@ Proof.
   intros [t Ht].
   apply h2.
   apply exist with (x:=t).
-  unfold TotalOrder in Before. destruct Before. (*unfold non_strict in *.*)
+  unfold TotalOrder in Before. destruct Before.
   unfold total_order in *.
   simpl in le. simpl in Ht. simpl.
   destruct t0. destruct o.
@@ -37,10 +46,23 @@ Proof.
   apply ord_trans with (y:=t1); tauto.
 Defined.
 
+Definition HistoryBefore_restriction {t1 t2 : Time}
+(le : non_strict Before t1 t2) (h2 : HistoryBefore t2) : HistoryBefore t1.
+Proof.
+  unfold HistoryBefore in *.
+  intros [t Ht].
+  apply h2.
+  apply exist with (x:=t).
+  apply strict_non_strict_transitive with (b:=t1); tauto.
+Defined.
+
 Definition Event : Type := pred History.
 
 Definition happens_in (e : Event) (h : History) : Prop :=
   e h = true.
+
+Definition happened_before {t0 : Time} (h0 : HistoryBefore t0) (e : Event) : Prop :=
+  forall (h : History), extends_before h h0 -> happens_in e h.
 
 Definition ScientificTheory : Type := History -> Prop.
 
@@ -48,7 +70,7 @@ Definition satisfies (h : History) (st : ScientificTheory) : Prop := st h.
 
 Definition satisfies_until {t0 : Time} (h0 : HistoryUntil t0)
 (st : ScientificTheory) : Prop :=
-  exists (h : History), st h /\ extends h h0.
+  exists (h : History), st h /\ extends_until h h0.
 
 Definition more_precise (st1 st2 : ScientificTheory) : Prop :=
   forall (h : History), st2 h -> st1 h.

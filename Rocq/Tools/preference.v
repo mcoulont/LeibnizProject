@@ -244,7 +244,7 @@ Proof.
   apply H0. exact H2.
 Qed.
 
-Lemma strict_non_strict_transitive {T : Type} (po : PreferenceOrder T) (a b c: T) :
+Lemma strict_non_strict_transitive_preference {T : Type} (po : PreferenceOrder T) (a b c: T) :
   strict po a b ->
   non_strict po b c ->
   strict po a c.
@@ -260,7 +260,7 @@ Proof.
   apply H. exact H2.
 Qed.
 
-Lemma strict_transitive {T : Type} (po : PreferenceOrder T) (a b c: T) :
+Lemma strict_preference_transitive {T : Type} (po : PreferenceOrder T) (a b c: T) :
   strict po a b ->
   strict po b c ->
   strict po a c.
@@ -268,7 +268,7 @@ Proof.
   intros.
   assert (non_strict po b c).
   { apply strict_preference_implies_non_strict. exact H0. }
-  { apply strict_non_strict_transitive with (b:=b) ; tauto. }
+  { apply strict_non_strict_transitive_preference with (b:=b) ; tauto. }
 Qed.
 
 Lemma strict_asymmetric {T : Type} (po : PreferenceOrder T) (a b: T) :

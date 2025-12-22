@@ -32,10 +32,12 @@ The set $H_{<t_0}$ of histories before $t_0$ is $S^{\{t \in T | t \lt t_0\}}$ (w
 
 $\mathbf{Definition}$\
 Let $t_0 \in T$, $h \in H$ and ${hu} \in H_{t_0}$. \
-$h$ is said to extend ${hu}$ if $\forall t \le t_0, h(t) = {hu}(t)$.
+$h$ is said to extend ${hu}$ if $\forall t \le t_0, h(t) = {hu}(t)$. \
+Let $t_0 \in T$, $h \in H$ and ${hb} \in H_{<t_0}$. \
+$h$ is said to extend ${hb}$ if $\forall t \lt t_0, h(t) = {hb}(t)$.
 --MATH_END--
 
-[//]: # Rocq (13-38)
+[//]: # Rocq (13-57)
 
 As a history contains all the information, it can report which events happened and which didn't.
 
@@ -44,7 +46,7 @@ $\mathbf{Definition}$\
 The set $E$ of events is ${\{⊥, ⊤\}}^H$, provided $e(h) = ⊤$ when the event $e \in E$ happens in history $h \in H$.
 --MATH_END--
 
-[//]: # Rocq (40-43)
+[//]: # Rocq (59-65)
 
 
 ## Scientific theories
@@ -63,7 +65,7 @@ $\mathbf{Definition}$\
 A history $h_{t_0} \in H_{t_0}$ is said to satisfy a scientific theory $st \in ST$ until $t_0 \in T$ if $\exists h \in H$ extending $h_{t_0}$ such that $st(h) = ⊤$.
 --MATH_END--
 
-[//]: # Rocq (45-51)
+[//]: # Rocq (67-73)
 
 The more patterns of behavior of the environment you take into account, the more precise is your scientific theory.
 
@@ -72,7 +74,7 @@ $\mathbf{Definition}$\
 $st_1 \in ST$ is said more precise than $st_2 \in ST$ if $\forall h \in H, st_2(h) = ⊥ \Rightarrow st_1(h) = ⊥$. \
 --MATH_END--
 
-[//]: # Rocq (53-54)
+[//]: # Rocq (75-76)
 
 ## Occam's razor as a way to choose among plausible scientific theories
 
@@ -83,4 +85,4 @@ $\mathbf{Definition}$\
 A history $h_{t_0} \in H_{t_0}$ being given, the scientific theory prefered by Occam's razor is the simplest one satisjfying $h_{t_0}$ (whatever the total relation order used to define the simplicity of scientific theories).
 --MATH_END--
 
-[//]: # Rocq (56-63)
+[//]: # Rocq (78-85)

@@ -245,7 +245,7 @@ Proof.
           {
             apply asboolT.
             apply strict_preference_implies_non_strict.
-            apply strict_non_strict_transitive with (b:=a).
+            apply strict_non_strict_transitive_preference with (b:=a).
             {
               unfold strict. intro. intuition.
               assert (`[< non_strict po a x >]).
@@ -1348,7 +1348,7 @@ Proof.
     unfold unanimously_same_order. exact H12.
   }
   unfold same_order in H13. destruct H13. destruct H14. rewrite H13.
-  apply strict_transitive with (b:=b).
+  apply strict_preference_transitive with (b:=b).
   {
     assert (strict (constitution pp1) c b).
     { unfold very_bottom_choice in H7. apply H7. exact H0. }

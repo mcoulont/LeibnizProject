@@ -239,7 +239,7 @@ Proof.
                   {
                     apply NNPP in H3.
                     assert (strict po x z).
-                    { apply strict_transitive with (b:=y); try tauto. }
+                    { apply strict_preference_transitive with (b:=y); try tauto. }
                     unfold indifferent in H2. tauto.
                   }
                   { apply NNPP in H3. unfold strict in H3. tauto. }

@@ -62,3 +62,32 @@ Proof.
   }
   tauto.
 Qed.
+
+Lemma strict_non_strict_transitive {T : Type} (to : TotalOrder T) (a b c: T) :
+  strict to a b ->
+  non_strict to b c ->
+  strict to a c.
+Proof.
+  intros.
+  unfold strict in *.
+  intro.
+  assert (non_strict to b a).
+  {
+    destruct to. destruct t. destruct o.
+    unfold Relation_Definitions.transitive in ord_trans.
+    simpl in *.
+    apply ord_trans with (y:=c) ; tauto.
+  }
+  apply H. exact H2.
+Qed.
+
+Lemma strict_transitive {T : Type} (to : TotalOrder T) (a b c: T) :
+  strict to a b ->
+  strict to b c ->
+  strict to a c.
+Proof.
+  intros.
+  assert (non_strict to b c).
+  { apply strict_implies_non_strict. exact H0. }
+  { apply strict_non_strict_transitive with (b:=b) ; tauto. }
+Qed.
