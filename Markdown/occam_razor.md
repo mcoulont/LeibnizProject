@@ -63,9 +63,10 @@ A history $h \in H$ is said to satisfy a scientific theory $pt \in PT$ if $pt(h)
 
 $\mathbf{Definition}$\
 A history $h_{t_0} \in H_{t_0}$ is said to satisfy a scientific theory $st \in ST$ until $t_0 \in T$ if $\exists h \in H$ extending $h_{t_0}$ such that $st(h) = ⊤$.
+A history $h_{<t_0} \in H_{<t_0}$ is said to satisfy a scientific theory $st \in ST$ before $t_0 \in T$ if $\exists h \in H$ extending $h_{<t_0}$ such that $st(h) = ⊤$.
 --MATH_END--
 
-[//]: # Rocq (67-73)
+[//]: # Rocq (67-77)
 
 The more patterns of behavior of the environment you take into account, the more precise is your scientific theory.
 
@@ -74,7 +75,7 @@ $\mathbf{Definition}$\
 $st_1 \in ST$ is said more precise than $st_2 \in ST$ if $\forall h \in H, st_2(h) = ⊥ \Rightarrow st_1(h) = ⊥$. \
 --MATH_END--
 
-[//]: # Rocq (75-76)
+[//]: # Rocq (79-80)
 
 ## Occam's razor as a way to choose among plausible scientific theories
 
@@ -85,4 +86,4 @@ $\mathbf{Definition}$\
 A history $h_{t_0} \in H_{t_0}$ being given, the scientific theory prefered by Occam's razor is the simplest one satisjfying $h_{t_0}$ (whatever the total relation order used to define the simplicity of scientific theories).
 --MATH_END--
 
-[//]: # Rocq (78-85)
+[//]: # Rocq (82-89)

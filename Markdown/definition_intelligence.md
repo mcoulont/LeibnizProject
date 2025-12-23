@@ -50,7 +50,7 @@ The set $STR$ of strategizings is the set of functions from events (goals) to po
 
 A policy is more adequate than another to reach a goal if its failure implies the failure of the other one. And one is more intelligent if one elaborates a more adequate policy whatever the goal.
 
-These two definitions don't work in [non-deterministic environments](https://leibnizproject.com/Articles/physical_theories.html). If instead there is some randomness, a goal may be reached thanks to beginner's luck: an action which is not the most likely to achieve the goal may succeed because something unexpected (but still possible) happened.
+These two definitions do not work in [non-deterministic environments](https://leibnizproject.com/Articles/physical_theories.html). If instead there is some randomness, a goal may be reached thanks to beginner's luck: an action which is not the most likely to achieve the goal may succeed because something unexpected (but still possible) happened. And in deerministic environments, good decisions taken for bad reasons are regarded as intelligent.
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -61,15 +61,15 @@ A goal is said fulfilled in a history before $t_0 \in T$ by a policy $p \in P$ i
 
 --MATH_START--
 $\mathbf{Definition}$\
-A policy $p_1 \in P$ is said more adequate than $p_2 \in P$ to achieve a goal $g$ if
-$$g \text{ is fulfilled in some history following } p_2 \Rightarrow g \text{ is fulfilled in some history following } p_1$$
+A scientific theory $st$ being given, a policy $p_1 \in P$ is said more adequate than $p_2 \in P$ to achieve a goal $g$ if
+$$g \text{ is fulfilled in some history satisfying $st$ following } p_2 \Rightarrow g \text{ is fulfilled in some history satisfying $st$ following } p_1$$
 --MATH_END--
 
-[//]: # Rocq (43-61)
+[//]: # Rocq (43-63)
 
 --MATH_START--
 $\mathbf{Definition}$\
-A strategizing $str_1 \in STR$ is said more intelligent than $str_2 \in STR$ if, whatever the goal, it provides a more adequate policy.
+A scientific theory $st$ being given, a strategizing $str_1 \in STR$ is said more intelligent than $str_2 \in STR$ if, whatever the goal, it provides a more adequate policy.
 --MATH_END--
 
-[//]: # Rocq (63-82)
+[//]: # Rocq (65-86)

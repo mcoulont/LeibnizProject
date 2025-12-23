@@ -72,6 +72,10 @@ Definition satisfies_until {t0 : Time} (h0 : HistoryUntil t0)
 (st : ScientificTheory) : Prop :=
   exists (h : History), st h /\ extends_until h h0.
 
+Definition satisfies_before {t0 : Time} (h0 : HistoryBefore t0)
+(st : ScientificTheory) : Prop :=
+  exists (h : History), st h /\ extends_before h h0.
+
 Definition more_precise (st1 st2 : ScientificTheory) : Prop :=
   forall (h : History), st2 h -> st1 h.
 
