@@ -1,5 +1,5 @@
 
-Require Import Logic.FunctionalExtensionality.
+Require Import Stdlib.Logic.FunctionalExtensionality.
 From mathcomp Require Import fintype fingroup perm.
 
 Require Import ethics_in_society.
@@ -10,67 +10,56 @@ Context {State : Type}.
 Context {Action : Type}.
 Context {Individual : finType}.
 
-Definition PermutationOnIndividuals : Type := {perm Individual}.
-
-Definition identity_permutation : {perm Individual} := 1.
-Definition identity : PermutationOnIndividuals := identity_permutation.
-
-Definition composition :
-PermutationOnIndividuals -> PermutationOnIndividuals -> PermutationOnIndividuals :=
-  fun σ => fun τ => mulg σ τ.
-
-Notation " σ ∘ τ " := (composition σ τ) (at level 40, no associativity).
-
-Definition IndividualsPermutationOnStates : Type := {
-  permutation : State -> PermutationOnIndividuals -> State |
-  forall (state : State),
-    permutation state identity = state /\
-    forall (σ τ : PermutationOnIndividuals),
-      permutation (permutation state σ) τ = permutation state (σ ∘ τ)
-}.
-
-Definition permutation_subjective_state (ipos : IndividualsPermutationOnStates) :
-SubjectiveState -> PermutationOnIndividuals -> SubjectiveState :=
-  fun subjective_state => fun σ => get_SubjectiveState (
-    proj1_sig ipos (state subjective_state) σ
-  ) (σ (individual subjective_state)).
-
-Notation " ipos , subjective_state ⋅ σ " := (
-  permutation_subjective_state ipos subjective_state σ
-) (at level 100, no associativity).
-
 Definition objective (ethic : @IndividualEthic State Action Individual)
-(ipos : IndividualsPermutationOnStates) : Prop :=
-  forall (state : State) (individual : Individual) (σ : PermutationOnIndividuals),
-    ethic ( ipos , (
-      get_SubjectiveState state individual
-    ) ⋅ σ ) = ethic (get_SubjectiveState state individual).
+(ipos : @IndividualsPermutationsActingOnStates State Individual) :
+Prop :=
+  forall (state : State) (individual : Individual) (σ : {perm Individual}),
+    ethic (
+      @permutation_SubjectiveState State Individual ipos (
+        @get_SubjectiveState State Individual state individual
+      ) σ
+    ) =
+    ethic ( @get_SubjectiveState State Individual state individual).
 
-Definition everyone_is_objective (ethical_profile : EthicalProfile)
-(ipos : IndividualsPermutationOnStates) :=
+Definition everyone_is_objective
+(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(ipos : @IndividualsPermutationsActingOnStates State Individual) :=
   forall (i : Individual), objective (ethical_profile i) ipos.
 
-Definition may_disapprove (ethical_profile : EthicalProfile) (i j : Individual)
-(state : State) : Prop :=
+Definition may_disapprove
+(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(i j : Individual) (state : State) :
+Prop :=
   exists (action : Action),
-    ethical_profile j (get_SubjectiveState state j) action = true /\
-    ethical_profile i (get_SubjectiveState state j) action = false.
+    ethical_profile j (
+      @get_SubjectiveState State Individual state j
+    ) action = true /\
+    ethical_profile i (
+      @get_SubjectiveState State Individual state j
+    ) action = false.
 
-Definition may_never_disapprove (ethical_profile : EthicalProfile)
-(i j : Individual) : Prop :=
+Definition may_never_disapprove
+(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(i j : Individual) :
+Prop :=
   forall (state : State), ~ may_disapprove ethical_profile i j state.
 
-Definition nobody_may_disapprove (ethical_profile : EthicalProfile)
-(state : State) : Prop :=
+Definition nobody_may_disapprove
+(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(state : State) :
+Prop :=
   forall (i j : Individual), ~ may_disapprove ethical_profile i j state.
 
-Definition nobody_may_ever_disapprove (ethical_profile : EthicalProfile) : Prop :=
+Definition nobody_may_ever_disapprove
+(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual)) :
+Prop :=
   forall (state : State), nobody_may_disapprove ethical_profile state.
 
-Lemma same_ethic_implies_may_not_disapprove (ethical_profile : EthicalProfile)
+Lemma same_ethic_implies_may_not_disapprove
+(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
 (i j : Individual) (state : State) :
-  ethical_profile i (get_SubjectiveState state j) =
-  ethical_profile j (get_SubjectiveState state j) ->
+  ethical_profile i ( @get_SubjectiveState State Individual state j) =
+  ethical_profile j ( @get_SubjectiveState State Individual state j) ->
     ~ may_disapprove ethical_profile i j state.
 Proof.
   intros. unfold not. intros.
@@ -80,7 +69,8 @@ Proof.
 Qed.
 
 Proposition objective_ethics_may_never_disapprove_implies_same_ethic
-(ipos : IndividualsPermutationOnStates) (ethical_profile : EthicalProfile)
+(ipos : @IndividualsPermutationsActingOnStates State Individual)
+(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
 (i j : Individual) :
   objective (ethical_profile i) ipos ->
   objective (ethical_profile j) ipos ->
@@ -100,14 +90,15 @@ Proof.
     unfold get_SubjectiveState in H5.
     assert ( forall (action : Action),
       ethical_profile i (
-        ipos, {| state := state; individual := individual |} ⋅ tperm i individual
+        @permutation_SubjectiveState State Individual ipos
+        {| state := state; individual := individual |} (tperm i individual)
       ) action =
       ethical_profile i {| state := state; individual := individual |} action
     ).
     { intro. rewrite H5. reflexivity. }
     pose proof (H6 x0).
     rewrite H3 in H7.
-    unfold permutation_subjective_state in H7.
+    unfold permutation_SubjectiveState in H7.
     rewrite proj_individual_SubjectiveState in H7.
     rewrite proj_state_SubjectiveState in H7.
     rewrite tpermR in H7.
@@ -115,14 +106,15 @@ Proof.
     unfold get_SubjectiveState in H8.
     assert ( forall (action : Action),
       ethical_profile j (
-        ipos, {| state := state; individual := individual |} ⋅ tperm i individual
+        @permutation_SubjectiveState State Individual ipos
+        {| state := state; individual := individual |} (tperm i individual)
       ) action =
       ethical_profile j {| state := state; individual := individual |} action
     ).
     { intro. rewrite H8. reflexivity. }
     pose proof (H9 x0).
     rewrite H4 in H10.
-    unfold permutation_subjective_state in H10.
+    unfold permutation_SubjectiveState in H10.
     rewrite proj_individual_SubjectiveState in H10.
     rewrite proj_state_SubjectiveState in H10.
     rewrite tpermR in H10.
@@ -137,14 +129,15 @@ Proof.
     unfold get_SubjectiveState in H5.
     assert ( forall (action : Action),
       ethical_profile i (
-        ipos, {| state := state; individual := individual |} ⋅ tperm j individual
+        @permutation_SubjectiveState State Individual ipos
+        {| state := state; individual := individual |} (tperm j individual)
       ) action =
       ethical_profile i {| state := state; individual := individual |} action
     ).
     { intro. rewrite H5. reflexivity. }
     pose proof (H6 x0).
     rewrite H3 in H7.
-    unfold permutation_subjective_state in H7.
+    unfold permutation_SubjectiveState in H7.
     rewrite proj_individual_SubjectiveState in H7.
     rewrite proj_state_SubjectiveState in H7.
     rewrite tpermR in H7.
@@ -152,14 +145,15 @@ Proof.
     unfold get_SubjectiveState in H8.
     assert ( forall (action : Action),
       ethical_profile j (
-        ipos, {| state := state; individual := individual |} ⋅ tperm j individual
+        @permutation_SubjectiveState State Individual ipos
+        {| state := state; individual := individual |} (tperm j individual)
       ) action =
       ethical_profile j {| state := state; individual := individual |} action
     ).
     { intro. rewrite H8. reflexivity. }
     pose proof (H9 x0).
     rewrite H4 in H10.
-    unfold permutation_subjective_state in H10.
+    unfold permutation_SubjectiveState in H10.
     rewrite proj_individual_SubjectiveState in H10.
     rewrite proj_state_SubjectiveState in H10.
     rewrite tpermR in H10.
@@ -169,7 +163,8 @@ Proof.
 Qed.
 
 Corollary objective_ethics_no_disapproval_iff_same_ethic
-(ipos : IndividualsPermutationOnStates) (ethical_profile : EthicalProfile) :
+(ipos : @IndividualsPermutationsActingOnStates State Individual)
+(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual)) :
   everyone_is_objective ethical_profile ipos ->
   (
     nobody_may_ever_disapprove ethical_profile <->

@@ -23,9 +23,6 @@ Definition get_state (state : State_dynamic) : State :=
 Definition state_dynamic (t : Time) (state : State) : State_dynamic :=
   (t, state).
 
-Definition can_achieve (goal : @Event Time (State * Action)) : Prop :=
-  is_possible goal physical_theory.
-
 Definition follows_its_ethic (history : @History Time (State * Action))
 (ethic : @Ethic State_dynamic Action) (t : Time) : Prop :=
   ethic (
@@ -38,7 +35,7 @@ Definition always_follows_its_ethic (history : @History Time (State * Action))
 (ethic :@Ethic State_dynamic Action) : Prop :=
   forall (t : Time), follows_its_ethic history ethic t.
 
-Definition can_achieve_ethically (goal : @Event Time (State * Action))
+Definition may_achieve_ethically (goal : @Event Time (State * Action))
 (ethic : @Ethic State_dynamic Action) : Prop :=
   exists (history : @History Time (State * Action)),
     satisfies history physical_theory /\
@@ -47,11 +44,11 @@ Definition can_achieve_ethically (goal : @Event Time (State * Action))
 
 Lemma ethics_cant_help_goal_achieving
 (goal : @Event Time (State * Action)) (ethic : @Ethic State_dynamic Action) :
-  can_achieve_ethically goal ethic ->
-  can_achieve goal.
+  may_achieve_ethically goal ethic ->
+  @is_possible Time (State * Action) goal physical_theory.
 Proof.
   intros.
-  unfold can_achieve_ethically in H. unfold can_achieve.
+  unfold may_achieve_ethically in H. unfold is_possible.
   destruct H as [history]. exists history.
   tauto.
 Qed.
@@ -71,10 +68,10 @@ Definition strictly_more_restrictive_dynamic
 Lemma ethic_restricts_goal_achieving (goal : @Event Time (State * Action))
 (e1 e2 : @Ethic State_dynamic Action) :
   more_restrictive_dynamic e1 e2 ->
-  can_achieve_ethically goal e1 ->
-  can_achieve_ethically goal e2.
+  may_achieve_ethically goal e1 ->
+  may_achieve_ethically goal e2.
 Proof.
-  unfold can_achieve_ethically. intros.
+  unfold may_achieve_ethically. intros.
   destruct H0 as [history]. exists history.
   destruct H0. destruct H1.
   split.
@@ -94,12 +91,12 @@ Qed.
 
 Lemma ethic_strictly_restricts_goal_achieving
 (goal : @Event Time (State * Action)) :
-  can_achieve goal ->
-  can_achieve_ethically goal ethicless.
+  @is_possible Time (State * Action) goal physical_theory ->
+  may_achieve_ethically goal ethicless.
 Proof.
   intro.
   destruct H as [history]. destruct H.
-  unfold can_achieve_ethically. exists history.
+  unfold may_achieve_ethically. exists history.
   split.
   { exact H. }
   split.

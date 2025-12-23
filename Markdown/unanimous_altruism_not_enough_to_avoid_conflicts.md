@@ -34,7 +34,7 @@ $\mathbf{Definition}$\
 An ethic $e$ is said altruist in $s$ if $\exists (a_i) \in A^I$ such that there is no conflict if $e$ is generalized to the whole society.
 --MATH_END--
 
-[//]: # Rocq (18-27)
+[//]: # Rocq (18-28)
 
 If there is an altruist ethic, then no one is in an ethical dead end (as everyone can follow this altruist ethic)
 
@@ -48,7 +48,7 @@ We conclude with [Lemma 2 in this article](https://www.leibnizproject.com/Articl
 ■
 --MATH_END--
 
-[//]: # Rocq (29-44)
+[//]: # Rocq (30-45)
 
 
 ## Bipartite contest
@@ -66,7 +66,7 @@ $$\begin{cases*}
 \end{cases*}$$
 --MATH_END--
 
-[//]: # Rocq (46-64)
+[//]: # Rocq (47-65)
 
 
 ## Unanimous altruism is not enough to avoid conflicts
@@ -114,4 +114,4 @@ $$\begin{cases*}
 ■
 --MATH_END--
 
-[//]: # Rocq (66-270)
+[//]: # Rocq (67-272)

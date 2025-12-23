@@ -13,26 +13,30 @@ From mathcomp.classical Require Import boolp.
 Require Import relation_facts.
 Require Import preference.
 Require Import finType_facts.
+Require Import ethics_in_society.
 
 Section arrow_theorem.
 
 Context {Alternative : finType}.
 Context {Individual : finType}.
 
-Definition PreferenceProfile : Type := Individual -> PreferenceOrder Alternative.
+Definition Constitution : Type :=
+  @Profile Individual (PreferenceOrder Alternative) ->
+  PreferenceOrder Alternative.
 
-Definition Constitution : Type := PreferenceProfile -> PreferenceOrder Alternative.
-
-Definition unanimously_prefers (pp : PreferenceProfile) (a b : Alternative) : Prop :=
+Definition unanimously_prefers (pp : @Profile Individual (PreferenceOrder Alternative))
+(a b : Alternative) : Prop :=
   forall (i : Individual), strict (pp i) a b.
 
 Definition respects_unanimity (constitution : Constitution) : Prop :=
-  forall (pp : PreferenceProfile) (a b : Alternative),
+  forall (pp : @Profile Individual (PreferenceOrder Alternative))
+  (a b : Alternative),
     unanimously_prefers pp a b ->
     strict (constitution pp) a b.
 
 Definition dictator (constitution : Constitution) (i : Individual) : Prop :=
-  forall (pp : PreferenceProfile) (a b : Alternative),
+  forall (pp : @Profile Individual (PreferenceOrder Alternative))
+  (a b : Alternative),
     strict (pp i) a b ->
     strict (constitution pp) a b.
 
@@ -41,13 +45,16 @@ Definition dictator_except (constitution : Constitution) (i : Individual)
   forall (a c : Alternative),
     a <> b ->
     c <> b ->
-    forall (pp : PreferenceProfile), strict (pp i) c a -> strict (constitution pp) c a .
+    forall (pp : @Profile Individual (PreferenceOrder Alternative)),
+      strict (pp i) c a -> strict (constitution pp) c a .
 
-Definition unanimously_same_order (pp1 pp2 : PreferenceProfile)
+Definition unanimously_same_order
+(pp1 pp2 : @Profile Individual (PreferenceOrder Alternative))
 (a b : Alternative) : Prop :=
   forall (i : Individual), same_order (pp1 i) (pp2 i) a b.
 
-Lemma unanimously_same_order_symmetric (pp1 pp2 : PreferenceProfile)
+Lemma unanimously_same_order_symmetric
+(pp1 pp2 : @Profile Individual (PreferenceOrder Alternative))
 (a b : Alternative) :
   unanimously_same_order pp1 pp2 a b <->
   unanimously_same_order pp1 pp2 b a.
@@ -57,7 +64,8 @@ Proof.
 Qed.
 
 Definition independence_irrelevant_alternatives (constitution : Constitution) : Prop :=
-  forall (pp1 pp2 : PreferenceProfile) (a b : Alternative),
+  forall (pp1 pp2 : @Profile Individual (PreferenceOrder Alternative))
+  (a b : Alternative),
     unanimously_same_order pp1 pp2 a b ->
     same_order (constitution pp1) (constitution pp2) a b.
 
@@ -76,19 +84,25 @@ Proof.
   apply strict_asymmetric with (po:=po) (a:=a) (b:=b) ; tauto.
 Qed.
 
-Definition unanimous_very_top_choice (pp : PreferenceProfile) (b : Alternative) : Prop :=
+Definition unanimous_very_top_choice
+(pp : @Profile Individual (PreferenceOrder Alternative)) (b : Alternative) :
+Prop :=
   forall (i : Individual), very_top_choice (pp i) b.
 
-Definition unanimous_very_bottom_choice (pp : PreferenceProfile) (b : Alternative) :
+Definition unanimous_very_bottom_choice
+(pp : @Profile Individual (PreferenceOrder Alternative)) (b : Alternative) :
 Prop :=
   forall (i : Individual), very_bottom_choice (pp i) b.
 
-Definition unanimous_very_extremal_choice (pp : PreferenceProfile) (b : Alternative) :
+Definition unanimous_very_extremal_choice
+(pp : @Profile Individual (PreferenceOrder Alternative)) (b : Alternative) :
 Prop :=
   forall (i : Individual), very_extremal_choice (pp i) b.
 
-Lemma unanimous_very_top (constitution : Constitution) (una : respects_unanimity constitution)
-(pp : PreferenceProfile) (b : Alternative) :
+Lemma unanimous_very_top (constitution : Constitution)
+(una : respects_unanimity constitution)
+(pp : @Profile Individual (PreferenceOrder Alternative))
+(b : Alternative) :
   unanimous_very_top_choice pp b -> very_top_choice (constitution pp) b.
 Proof.
   unfold unanimous_very_top_choice. unfold very_top_choice.
@@ -99,7 +113,9 @@ Proof.
 Qed.
 
 Lemma unanimous_very_bottom (constitution : Constitution)
-(una : respects_unanimity constitution) (pp : PreferenceProfile) (b : Alternative) :
+(una : respects_unanimity constitution)
+(pp : @Profile Individual (PreferenceOrder Alternative))
+(b : Alternative) :
   unanimous_very_bottom_choice pp b -> very_bottom_choice (constitution pp) b.
 Proof.
   unfold unanimous_very_bottom_choice. unfold very_bottom_choice.
@@ -371,8 +387,10 @@ Definition make_above_preference (po : PreferenceOrder Alternative)
     make_above_preference_order po a b
   ).
 
-Definition make_very_top_at (pp : PreferenceProfile) (b : Alternative)
-(n : Individual) : PreferenceProfile :=
+Definition make_very_top_at
+(pp : @Profile Individual (PreferenceOrder Alternative))
+(b : Alternative) (n : Individual) :
+@Profile Individual (PreferenceOrder Alternative) :=
   fun (i : Individual) => if i == n then (
     make_very_top_preference (pp i) b
   ) else (pp i).
@@ -392,8 +410,10 @@ Proof.
   intuition.
 Qed.
 
-Definition make_above_profile (pp : PreferenceProfile)
-(a c : Alternative) : PreferenceProfile :=
+Definition make_above_profile
+(pp : @Profile Individual (PreferenceOrder Alternative))
+(a c : Alternative) :
+@Profile Individual (PreferenceOrder Alternative) :=
   fun (i : Individual) => make_above_preference (pp i) a c.
 
 Lemma make_above_well_named (po : PreferenceOrder Alternative) (a b : Alternative) :
@@ -460,7 +480,8 @@ Qed.
 
 Lemma extremal_lemma (constitution : Constitution) (alt3 : #|Alternative| >= 3)
 (una : respects_unanimity constitution) (iia : independence_irrelevant_alternatives constitution) :
-  forall (pp : PreferenceProfile) (b : Alternative),
+  forall (pp : @Profile Individual (PreferenceOrder Alternative))
+  (b : Alternative),
     unanimous_very_extremal_choice pp b ->
     very_extremal_choice (constitution pp) b.
 Proof.
@@ -701,7 +722,7 @@ Qed.
 
 Definition is_pivotal (constitution : Constitution) (i : Individual)
 (b : Alternative) : Prop :=
-  exists (pp pp' : PreferenceProfile),
+  exists (pp pp' : @Profile Individual (PreferenceOrder Alternative)),
     (forall (j : Individual), j != i -> pp j = pp' j) /\
     (forall (j : Individual), very_extremal_choice (pp j) b) /\
     (forall (j : Individual), very_extremal_choice (pp' j) b) /\
@@ -717,14 +738,15 @@ Lemma exists_pivot_when_hater (constitution : Constitution)
 (una : respects_unanimity constitution)
 (iia : independence_irrelevant_alternatives constitution)
 (alt3 : #|Alternative| >= 3) (b : Alternative) :
-  forall (bHater : finType) (pp : PreferenceProfile),
+  forall (bHater : finType)
+  (pp : @Profile Individual (PreferenceOrder Alternative)),
     bHater = ({i : Individual | asbool (very_bottom_choice (pp i) b)} : finType) ->
     (forall (i : Individual), very_extremal_choice (pp i) b) ->
     very_bottom_choice (constitution pp) b ->
     has_pivot constitution b.
 Proof.
   apply (induction_cardinal (fun (bHater : finType) =>
-    forall (pp : PreferenceProfile),
+    forall (pp : @Profile Individual (PreferenceOrder Alternative)),
       bHater = ({i : Individual | asbool (very_bottom_choice (pp i) b)} : finType) ->
       (forall (i : Individual), very_extremal_choice (pp i) b) ->
       very_bottom_choice (constitution pp) b ->
@@ -1060,8 +1082,8 @@ Proof.
   }
 Qed.
 
-Definition single_min_all_others_indifferent_preference_profile
-(b : Alternative) : PreferenceProfile :=
+Definition single_min_all_others_indifferent_preference_profile (b : Alternative) :
+@Profile Individual (PreferenceOrder Alternative) :=
   fun (i : Individual) => single_bottom_others_indifferent b.
 
 Lemma exists_pivot (constitution : Constitution)
@@ -1101,8 +1123,10 @@ Proof.
   }
 Qed.
 
-Definition profile_III (i : Individual) (pp pp1 : PreferenceProfile)
-(a b : Alternative) : PreferenceProfile :=
+Definition profile_III (i : Individual)
+(pp pp1 : @Profile Individual (PreferenceOrder Alternative))
+(a b : Alternative) :
+@Profile Individual (PreferenceOrder Alternative) :=
   fun (j : Individual) => (
     if j == i then make_above_preference (pp j) a b else (
         if `[< very_bottom_choice (pp1 j) b >]
@@ -1545,7 +1569,7 @@ Proof.
   pose proof (h_piv (third_alt alt3)).
   unfold has_pivot in H. destruct H as [i].
   assert (forall(a : Alternative), a <> third_alt alt3 ->
-    forall (pp : PreferenceProfile),
+    forall (pp : @Profile Individual (PreferenceOrder Alternative)),
       (strict (pp i) a (third_alt alt3) -> strict (constitution pp) a (third_alt alt3)) /\
       (strict (pp i) (third_alt alt3) a -> strict (constitution pp) (third_alt alt3) a)
   ).

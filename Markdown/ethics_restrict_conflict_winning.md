@@ -24,7 +24,7 @@ $\mathbf{Definition}$\
 Let $G = {\{⊥ ,⊤\}}^H$ be the set of goals (which are events in [this article with $S = S \times A^I$](https://leibnizproject.com/Articles/physical_theories.html)).
 --MATH_END--
 
-[//]: # Rocq (15-22)
+[//]: # Rocq (14-21)
 
 
 ## Conflicts
@@ -36,26 +36,26 @@ $\mathbf{Definition}$\
 The set $GP$ of action profiles is $G^I$.
 --MATH_END--
 
-[//]: # Rocq (24-25)
+[//]: # Rocq (23-24)
 
-A conflict arises when not everyone can achieve its goal.
+A conflict arises when not everyone may achieve its goal.
 
 --MATH_START--
 $\mathbf{Definition}$\
-All the goals of $gp \in GP$ can be achieved if $\exists h \in H$ compatible with the laws of physics in which all the individual goals of $gp$ are achieved.
+All the goals of $gp \in GP$ may be achieved if $\exists h \in H$ compatible with the laws of physics in which all the individual goals of $gp$ are achieved.
 --MATH_END--
 
-[//]: # Rocq (27-31)
+[//]: # Rocq (26-30)
 
 Someone wins a conflict when its goal is achieved. There may be more than one individual who achieves its goal.
 
 --MATH_START--
 $\mathbf{Definition}$\
-An individual $i \in I$ can win a conflict relative to goals $gp \in GP$ if all the goals of $gp$ can't be achieved but $i$'s goal $gp(i)$ can be. \
-An individual $i \in I$ can't win a conflict relative to goals $gp \in GP$ if all the goals of $gp$ can't be achieved and $i$'s goal $gp(i)$ can't either.
+An individual $i \in I$ may win a conflict relative to goals $gp \in GP$ if all the goals of $gp$ may not be achieved but $i$'s goal $gp(i)$ may be. \
+An individual $i \in I$ may not win a conflict relative to goals $gp \in GP$ if all the goals of $gp$ may not be achieved and $i$'s goal $gp(i)$ may not either.
 --MATH_END--
 
-[//]: # Rocq (33-45)
+[//]: # Rocq (32-42)
 
 
 ## Following one's ethic
@@ -66,25 +66,25 @@ Everyone follows its ethic in a history $h \in H$ for an ehtical profile $ep$ at
 And everyone always follows its ethic in $h$ for $ep$ if $\forall t \in T$ everyone follows its ethic in $h$ for $ep$ at time $t$.
 --MATH_END--
 
-[//]: # Rocq (47-77)
+[//]: # Rocq (44-76)
 
 --MATH_START--
 $\mathbf{Definition}$\
-All the goals of $gp \in GP$ can be achieved according to $ep \in EP$ if there is a history $h \in H$ compatible with the laws of physics in which: \
+All the goals of $gp \in GP$ may be achieved according to $ep \in EP$ if there is a history $h \in H$ compatible with the laws of physics in which: \
 - $\forall i \in I, gp(i)$ happens in $h$ \
 - Everyone always follows its ethic in $h$ for $ep$
 --MATH_END--
 
-[//]: # Rocq (79-84)
+[//]: # Rocq (78-84)
 
 --MATH_START--
 $\mathbf{Definition}$\
-An individual $i \in I$ can achieve a goal $g \in G$ according to $ep \in EP$ if there is a history $h \in H$ compatible with the laws of physics in which: \
+An individual $i \in I$ may achieve a goal $g \in G$ according to $ep \in EP$ if there is a history $h \in H$ compatible with the laws of physics in which: \
 - $gp(i)$ happens in $h$ \
 - Everyone always follows its ethic in $h$ for $ep$
 --MATH_END--
 
-[//]: # Rocq (86-92)
+[//]: # Rocq (86-93)
 
 
 ## Restrictiveness and conflict achieving
@@ -93,18 +93,18 @@ Winning a conflict ethically means here winning a conflict while everyone follow
 
 --MATH_START--
 $\mathbf{Definition}$\
-An individual $i \in I$ can win a conflict relative to goals $gp \in GP$ according to $ep \in EP$ if not all the goals of $gp$ can be achieved according to $ep$ but $i$ can achieve its goal $gp(i)$ according to $ep$. \
-And it can't win a conflict relative to goals $gp \in GP$ according to $ep \in EP$ if not all the goals of $gp$ can be achieved according to $ep$ and $i$ can't achieve its goal $gp(i)$ according to $ep$.
+An individual $i \in I$ may win a conflict relative to goals $gp \in GP$ according to $ep \in EP$ if not all the goals of $gp$ may be achieved according to $ep$ but $i$ may achieve its goal $gp(i)$ according to $ep$. \
+And it may not win a conflict relative to goals $gp \in GP$ according to $ep \in EP$ if not all the goals of $gp$ may be achieved according to $ep$ and $i$ may not achieve its goal $gp(i)$ according to $ep$.
 --MATH_END--
 
-[//]: # Rocq (94-106)
+[//]: # Rocq (95-107)
 
 Winning a conflict ethically means here winning a conflict while everyone follows its own ethic.
 
 --MATH_START--
 $\mathbf{Lemma}$\
 Let $i \in I$ an individual, $goals \in GP$ a goal profile, $ep \in EP$ an ethical profile and $e$ an ethic such that $ep(i)$ is more restrictive than $e$. \
-If $i$ can achieve $gp(i)$ according to $ep$, $i$ can still achieve $gp(i)$ replacing its ethic $ep(i)$ with $e$.
+If $i$ may achieve $gp(i)$ according to $ep$, $i$ may still achieve $gp(i)$ replacing its ethic $ep(i)$ with $e$.
 
 $\mathbf{proof:}$\
 Let $h$ a history $h \in H$ compatible with the laws of physics in which: \
@@ -116,18 +116,18 @@ And so does $i$ because $ep(i)$ is more restrictive than $e$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (108-159)
+[//]: # Rocq (109-160)
 
 Winning a conflict ethically means here winning a conflict while everyone follows its own ethic.
 
 --MATH_START--
 $\mathbf{Corollary}$\
 Let $i \in I$ an individual, $goals \in GP$ a goal profile, $ep \in EP$ an ethical profile and $e$ an ethic such that $ep(i)$ is more restrictive than $e$. \
-If $i$ can win a conflict relative to goals $gp \in GP$ according to $ep$, $i$ can still achieve $gp(i)$ replacing its ethic $ep(i)$ with $e$.
+If $i$ may win a conflict relative to goals $gp \in GP$ according to $ep$, $i$ still may achieve $gp(i)$ replacing its ethic $ep(i)$ with $e$.
 
 $\mathbf{proof:}$\
-By definition of winning a conflict, we have $i$ who can achieve its goal $gp(i)$ according to $ep$. Then we just have to apply the previous lemma. \
+By definition of winning a conflict, we have $i$ who may achieve its goal $gp(i)$ according to $ep$. Then we just have to apply the previous lemma. \
 ■
 --MATH_END--
 
-[//]: # Rocq (161-181)
+[//]: # Rocq (162-182)

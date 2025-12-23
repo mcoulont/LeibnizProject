@@ -61,7 +61,7 @@ Definition Event : Type := pred History.
 Definition happens_in (e : Event) (h : History) : Prop :=
   e h = true.
 
-Definition happened_before {t0 : Time} (h0 : HistoryBefore t0) (e : Event) : Prop :=
+Definition happened_before {t0 : Time} (e : Event) (h0 : HistoryBefore t0) : Prop :=
   forall (h : History), extends_before h h0 -> happens_in e h.
 
 Definition ScientificTheory : Type := History -> Prop.
@@ -75,6 +75,9 @@ Definition satisfies_until {t0 : Time} (h0 : HistoryUntil t0)
 Definition satisfies_before {t0 : Time} (h0 : HistoryBefore t0)
 (st : ScientificTheory) : Prop :=
   exists (h : History), st h /\ extends_before h h0.
+
+Definition is_possible (event : Event) (st : ScientificTheory) : Prop :=
+  exists (h : History), satisfies h st /\ event h = true.
 
 Definition more_precise (st1 st2 : ScientificTheory) : Prop :=
   forall (h : History), st2 h -> st1 h.

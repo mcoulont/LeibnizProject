@@ -17,7 +17,7 @@ Throughout this page, let $T$ be the set of instants in the unfolding of time. I
 Let $S$ be the set of states.
 --MATH_END--
 
-[//]: # Rocq (9-12)
+[//]: # Rocq (7-10)
 
 
 ## Physical theories
@@ -33,16 +33,7 @@ $\mathbf{Definition}$\
 A history $h \in H$ is said to satisfy a physical theory $pt \in PT$ if $pt(h) = ⊤$
 --MATH_END--
 
-[//]: # Rocq (14-14)
-
-An event is possible if there exists a physically possible history in which it happens.
-
---MATH_START--
-$\mathbf{Definition}$\
-An event $e \in E$ is said possible in a physical theory $pt \in PT$ if $\exists h \in H$ which satisfies $pt$ such that $e(h)=⊤$.
---MATH_END--
-
-[//]: # Rocq (16-17)
+[//]: # Rocq (12-12)
 
 ## Determinism
 
@@ -53,7 +44,7 @@ $\mathbf{Definition}$\
 A physical theory $pt \in PT$ is said deterministic if $\forall h_1, h_2 \in H$ which satisfy $pt$ and such that $h_1(t_0) = h_2(t_0)$ for a given $t_0 \in T$, then $\forall t \gt t_0, h_1(t) = h_2(t)$.
 --MATH_END--
 
-[//]: # Rocq (19-35)
+[//]: # Rocq (14-30)
 
 ## Time-translation symmetry
 
@@ -68,4 +59,4 @@ $\mathbf{Definition}$\
 $pt \in PT$ is said to respect time-translation symmetry if $\forall \delta$ amount of time and $\forall h \in H$, $h$ satisfies $pt$ if and only if $h_\delta$ satisfies $pt$.
 --MATH_END--
 
-[//]: # Rocq (37-43)
+[//]: # Rocq (32-38)

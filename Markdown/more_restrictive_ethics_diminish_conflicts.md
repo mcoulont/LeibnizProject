@@ -59,7 +59,7 @@ As $i$ follows its own ethic, there is an $a \in A$ such that $e_i((s, i), a_i)$
 ■
 --MATH_END--
 
-[//]: # Rocq (29-42)
+[//]: # Rocq (29-44)
 
 A conflict occurs when not every individual (following its own ethic) can do the action (s)he wants.
 
@@ -78,7 +78,7 @@ $$\begin{cases*}
 \end{cases*}$$
 --MATH_END--
 
-[//]: # Rocq (44-52)
+[//]: # Rocq (46-57)
 
 Conflict (and the absence of conflict) presuppose that everyone follows its own ethic, which is possible only if no one is an ethical dead end.
 
@@ -93,7 +93,7 @@ In both cases, everyone follows its own ethic by definition, and we conclude wit
 ■
 --MATH_END--
 
-[//]: # Rocq (54-72)
+[//]: # Rocq (59-79)
 
 
 ## More restrictive individual ethics diminish the risk of conflicts
@@ -112,7 +112,7 @@ We can cconclude that $s, (e_i)_{j/e}, (a_i)$ conflict. \
 ■
 --MATH_END--
 
-[//]: # Rocq (74-98)
+[//]: # Rocq (81-106)
 
 And if not everything is feasible, one can create a conflict by unrestricting a single individual ethic.
 
@@ -140,4 +140,4 @@ Now, $(e_i)_{j/e}((s, i), a) = ⊤ \text{ } \forall (s, i) \in SubjS, a \in A$, 
 ■
 --MATH_END--
 
-[//]: # Rocq (100-164)
+[//]: # Rocq (108-173)

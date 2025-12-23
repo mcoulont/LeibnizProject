@@ -1,6 +1,5 @@
 
-From mathcomp Require Import all_ssreflect.
-From mathcomp.classical Require Import boolp.
+From mathcomp Require Import fintype fingroup perm.
 
 Require Import ethics_first_steps.
 
@@ -10,7 +9,7 @@ Context {State : Type}.
 Context {Action : Type}.
 Context {Individual : finType}.
 
-Definition ActionProfile : Type := Individual -> Action.
+Definition Profile (T  : Type) : Type := Individual -> T.
 
 Structure SubjectiveState : Type := {
     state : State ;
@@ -35,17 +34,40 @@ Proof.
   auto.
 Qed.
 
+Open Scope group_scope.
+
+Notation " σ ∘ τ " := (σ * τ) (at level 40, no associativity).
+Definition identity : {perm Individual} := 1.
+
+Definition IndividualsPermutationsActingOnStates : Type := {
+  permutation : State -> {perm Individual} -> State |
+  forall (state : State),
+    permutation state identity = state /\
+    forall (σ τ : {perm Individual}),
+      permutation (permutation state σ) τ = permutation state (σ ∘ τ)
+}.
+
+Definition permutation_State (ipos : IndividualsPermutationsActingOnStates) :
+State -> {perm Individual} -> State :=
+  fun state => fun σ => proj1_sig ipos state σ.
+
+Definition permutation_SubjectiveState (ipos : IndividualsPermutationsActingOnStates) :
+SubjectiveState -> {perm Individual} -> SubjectiveState :=
+  fun subjective_state => fun σ => get_SubjectiveState (
+    proj1_sig ipos subjective_state.(state) σ
+  ) (σ subjective_state.(individual)).
+
 Definition IndividualEthic : Type := @Ethic SubjectiveState Action.
 
-Definition EthicalProfile : Type := Individual -> IndividualEthic.
-
 Definition everyone_same_ethic
-(ethical_profile : EthicalProfile) (subjective_state : SubjectiveState) : Prop :=
+(ethical_profile : Profile IndividualEthic) (subjective_state : SubjectiveState) :
+Prop :=
   forall (i j : Individual),
     ethical_profile i subjective_state =
     ethical_profile j subjective_state.
 
-Definition everyone_always_same_ethic (ethical_profile : EthicalProfile) : Prop :=
+Definition everyone_always_same_ethic (ethical_profile : Profile IndividualEthic) :
+Prop :=
   forall (subjective_state : SubjectiveState),
     everyone_same_ethic ethical_profile subjective_state.
 

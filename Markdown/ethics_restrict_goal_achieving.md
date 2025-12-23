@@ -39,31 +39,28 @@ Let $G = {\{⊥ ,⊤\}}^H$ be the set of goals (which are events in [this articl
 
 --MATH_START--
 $\mathbf{Definition}$\
-A $g \in G$ can be achieved if there is a history compatible with the laws of physics in which $g$ happens.
-
-$\mathbf{Definition}$\
 An ethic $e \in E$ is followed in a history $h \in H$ at time $t \in T$ if $e((t, h_S(t)), h_A(t)) = ⊤$. \
 An ethic $e \in E$ is always followed in a history $h \in H$ if $\forall t \in T, e((t, h_S(t)), h_A(t)) = ⊤$.
 
 $\mathbf{Definition}$\
-A $g \in G$ can be achieved ethically with $e \in E$ if there is a history compatible with the laws of physics in which $g$ happens and $e$ is always followed.
+A $g \in G$ may be achieved ethically with $e \in E$ if there is a history compatible with the laws of physics in which $g$ happens and $e$ is always followed.
 --MATH_END--
 
-[//]: # Rocq (26-46)
+[//]: # Rocq (26-43)
 
-If you can achieve a goal with your ethic, you can without as well.
+If you may achieve a goal with your ethic, you may without as well.
 
 --MATH_START--
 $\mathbf{Lemma}$\
 Let $g \in G$ a goal and $e \in E$ an ethic. \
-If $g$ can be achieved ethically with $e$, then $g$ can be achieved.
+If $g$ may be achieved ethically with $e$, then $g$ may be achieved.
 
 $\mathbf{proof:}$\
 Obvious: the history given by the ethical achievement also works for the ethicless achievement. \
 ■
 --MATH_END--
 
-[//]: # Rocq (48-57)
+[//]: # Rocq (45-54)
 
 
 ## Restrictiveness and goal achieving
@@ -76,34 +73,34 @@ An ethic $e_1 \in E$ is said more restrictive than $e_2 \in E$ in a state $s \in
 And $e_1$ is said strictly more restrictive than $e_2$ if $e_1$ is more restrictive than $e_2$ and $\exists t \in T, s \in S e_1(s, a) = ⊥$ and $e_2(s, a) = ⊤$.
 --MATH_END--
 
-[//]: # Rocq (59-69)
+[//]: # Rocq (56-66)
 
-If you can achieve a goal with your ethic, you can with a less restrictive one as well.
+If you may achieve a goal with your ethic, you may with a less restrictive one as well.
 
 --MATH_START--
 $\mathbf{Lemma}$\
 Let $g \in G$ a goal and $e_1, e_2 \in E$ ethics such that $e_1$ is more restrictive than $e_2$. \
-If $g$ can be achieved ethically with $e_1$, then $g$ can be achieved ethically with $e_2$.
+If $g$ may be achieved ethically with $e_1$, then $g$ may be achieved ethically with $e_2$.
 
 $\mathbf{proof:}$\
-As $g$ can be achieved ethically with $e_1$, let $h$ a history compatible with the laws of physics in which $g$ happens and $e_1$ is always followed. \
+As $g$ may be achieved ethically with $e_1$, let $h$ a history compatible with the laws of physics in which $g$ happens and $e_1$ is always followed. \
 It suffices to show that $e_2$ is always followed in $h$, which is true because $e_1$ is more restrictive than $e_2$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (71-93)
+[//]: # Rocq (68-90)
 
-If a goal can be achieved, it can be achieved with a void ethic (that is an ethic which allows everything).
+If a goal may be achieved, it may be achieved with a void ethic (that is an ethic which allows everything).
 
 --MATH_START--
 $\mathbf{Lemma}$\
-Let $g \in G$ a goal which can be achieved. \
-Then it can be achieved with the void ethic (see [this article](https://leibnizproject.com/Articles/ethics_first_steps.html)).
+Let $g \in G$ a goal which may be achieved. \
+Then it may be achieved with the void ethic (see [this article](https://leibnizproject.com/Articles/ethics_first_steps.html)).
 
 $\mathbf{proof:}$\
-As $g$ can be achieved, let $h$ a history compatible with the laws of physics in which $g$ happens. \
+As $g$ may be achieved, let $h$ a history compatible with the laws of physics in which $g$ happens. \
 Then the void ethic is satisfied by every history, so by $h$ in particular. \
 ■
 --MATH_END--
 
-[//]: # Rocq (95-112)
+[//]: # Rocq (92-109)

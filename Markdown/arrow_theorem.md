@@ -29,7 +29,7 @@ We denote $a \prec_i b$ the fact that individual $i$ strictly prefers $b$ over $
 If $a \preceq_i b$ and $b \preceq_i a$, $a$ and $b$ are said indifferent.
 --MATH_END--
 
-[//]: # Rocq (19-20)
+[//]: # Rocq (20-21)
 
 
 ## Fundamental definitions
@@ -43,8 +43,6 @@ Let $P$ be the set of preference profiles.\
 We denote $a \succ_p b$ (or just $a \succ b$ if there is no ambiguity) the fact that the society (whose individual preferences are described with the preference profile $p$) strictly prefers $a$ over $b$ and $a \preceq_p b$ the fact that the society (possibly equally) prefers $b$ over $a$.
 --MATH_END--
 
-[//]: # Rocq (22-22)
-
 A constitution is a way to aggregate all the individual preference orders into a single one.
 
 --MATH_START--
@@ -52,7 +50,7 @@ $\mathbf{Definition}$\
 A constitution is a function from $P$ to $O$.
 --MATH_END--
 
-[//]: # Rocq (24-24)
+[//]: # Rocq (23-25)
 
 A preference profile unanimously (strictly) prefers an alternative over another one if every individual does so.
 
@@ -61,7 +59,7 @@ $\mathbf{Definition}$\
 A preference profile is unanimously prefer an alternative $a$ over another alternative $b$ if $\forall i \in I, a \succ_i b$.
 --MATH_END--
 
-[//]: # Rocq (26-27)
+[//]: # Rocq (27-29)
 
 A constitution is said to respect unanimity if it prefers a candidate to another when every individual does so.
 
@@ -71,7 +69,7 @@ A constitution respects unanimity if
 $$\forall p \in P, a,b \in A, p \text{ unanimously prefers } a \text{ over } b \Rightarrow a \succ_p b$$
 --MATH_END--
 
-[//]: # Rocq (29-32)
+[//]: # Rocq (31-35)
 
 A dictator is an individual whose preference is unconditionally adopted by the society.
 
@@ -81,7 +79,7 @@ An individual $i$ is a dictator if
 $$\forall a,b \in A, p \in P, a \succ_i b \Rightarrow a \succ_p b$$
 --MATH_END--
 
-[//]: # Rocq (34-37)
+[//]: # Rocq (37-41)
 
 An individual is said to be a dictator for all alternatives but one if its preference is unconditionally adopted by the society for all these other alternatives.
 
@@ -91,7 +89,7 @@ An individual $i$ is a dictator except for $b \in A$ if
 $$\forall a,c \in A \text{ other than } b, p \in P, a \succ_i c \Rightarrow a \succ_p c$$
 --MATH_END--
 
-[//]: # Rocq (39-44)
+[//]: # Rocq (43-49)
 
 Two alternatives are said to be unanimously in the same order in two preference profiles if they are (strictly) in the same order for every individual.
 
@@ -105,7 +103,7 @@ $\mathbf{Definition}$\
 Two alternatives $a$ and $b$ are unanimously in the same order in preference profiles $p_1$ and $p_2$ if they are in the same order for every individual.
 --MATH_END--
 
-[//]: # Rocq (46-57)
+[//]: # Rocq (51-64)
 
 We say that the independance of irrelevant alternatives is respected if the social preference between two alternatives only depends on the individual preferences between them.
 
@@ -115,7 +113,7 @@ A constitution $constit$ respects the independance of irrelevant alternatives if
 $$a \text{ and } b \text{ are unanimously in the same order in } p_1 \text{ and } p_2 \Rightarrow a \text{ and } b \text{ are in the same order in } constit(p_1) \text{ and } constit(p_2)$$
 --MATH_END--
 
-[//]: # Rocq (59-62)
+[//]: # Rocq (66-70)
 
 
 ## First lemmas, some useful definitions
@@ -131,7 +129,7 @@ Obvious \
 ■
 --MATH_END--
 
-[//]: # Rocq (64-77)
+[//]: # Rocq (72-85)
 
 An alternative is said to be an unanimous top (resp. bottom) choice if it's the top (resp. bottom) choice for every individual. It's said to be an unanimous extremal choice if it's one of them.
 
@@ -144,7 +142,7 @@ $$\forall i \in I, \forall a \neq b \in A, b \prec_i a$$
 An alternativeis is an unanimous extremal choice if it's either an unanimous top choice or an unanimous bottom choice.
 --MATH_END--
 
-[//]: # Rocq (79-88)
+[//]: # Rocq (87-100)
 
 In a constitution respecting unanimity, an unanimous top (resp. bottom) choice is the top (resp. bottom) choice for the society.
 
@@ -162,7 +160,7 @@ Let $i \in I$. We indeed have $b \succ_i a$ because $b$ in an unanimous top choi
 ■
 --MATH_END--
 
-[//]: # Rocq (90-110)
+[//]: # Rocq (102-126)
 
 
 ## Transformations on preference orders
@@ -183,7 +181,7 @@ We denote: \
 - $p_{b \uparrow a} = (i \in I) \mapsto p(i)_{b \uparrow a}$
 --MATH_END--
 
-[//]: # Rocq (112-428)
+[//]: # Rocq (128-448)
 
 
 # Proof of Arrow's theorem
@@ -202,7 +200,7 @@ Else, we have $d \succeq b$, so $d \succeq b \succeq c$ where $b, c, d$ are pair
 ■
 --MATH_END--
 
-[//]: # Rocq (430-459)
+[//]: # Rocq (450-479)
 
 The following lemma is already puzzling: unanimity and the independence of irrelevant alternatives being respected, if an alternative is an extremal choice for every individual, then it must be extremal for the society as well (alhtough one could think that, if half of the citizens adore it and the other half abhor it, the society would rank it somewhere in the middle).
 
@@ -220,7 +218,7 @@ But, making $c$ above $a$ for every individual makes $c \succ a$ for the whole s
 ■
 --MATH_END--
 
-[//]: # Rocq (461-700)
+[//]: # Rocq (481-721)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -235,7 +233,7 @@ $i$ is pivotal for $b$ if there are $p, p' \in P$ such that: \
 $b$ has a pivot if $\exists i \in I$ such that $i$ is pivotal for $b$.
 --MATH_END--
 
-[//]: # Rocq (702-714)
+[//]: # Rocq (723-735)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }1}$\
@@ -259,7 +257,7 @@ Here $i$ is pivotal just by definition (considering $p'$ as the profile by makin
 ■
 --MATH_END--
 
-[//]: # Rocq (716-1061)
+[//]: # Rocq (737-1083)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }2}$\
@@ -273,7 +271,7 @@ There, $b$ is the bottom choice for the society by unanimity, and we can conclud
 ■
 --MATH_END--
 
-[//]: # Rocq (1063-1102)
+[//]: # Rocq (1085-1124)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }3}$\
@@ -309,7 +307,7 @@ For individuals $j \neq i$ such that $b$ is not the bottom choice in $p_1$, $b$ 
 ■
 --MATH_END--
 
-[//]: # Rocq (1104-1534)
+[//]: # Rocq (1126-1558)
 
 --MATH_START--
 $\mathbf{Lemma\text{ }4}$\
@@ -329,7 +327,7 @@ Let $a \in A$ other than $b$ and $b'$. Then $i$ and $i'$ are both dictators for 
 ■
 --MATH_END--
 
-[//]: # Rocq (1536-1653)
+[//]: # Rocq (1560-1677)
 
 --MATH_START--
 $\mathbf{Arrow's\text{ }theorem}$\
@@ -341,4 +339,4 @@ Every alternative has a pivot by lemma 2. Then lemma 4 immediately gives a dicta
 ■
 --MATH_END--
 
-[//]: # Rocq (1655-1665)
+[//]: # Rocq (1679-1689)

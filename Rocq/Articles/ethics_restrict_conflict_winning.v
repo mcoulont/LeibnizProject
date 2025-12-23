@@ -1,6 +1,5 @@
 
 From mathcomp Require Import all_ssreflect.
-From mathcomp.classical Require Import boolp.
 Require Import Classical.
 
 Require Import eqType_facts.
@@ -18,31 +17,29 @@ Context {Action : Type}.
 Context {Individual : finType}.
 Context {
   physical_theory :
-  @PhysicalTheory Time (State * @ActionProfile Action Individual)
+  @PhysicalTheory Time (State * @Profile Individual Action)
 }.
 
 Definition GoalProfile : Type :=
-  Individual -> @Event Time (State * @ActionProfile Action Individual).
+  @Profile Individual (@Event Time (State * @Profile Individual Action)).
 
-Definition can_achieve_all (goals : GoalProfile) :
+Definition may_achieve_all (goals : GoalProfile) :
 Prop :=
-  exists (history : @History Time (State * @ActionProfile Action Individual)),
+  exists (history : @History Time (State * @Profile Individual Action)),
     satisfies history physical_theory /\
     forall (i : Individual), goals i history.
 
-Definition can_win_conflict (i : Individual) (goals : GoalProfile) :
+Definition may_win_conflict (i : Individual) (goals : GoalProfile) :
 Prop :=
-  ~ can_achieve_all goals /\
-  @can_achieve Time State (
-    @ActionProfile Action Individual
-  ) physical_theory (goals i).
+  ~ may_achieve_all goals /\
+  @is_possible Time (
+    State * @Profile Individual Action
+  ) (goals i)  physical_theory.
 
-Definition cannot_win_conflict (i : Individual) (goals : GoalProfile) :
+Definition may_not_win_conflict (i : Individual) (goals : GoalProfile) :
 Prop :=
-  ~ can_achieve_all goals /\
-  @can_achieve Time State (
-    @ActionProfile Action Individual
-  ) physical_theory (goals i).
+  ~ may_achieve_all goals /\
+  @is_possible Time (State * @Profile Individual Action) (goals i) physical_theory.
 
 Definition state_dynamic_to_subjective (state_d : @State_dynamic Time State)
 (i : Individual) : @SubjectiveState (Time * State) Individual :=
@@ -51,9 +48,9 @@ Definition state_dynamic_to_subjective (state_d : @State_dynamic Time State)
 Definition ethic_subjective_to_dynamic
 (ethic_subj : @Ethic (@SubjectiveState (Time * State) Individual) Action)
 (i : Individual) :
-@Ethic (@State_dynamic Time State) (@ActionProfile Action Individual) :=
+@Ethic (@State_dynamic Time State) (@Profile Individual Action) :=
   fun (state_d : @State_dynamic Time State) =>
-  fun (action_profile : @ActionProfile Action Individual) =>
+  fun (action_profile : @Profile Individual Action) =>
   ethic_subj (
     state_dynamic_to_subjective state_d i
   ) (
@@ -61,67 +58,71 @@ Definition ethic_subjective_to_dynamic
   ).
 
 Definition everyone_follows_its_ethic_dynamic
-(history : @History Time (State * @ActionProfile Action Individual))
-(ethical_profile : @EthicalProfile (Time * State) Action Individual)
-(t : Time) : Prop :=
+(history : @History Time (State * @Profile Individual Action))
+(ethical_profile : @Profile Individual (@IndividualEthic (Time * State) Action Individual))
+(t : Time) :
+Prop :=
   forall (i : Individual),
     follows_its_ethic history (
       ethic_subjective_to_dynamic (ethical_profile i) i
     ) t.
 
 Definition everyone_always_follows_its_ethic_dynamic
-(history : @History Time (State * @ActionProfile Action Individual))
-(ethical_profile : @EthicalProfile (Time * State) Action Individual) : Prop :=
+(history : @History Time (State * @Profile Individual Action))
+(ethical_profile : @Profile Individual (@IndividualEthic (Time * State) Action Individual)) :
+Prop :=
   forall (i : Individual), always_follows_its_ethic history (
     ethic_subjective_to_dynamic (ethical_profile i) i
   ).
 
-Definition can_all_achieve_ethically (goals : GoalProfile)
-(ethical_profile : @EthicalProfile (Time * State) Action Individual) : Prop :=
-  exists (history : @History Time (State * @ActionProfile Action Individual)),
+Definition may_all_achieve_ethically (goals : GoalProfile)
+(ethical_profile : @Profile Individual (@IndividualEthic (Time * State) Action Individual)) :
+Prop :=
+  exists (history : @History Time (State * @Profile Individual Action)),
     satisfies history physical_theory /\
     forall (i : Individual), happens_in (goals i) history /\
     everyone_always_follows_its_ethic_dynamic history ethical_profile.
 
-Definition can_achieve_with_ethics (i : Individual)
-(goal : @Event Time (State * @ActionProfile Action Individual))
-(ethical_profile : @EthicalProfile (Time * State) Action Individual) : Prop :=
-  exists (history : @History Time (State * @ActionProfile Action Individual)),
+Definition may_achieve_with_ethics (i : Individual)
+(goal : @Event Time (State * @Profile Individual Action))
+(ethical_profile : @Profile Individual (@IndividualEthic (Time * State) Action Individual)) :
+Prop :=
+  exists (history : @History Time (State * @Profile Individual Action)),
     satisfies history physical_theory /\
     happens_in goal history /\
     everyone_always_follows_its_ethic_dynamic history ethical_profile.
 
-Definition can_win_conflict_with_ethics (i : Individual)
-(ethical_profile : @EthicalProfile (Time * State) Action Individual)
+Definition may_win_conflict_with_ethics (i : Individual)
+(ethical_profile : @Profile Individual (@IndividualEthic (Time * State) Action Individual))
 (goals : GoalProfile) :
 Prop :=
-  ~ can_all_achieve_ethically goals ethical_profile /\
-  can_achieve_with_ethics i (goals i) ethical_profile.
+  ~ may_all_achieve_ethically goals ethical_profile /\
+  may_achieve_with_ethics i (goals i) ethical_profile.
 
-Definition cannot_win_conflict_with_ethics (i : Individual)
-(ethical_profile : @EthicalProfile (Time * State) Action Individual)
+Definition may_not_win_conflict_with_ethics (i : Individual)
+(ethical_profile : @Profile Individual (@IndividualEthic (Time * State) Action Individual))
 (goals : GoalProfile) :
 Prop :=
-  ~ can_all_achieve_ethically goals ethical_profile /\
-  ~ can_achieve_with_ethics i (goals i) ethical_profile.
+  ~ may_all_achieve_ethically goals ethical_profile /\
+  ~ may_achieve_with_ethics i (goals i) ethical_profile.
 
 Lemma ethic_restricts_goal_achieving_with_ethics (i : Individual)
-(ethical_profile : @EthicalProfile (Time * State) Action Individual)
+(ethical_profile : @Profile Individual (@IndividualEthic (Time * State) Action Individual))
 (relaxed_ethic : @Ethic (@SubjectiveState (Time * State) Individual) Action)
 (goals : GoalProfile) :
-  @more_restrictive_dynamic Time State (@ActionProfile Action Individual) (
+  @more_restrictive_dynamic Time State (@Profile Individual Action) (
     ethic_subjective_to_dynamic (ethical_profile i) i
   ) (
     ethic_subjective_to_dynamic relaxed_ethic i
   ) ->
-  can_achieve_with_ethics i (goals i) ethical_profile ->
-  can_achieve_with_ethics i (goals i) (
+  may_achieve_with_ethics i (goals i) ethical_profile ->
+  may_achieve_with_ethics i (goals i) (
     replace ethical_profile i (
       relaxed_ethic
     )
   ).
 Proof.
-  unfold can_achieve_with_ethics.
+  unfold may_achieve_with_ethics.
   intros.
   destruct H0 as [history]. destruct H0. destruct H1.
   exists history.
@@ -159,23 +160,23 @@ Proof.
 Qed.
 
 Lemma ethic_restricts_conflict_winning (i : Individual)
-(ethical_profile : @EthicalProfile (Time * State) Action Individual)
+(ethical_profile : @Profile Individual (@IndividualEthic (Time * State) Action Individual))
 (relaxed_ethic : @Ethic (@SubjectiveState (Time * State) Individual) Action)
 (goals : GoalProfile) :
-  @more_restrictive_dynamic Time State (@ActionProfile Action Individual) (
+  @more_restrictive_dynamic Time State (@Profile Individual Action) (
     ethic_subjective_to_dynamic (ethical_profile i) i
   ) (
     ethic_subjective_to_dynamic relaxed_ethic i
   ) ->
-  can_win_conflict_with_ethics i ethical_profile goals ->
-  can_achieve_with_ethics i (goals i) (
+  may_win_conflict_with_ethics i ethical_profile goals ->
+  may_achieve_with_ethics i (goals i) (
     replace ethical_profile i (
       relaxed_ethic
     )
   ).
 Proof.
   intros.
-  unfold can_win_conflict_with_ethics in H0.
+  unfold may_win_conflict_with_ethics in H0.
   destruct H0.
   apply ethic_restricts_goal_achieving_with_ethics ; try tauto.
 Qed.

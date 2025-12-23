@@ -1,6 +1,4 @@
 
-From mathcomp Require Import all_algebra all_ssreflect classical_sets boolp.
-
 Require Import relation_facts.
 Require Import occam_razor.
 
@@ -12,9 +10,6 @@ Context {State : Type}.
 Context {offset : Time -> Time -> Time}.
 
 Definition PhysicalTheory : Type := @ScientificTheory Time State.
-
-Definition is_possible (event : Event) (pt : PhysicalTheory) : Prop :=
-  exists (h : @History Time State), satisfies h pt /\ event h = true.
 
 Definition is_deterministic (pt : PhysicalTheory) : Prop :=
   forall (h1 h2 : @History Time State),

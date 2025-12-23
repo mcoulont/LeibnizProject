@@ -68,14 +68,23 @@ A history $h_{<t_0} \in H_{<t_0}$ is said to satisfy a scientific theory $st \in
 
 [//]: # Rocq (67-77)
 
-The more patterns of behavior of the environment you take into account, the more precise is your scientific theory.
+An event is possible if there is a scientifically possible history in which it happens.
+
+--MATH_START--
+$\mathbf{Definition}$\
+An event $e \in E$ is said possible according to a scientific theory if there exists a history satisfying this theory in which $e$ happens. \
+--MATH_END--
+
+[//]: # Rocq (79-80)
+
+The more patterns of behavior of the environment you take into account, the more precise (that is, restrictive) is your scientific theory.
 
 --MATH_START--
 $\mathbf{Definition}$\
 $st_1 \in ST$ is said more precise than $st_2 \in ST$ if $\forall h \in H, st_2(h) = ⊥ \Rightarrow st_1(h) = ⊥$. \
 --MATH_END--
 
-[//]: # Rocq (79-80)
+[//]: # Rocq (82-83)
 
 ## Occam's razor as a way to choose among plausible scientific theories
 
@@ -86,4 +95,4 @@ $\mathbf{Definition}$\
 A history $h_{t_0} \in H_{t_0}$ being given, the scientific theory prefered by Occam's razor is the simplest one satisjfying $h_{t_0}$ (whatever the total relation order used to define the simplicity of scientific theories).
 --MATH_END--
 
-[//]: # Rocq (82-89)
+[//]: # Rocq (85-92)

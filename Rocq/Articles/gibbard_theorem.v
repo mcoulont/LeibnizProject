@@ -18,6 +18,7 @@ Require Import eqType_facts.
 Require Import finType_facts.
 Require Import ssrnat_facts.
 Require Import preference.
+Require Import ethics_in_society.
 Require Import arrow_theorem.
 
 Section gibbard_theorem.
@@ -85,12 +86,13 @@ Qed.
 
 Definition dominant_strategies_profile
 {gf : GameForm} (straightforward_gf : straightforward gf)
-(pp : @PreferenceProfile Outcome Individual) : StrategyProfile :=
+(pp : @Profile Individual (PreferenceOrder Outcome)) : StrategyProfile :=
   fun (i : Individual) => dominant_strategy straightforward_gf i (pp i).
 
 Definition outcome_when_dominant_strategies
 {gf : GameForm} (straightforward_gf : straightforward gf)
-(pp : @PreferenceProfile Outcome Individual) : Outcome :=
+(pp : @Profile Individual (PreferenceOrder Outcome)) :
+Outcome :=
   gf (dominant_strategies_profile straightforward_gf pp).
 
 Definition remove_indifference (po : PreferenceOrder Outcome)
@@ -108,8 +110,10 @@ Definition remove_indifference (po : PreferenceOrder Outcome)
       )
     ).
 
-Definition remove_indifference_profile (pp : @PreferenceProfile Outcome Individual)
-(Z : pred Outcome) : Individual -> relation Outcome :=
+Definition remove_indifference_profile
+(pp : @Profile Individual (PreferenceOrder Outcome))
+(Z : pred Outcome) :
+Individual -> relation Outcome :=
   fun (i : Individual) => remove_indifference (pp i) Z.
 
 Lemma remove_indifference_is_total_order (po : PreferenceOrder Outcome)
@@ -396,8 +400,9 @@ Proof.
 Qed.
 
 Definition remove_indifference_PreferenceProfile
-(pp : @PreferenceProfile Outcome Individual)
-(Z : pred Outcome) : @PreferenceProfile Outcome Individual :=
+(pp : @Profile Individual (PreferenceOrder Outcome))
+(Z : pred Outcome) :
+@Profile Individual (PreferenceOrder Outcome) :=
   fun (i : Individual) => remove_indifference_PreferenceOrder (pp i) Z.
 
 Lemma remove_indifference_well_named (po : PreferenceOrder Outcome)
@@ -553,7 +558,7 @@ Proof.
 Qed.
 
 Lemma remove_indifference_profile_down_to_littlest_subset {Y Z : pred Outcome}
-(pp : @PreferenceProfile Outcome Individual) (YsubsZ : subpred Y Z) :
+(pp : @Profile Individual (PreferenceOrder Outcome)) (YsubsZ : subpred Y Z) :
   remove_indifference_PreferenceProfile (
     remove_indifference_PreferenceProfile pp Z
   ) Y = remove_indifference_PreferenceProfile pp Y.
@@ -570,8 +575,9 @@ Prop :=
     (Z x && Z y) ->
     same_order po1 po2 x y.
 
-Definition agree_on_profile (pp1 pp2 : @PreferenceProfile Outcome Individual)
-(Z : pred Outcome) : Prop :=
+Definition agree_on_profile
+(pp1 pp2 : @Profile Individual (PreferenceOrder Outcome)) (Z : pred Outcome) :
+Prop :=
   forall (i : Individual), agree_on (pp1 i) (pp2 i) Z.
 
 Lemma agree_on_implies_remove_indifference_equal
@@ -623,7 +629,7 @@ Proof.
 Qed.
 
 Lemma agree_on_implies_remove_indifference_equal_profile
-{pp1 pp2 : @PreferenceProfile Outcome Individual} {Z : pred Outcome}
+{pp1 pp2 : @Profile Individual (PreferenceOrder Outcome)} {Z : pred Outcome}
 (ago : agree_on_profile pp1 pp2 Z) :
   remove_indifference_PreferenceProfile pp1 Z =
   remove_indifference_PreferenceProfile pp2 Z.
@@ -635,14 +641,16 @@ Qed.
 
 Definition strictly_preferred_when_dominant_strategies {gf : GameForm}
 (straightforward_gf : straightforward gf)
-(pp : @PreferenceProfile Outcome Individual) : relation Outcome :=
+(pp : @Profile Individual (PreferenceOrder Outcome)) :
+relation Outcome :=
   fun (x : Outcome) => fun (y : Outcome) =>
   x <> y /\ x = outcome_when_dominant_strategies straightforward_gf (
     remove_indifference_PreferenceProfile pp (pair x y)
   ).
 
 Definition preferred_when_dominant_strategies {gf : GameForm}
-(straightforward_gf : straightforward gf) (pp : @PreferenceProfile Outcome Individual) :
+(straightforward_gf : straightforward gf)
+(pp : @Profile Individual (PreferenceOrder Outcome)) :
 relation Outcome :=
   fun (x : Outcome) => fun (y : Outcome) =>
   x = y \/ y <> outcome_when_dominant_strategies straightforward_gf (
@@ -650,7 +658,8 @@ relation Outcome :=
   ).
 
 Lemma switch_strictness_preferred_when_dominant_strategies {gf : GameForm}
-(straightforward_gf : straightforward gf) (pp : @PreferenceProfile Outcome Individual) :
+(straightforward_gf : straightforward gf)
+(pp : @Profile Individual (PreferenceOrder Outcome)) :
   switch_strictness (
     preferred_when_dominant_strategies straightforward_gf pp
   ) = strictly_preferred_when_dominant_strategies straightforward_gf pp.
@@ -668,7 +677,8 @@ Proof.
 Qed.
 
 Lemma switch_strictness_preferred_when_dominant_strategies' {gf : GameForm}
-(straightforward_gf : straightforward gf) (pp : @PreferenceProfile Outcome Individual) :
+(straightforward_gf : straightforward gf)
+(pp : @Profile Individual (PreferenceOrder Outcome)) :
   switch_strictness (
     strictly_preferred_when_dominant_strategies straightforward_gf pp
   ) = preferred_when_dominant_strategies straightforward_gf pp.
@@ -684,8 +694,8 @@ Proof.
 Qed.
 
 Lemma preferred_when_dominant_strategies_strict_implies_nonstrict {gf : GameForm}
-(straightforward_gf : straightforward gf) (pp : @PreferenceProfile Outcome Individual)
-(x y : Outcome) :
+(straightforward_gf : straightforward gf)
+(pp : @Profile Individual (PreferenceOrder Outcome)) (x y : Outcome) :
   strictly_preferred_when_dominant_strategies straightforward_gf pp x y ->
   preferred_when_dominant_strategies straightforward_gf pp x y.
 Proof.
@@ -699,8 +709,7 @@ Qed.
 
 Lemma pairwise_determination {gf : GameForm}
 (straightforward_gf : straightforward gf)
-(pp1 pp2 : @PreferenceProfile Outcome Individual)
-(x y : Outcome) :
+(pp1 pp2 : @Profile Individual (PreferenceOrder Outcome)) (x y : Outcome) :
   @unanimously_same_order Outcome Individual pp1 pp2 x y ->
   (
     strictly_preferred_when_dominant_strategies straightforward_gf pp1 x y <->
@@ -771,7 +780,7 @@ Definition IndividualRank : finType :=
   fintype_ordinal__canonical__eqtype_SubType #|[eta Individual]|.
 
 Lemma assertion_1 {gf : GameForm} (straightforward_gf : straightforward gf)
-(inh : 0 < #|Individual|) (pp : @PreferenceProfile Outcome Individual)
+(inh : 0 < #|Individual|) (pp : @Profile Individual (PreferenceOrder Outcome))
 (sp : StrategyProfile) (x y : Outcome) (Exy : x <> y) :
   (
     forall (i : Individual),
@@ -1254,7 +1263,7 @@ Qed.
 
 Corollary strictly_preferred_when_dominant_strategies_respects_unanimity
 {gf : GameForm} (straightforward_gf : straightforward gf) (inh : 0 < #|Individual|)
-(pp : @PreferenceProfile Outcome Individual) (x y : Outcome)
+(pp : @Profile Individual (PreferenceOrder Outcome)) (x y : Outcome)
 (gf_surj : Surjective gf) :
   (forall (i : Individual), strict (pp i) x y) ->
   strictly_preferred_when_dominant_strategies straightforward_gf pp x y.
@@ -1305,7 +1314,7 @@ Proof.
 Qed.
 
 Corollary corollary_2 {gf : GameForm} (straightforward_gf : straightforward gf)
-(inh : 0 < #|Individual|) (pp : @PreferenceProfile Outcome Individual)
+(inh : 0 < #|Individual|) (pp : @Profile Individual (PreferenceOrder Outcome))
 (x y : Outcome) :
   (forall (i : Individual), ~ indifferent (pp i) x y) ->
   preferred_when_dominant_strategies straightforward_gf pp y x ->
@@ -1336,7 +1345,7 @@ Proof.
 Qed.
 
 Corollary corollary_3 {gf : GameForm} (straightforward_gf : straightforward gf)
-(inh : 0 < #|Individual|) (pp : @PreferenceProfile Outcome Individual)
+(inh : 0 < #|Individual|) (pp : @Profile Individual (PreferenceOrder Outcome))
 (x y : Outcome) :
   (forall (i : Individual), ~ indifferent (pp i) x y) ->
   outcome_when_dominant_strategies straightforward_gf pp = x ->
@@ -1353,7 +1362,7 @@ Proof.
 Qed.
 
 Lemma assertion_2 {gf : GameForm} (straightforward_gf : straightforward gf)
-(inh : 0 < #|Individual|) (pp : @PreferenceProfile Outcome Individual)
+(inh : 0 < #|Individual|) (pp : @Profile Individual (PreferenceOrder Outcome))
 (gf_surj : Surjective gf) :
   preference_order (
     preferred_when_dominant_strategies straightforward_gf pp
@@ -1706,7 +1715,7 @@ Qed.
 
 Definition aggregation_preferences {gf : GameForm}
 (straightforward_gf : straightforward gf) (inh : 0 < #|Individual|)
-(pp : @PreferenceProfile Outcome Individual) (gf_surj : Surjective gf) :
+(pp : @Profile Individual (PreferenceOrder Outcome)) (gf_surj : Surjective gf) :
 PreferenceOrder Outcome :=
   exist preference_order (
     preferred_when_dominant_strategies straightforward_gf pp
@@ -1716,7 +1725,7 @@ Lemma assertion_3 {gf : GameForm} (straightforward_gf : straightforward gf)
 (inh : 0 < #|Individual|) (out3 : #|Outcome| >= 3)
 (sp : StrategyProfile) (gf_surj : Surjective gf) :
   exists (k : Individual), @dictator Outcome Individual (
-    fun (pp : @PreferenceProfile Outcome Individual) =>
+    fun (pp : @Profile Individual (PreferenceOrder Outcome)) =>
       aggregation_preferences straightforward_gf inh pp gf_surj
   ) k.
 Proof.
@@ -1771,7 +1780,7 @@ Lemma assertion_4 {gf : GameForm} (straightforward_gf : straightforward gf)
 (inh : 0 < #|Individual|) (out3 : #|Outcome| >= 3) (gf_surj : Surjective gf) :
   forall (k : Individual),
     @dictator Outcome Individual (
-      fun (pp : @PreferenceProfile Outcome Individual) =>
+      fun (pp : @Profile Individual (PreferenceOrder Outcome)) =>
       aggregation_preferences straightforward_gf inh pp gf_surj
     ) k -> omnipotent k gf.
 Proof.
@@ -1881,7 +1890,7 @@ Proof.
   unfold admits_omnipotent.
   assert (
     exists k : Individual, @dictator Outcome Individual (
-      fun (pp : @PreferenceProfile Outcome Individual) =>
+      fun (pp : @Profile Individual (PreferenceOrder Outcome)) =>
       aggregation_preferences H2 H pp H1
     ) k
   ).
@@ -1911,7 +1920,7 @@ Definition VotingScheme : Type :=
   @GameForm Alternative Individual StrategyProfile_VotingScheme.
 
 Definition manipulable (vs : VotingScheme) : Prop :=
-  exists (k : Individual) (pp : @PreferenceProfile Alternative Individual)
+  exists (k : Individual) (pp : @Profile Individual (PreferenceOrder Alternative))
   (true_po : PreferenceOrder Alternative),
     strict true_po (vs pp) (vs (
       replace pp k true_po

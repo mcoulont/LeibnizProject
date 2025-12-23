@@ -33,34 +33,34 @@ Definition follows_policy_before {t0 : TimePerception}
 Definition Strategizing : Type :=
   @Event TimePerception (SpacePerception * Action) -> Policy.
 
+Definition fulfills_goal
+(h : @History TimePerception (SpacePerception * Action))
+(policy : Policy) (goal : @Event TimePerception (SpacePerception * Action)) :
+Prop :=
+  follows_policy h policy /\
+  happens_in goal h.
+
 Definition fulfilled_goal {t0 : TimePerception}
 (h0 : @HistoryBefore TimePerception (SpacePerception * Action) Before t0)
 (policy : Policy) (goal : @Event TimePerception (SpacePerception * Action)) :
 Prop :=
   follows_policy_before h0 policy /\
-  happened_before h0 goal.
+  happened_before goal h0.
+
+Definition may_achieve (policy : Policy)
+(goal : @Event TimePerception (SpacePerception * Action))
+(st : @ScientificTheory TimePerception (SpacePerception * Action)) :
+Prop :=
+  exists (h : @History TimePerception (SpacePerception * Action)),
+    fulfills_goal h policy goal /\
+    satisfies h st.
 
 Definition more_adequate_in_deterministic_environment (policy1 policy2 : Policy)
 (goal : @Event TimePerception (SpacePerception * Action))
-(st : @ScientificTheory TimePerception (SpacePerception * Action)) : Prop :=
-  (
-    exists (t : TimePerception)
-    (h : @HistoryBefore TimePerception (SpacePerception * Action) Before t),
-    fulfilled_goal h policy2 goal /\ satisfies_before h st
-  ) -> (
-    exists (t : TimePerception)
-    (h : @HistoryBefore TimePerception (SpacePerception * Action) Before t),
-    fulfilled_goal h policy1 goal /\ satisfies_before h st
-  ).
-
-Definition strictly_more_adequate_in_deterministic_environment (policy1 policy2 : Policy)
-(goal : @Event TimePerception (SpacePerception * Action))
-(st : @ScientificTheory TimePerception (SpacePerception * Action)) : Prop :=
-  more_adequate_in_deterministic_environment policy1 policy2 goal st /\
-  exists (t : TimePerception)
-  (h : @HistoryBefore TimePerception (SpacePerception * Action) Before t),
-    fulfilled_goal h policy1 goal /\ satisfies_before h st /\
-    not (fulfilled_goal h policy2 goal).
+(st : @ScientificTheory TimePerception (SpacePerception * Action)) :
+Prop :=
+  may_achieve policy2 goal st ->
+  may_achieve policy1 goal st.
 
 Definition more_intelligent_in_deterministic_environment
 (strategizing1 strategizing2 : Strategizing)
@@ -79,10 +79,7 @@ Definition strictly_more_intelligent_in_deterministic_environment
 Prop :=
   more_intelligent_in_deterministic_environment strategizing1 strategizing2 st /\
   exists (goal : @Event TimePerception (SpacePerception * Action)),
-    strictly_more_adequate_in_deterministic_environment (
-      strategizing1 goal
-    ) (
-      strategizing2 goal
-    ) goal st.
+    may_achieve (strategizing1 goal) goal st /\
+    ~ may_achieve (strategizing2 goal) goal st.
 
 End definition_intelligence.
