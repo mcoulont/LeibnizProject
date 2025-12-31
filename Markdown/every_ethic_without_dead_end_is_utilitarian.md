@@ -3,8 +3,8 @@ title: "Every ethic without dead end is utilitarian"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy
-  - ethics
+  - Philosophy
+  - Ethics
   - utility-function
 ...
 

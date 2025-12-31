@@ -3,8 +3,8 @@ title: "Ethics in a society"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy
-  - ethics
+  - Philosophy
+  - Ethics
   - society
 ...
 

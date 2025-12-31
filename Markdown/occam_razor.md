@@ -3,8 +3,8 @@ title: "Occam's razor"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy
-  - philosophy of science
+  - Philosophy
+  - Philosophy of science
 ...
 
 

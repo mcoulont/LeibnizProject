@@ -3,7 +3,8 @@ title: "Arrow's theorem"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - social choice
+  - Social choice
+  - Game theory
 ...
 
 

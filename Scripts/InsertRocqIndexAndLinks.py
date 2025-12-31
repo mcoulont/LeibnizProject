@@ -12,7 +12,7 @@ TOKEN_ROCQ_INDEX = '<div id="rocq-index">'
 REGEX_BASENAME_ROCQ_ARTICLE = "(#\\s*)?\\./Articles/([a-z0-9_]+)\\.v($|\\s)"
 REGEX_BASENAME_ROCQ_TOOL = "(#\\s*)?\\./Tools/([a-z0-9_]+)\\.v($|\\s)"
 
-# We wrap Rocq identifiers in a tag and then create hyperlinks
+# We wrap Rocq identifiers in a HTML tag and then create hyperlinks
 # to point to them
 
 # In Rocq, objects we will point to are "Definition", "Axiom", "Example",

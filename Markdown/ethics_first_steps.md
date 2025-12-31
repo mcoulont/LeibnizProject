@@ -3,8 +3,8 @@ title: "Ethics: first steps"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy
-  - ethics
+  - Philosophy
+  - Ethics
 ...
 
 

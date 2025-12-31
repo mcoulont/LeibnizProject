@@ -3,8 +3,8 @@ title: "More restrictive individual ethics diminish the risk of conflicts"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy
-  - ethics
+  - Philosophy
+  - Ethics
   - society
 ...
 

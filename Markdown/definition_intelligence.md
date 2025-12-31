@@ -3,7 +3,7 @@ title: "A definition of intelligence"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy
+  - Philosophy
 ...
 
 

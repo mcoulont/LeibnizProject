@@ -3,7 +3,8 @@ title: "Physical theories"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy of science
+  - Philosophy
+  - Philosophy of science
   - physics
 ...
 

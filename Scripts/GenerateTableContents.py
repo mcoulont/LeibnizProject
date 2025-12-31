@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import sys
-from re import finditer, search, sub
+from re import finditer, search, sub, DOTALL
 
 from InsertCommonHtml import (
     TOKEN_LINK_HOMEPAGE,
@@ -17,6 +17,82 @@ REGEX_TITLE_MD = """title\\s*:\\s*"([^"]+)"\\s+author\\s*:"""
 FOLDER_HTML = "Articles/"
 REGEX_BASENAME_ROCQ_PROJECT = "(#\\s*)?\\./Articles/([a-z0-9_]+)\\.v($|\\s)"
 REGEX_BASENAME_LEAN_PROJECT = "(--\\s*)?import\\s+Articles\\.([a-z0-9_]+)($|\\s)"
+REGEX_KEYWORDS = "keywords:\\n  - ([a-zA-Z0-9 ]+)\\n(  - ([a-zA-Z0-9 ]+)\\n)?"
+
+
+class Section:
+    def __init__(self,
+        name: str,
+        article: str,
+        subsection: str|None = None
+    ):
+        self.__name = name
+
+        if None == subsection:
+            self.__subsections: dict[str, list[str]] = dict()
+            self.__articles: list[str] = [article]
+        else:
+            self.__subsections: dict[str, list[str]] = {subsection: [article]}
+            self.__articles: list[str] = []
+
+    def get_name(self) -> str:
+        return self.__name
+
+    def get_articles(self) -> list[str]:
+        return self.__articles
+
+    def get_subsections(self) -> dict[str, list[str]]:
+        return self.__subsections
+
+    def get_subsection(self, name: str) -> dict[str, list[str]]:
+        return self.__subsections[name]
+
+    def get_nbr_articles(self) -> int:
+        return len(self.__articles)
+
+    def get_nbr_subsections(self) -> int:
+        return len(self.__subsections)
+
+    def add_article(self, article: str) -> None:
+        self.__articles.append(article)
+
+    def add_article_in_subsection(self, article: str, subsection: str) -> None:
+        if subsection in self.__subsections:
+            self.__subsections[subsection].append(article)
+        else:
+            self.__subsections[subsection] = [article]
+
+class SectionsToArticles:
+    def __init__(self):
+        self.__sections: list[Section] = []
+
+    def get_sections(self) -> list[Section]:
+        return self.__sections
+
+    def get_section(self, name_section: str) -> Section|None:
+        for section in self.__sections:
+            if section.get_name() == name_section:
+                return section
+
+        return None
+
+    def add_section(self,
+        article_basename: str,
+        section: str,
+        subsection: str|None
+    ) -> None:
+        key_section = self.get_section(section)
+
+        if None == subsection or not subsection[0].isupper():
+            if None == key_section:
+                self.__sections.append(Section(section, article_basename))
+            else:
+                key_section.add_article(article_basename)
+        else:
+            if None == key_section:
+                self.__sections.append(Section(section, article_basename, subsection))
+            else:
+                key_section.add_article_in_subsection(article_basename, subsection)
 
 
 # To be consistent with imports, the articles must be in the table of contents
@@ -95,17 +171,78 @@ if __name__ == "__main__":
         )
         exit(1)
 
+    sections_to_articles = SectionsToArticles()
+
     for article_basename in articles:
-        body_html += (
-            '<li><a href="' + FOLDER_HTML + article_basename +
-            '.html">' + search(
-                REGEX_TITLE_MD,
-                open(
-                    folder_markdown + '/' + article_basename + ".md",
-                    encoding="utf-8"
-                ).read()
-            ).group(1) + '</a></li>'
+        keywords = search(
+            REGEX_KEYWORDS,
+            open(
+                folder_markdown + '/' + article_basename + ".md",
+                encoding="utf-8"
+            ).read(),
+            flags=DOTALL
         )
+
+        if None == keywords:
+            print(
+                "Error: Keywords of ",
+                article_basename,
+                ' not found\n',
+                file=sys.stderr
+            )
+            exit(1)
+
+        sections_to_articles.add_section(
+            article_basename,
+            keywords.group(1),
+            keywords.group(3)
+        )
+
+    for section in sections_to_articles.get_sections():
+        body_html += '<li class="section">' + section.get_name() + '</li>'
+
+        if 0 < section.get_nbr_articles():
+            body_html += "<ul>"
+
+            for article in section.get_articles():
+                body_html += (
+                    '<li class="table-contents-item"><a href="' +
+                    FOLDER_HTML + article + '.html">' +
+                    search(
+                        REGEX_TITLE_MD,
+                        open(
+                            folder_markdown + '/' + article + ".md",
+                            encoding="utf-8"
+                        ).read()
+                    ).group(1) + '</a></li>'
+                )
+
+            body_html += "</ul>"
+
+        if 0 < section.get_nbr_subsections():
+            body_html += "<ul>"
+
+            for subsection in section.get_subsections():
+                body_html += '<li class="subsection">' + subsection + '</li>'
+
+                for article in section.get_subsection(subsection):
+                    body_html += "<ul>"
+
+                    body_html += (
+                        '<li class="table-contents-item"><a href="' +
+                        FOLDER_HTML + article + '.html">' +
+                        search(
+                            REGEX_TITLE_MD,
+                            open(
+                                folder_markdown + '/' + article + ".md",
+                                encoding="utf-8"
+                            ).read()
+                        ).group(1) + '</a></li>'
+                    )
+
+                    body_html += "</ul>"
+
+            body_html += "</ul>"
 
     body_html += "</ul>"
 

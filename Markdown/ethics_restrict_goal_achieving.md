@@ -3,8 +3,8 @@ title: "Ethics restrict goal achieving"
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy
-  - ethics
+  - Philosophy
+  - Ethics
 ...
 
 

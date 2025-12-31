@@ -3,8 +3,8 @@ title: "For an utilitarian ethic, no freedom iff maximum utility reached for a u
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy
-  - ethics
+  - Philosophy
+  - Ethics
   - utility-function
 ...
 

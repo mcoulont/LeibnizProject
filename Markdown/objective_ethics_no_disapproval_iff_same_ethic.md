@@ -3,8 +3,8 @@ title: "If every individual ethic is objective, no possible disapproval iff ever
 author: Marc Coulont-Robert
 lang: "en"
 keywords:
-  - philosophy
-  - ethics
+  - Philosophy
+  - Ethics
   - society
 ...
 
