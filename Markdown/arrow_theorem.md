@@ -4,7 +4,7 @@ author: Marc Coulont-Robert
 lang: "en"
 keywords:
   - Social choice
-  - Game theory
+  - game theory
 ...
 
 
