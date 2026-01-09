@@ -428,9 +428,9 @@ Proof.
       destruct (`[< indifferent po x y >]) eqn:indif.
       {
         assert ((enum_rank x <= enum_rank y)%coq_nat).
-        { apply le_mathcomp_equivalent. intuition. }
+        { apply le_bool_equivalent. intuition. }
         assert ((enum_rank y <= enum_rank x)%coq_nat).
-        { apply le_mathcomp_equivalent. intuition. }
+        { apply le_bool_equivalent. intuition. }
         assert (nat_of_ord (enum_rank x) = nat_of_ord(enum_rank y)).
         { apply Nat.le_antisymm; tauto. }
         apply ord_inj in H6. apply enum_rank_inj. exact H6.
@@ -450,9 +450,9 @@ Proof.
     { inversion H0. }
     {
       assert ((enum_rank x <= enum_rank y)%coq_nat).
-      { apply le_mathcomp_equivalent. intuition. }
+      { apply le_bool_equivalent. intuition. }
       assert ((enum_rank y <= enum_rank x)%coq_nat).
-      { apply le_mathcomp_equivalent. intuition. }
+      { apply le_bool_equivalent. intuition. }
       assert (nat_of_ord (enum_rank x) = nat_of_ord(enum_rank y)).
       { apply Nat.le_antisymm; tauto. }
       apply ord_inj in H6. apply enum_rank_inj. exact H6.
@@ -796,7 +796,7 @@ Proof.
   { apply Exy. rewrite H1. reflexivity. }
   unfold outcome_when_dominant_strategies in H1.
   pose proof (instance_makes_card_nonnull (enum_val (Ordinal inh) : Individual)).
-  pose proof (lt_mathcomp_equivalent 0 #|Individual|).
+  pose proof (lt_bool_equivalent 0 #|Individual|).
   assert ((0 < #|Individual|)%coq_nat).
   { tauto. }
   clear H4.
@@ -856,12 +856,11 @@ Proof.
     {
       apply PeanoNat.Nat.lt_pred_l.
       intuition.
-      rewrite H11 in H10. inversion H10.
     }
     apply PeanoNat.Nat.lt_le_trans with (m:=k); tauto.
   }
   assert (Nat.pred k < #|Individual|).
-  { apply lt_mathcomp_equivalent. exact H11. }
+  { apply lt_bool_equivalent. exact H11. }
   assert (
     strict (pp (enum_val (Ordinal H12))) y x <->
     ~ strict (pp (enum_val (Ordinal H12))) x y
@@ -944,7 +943,7 @@ Proof.
         apply functional_extensionality_dep. intro.
         destruct (enum_rank x0 < k.-1) eqn:Hx0k.
         {
-          rewrite lt_mathcomp_equivalent in Hx0k.
+          rewrite lt_bool_equivalent in Hx0k.
           assert (enum_val (Ordinal H12) <> x0).
           {
             intro.
@@ -957,7 +956,7 @@ Proof.
           2: { exact H17. }
           assert (enum_rank x0 < k = true).
           {
-            rewrite lt_mathcomp_equivalent.
+            rewrite lt_bool_equivalent.
             assert ((k.-1 < k)%coq_nat).
             { apply Arith_base.lt_pred_n_n_stt. exact H10. }
             apply Nat.lt_trans with (m:=k.-1); tauto.
@@ -966,10 +965,10 @@ Proof.
           reflexivity.
         }
         {
-          rewrite lt_mathcomp_equivalent_not in Hx0k.
+          rewrite lt_bool_equivalent_not in Hx0k.
           destruct (enum_rank x0 < k) eqn:Ix0k.
           {
-            rewrite lt_mathcomp_equivalent in Ix0k.
+            rewrite lt_bool_equivalent in Ix0k.
             pose proof (lt_eq_lt_dec (enum_rank x0) k.-1).
             destruct H17. destruct s.
             { tauto. }
@@ -992,7 +991,7 @@ Proof.
             }
           }
           {
-            rewrite lt_mathcomp_equivalent_not in Ix0k.
+            rewrite lt_bool_equivalent_not in Ix0k.
             assert (nat_of_ord (enum_rank x0) <> k.-1).
             {
               intro.
@@ -1019,7 +1018,7 @@ Proof.
             2: { exact H18. }
             destruct (enum_rank x0 < k) eqn:Ex0k.
             {
-              rewrite <- lt_mathcomp_equivalent_not in Ix0k.
+              rewrite <- lt_bool_equivalent_not in Ix0k.
               rewrite Ex0k in Ix0k.
               inversion Ix0k.
             }
@@ -1149,7 +1148,7 @@ Proof.
     apply functional_extensionality_dep. intro.
     destruct (enum_rank x0 < k.-1) eqn:Hx0k.
     {
-      rewrite lt_mathcomp_equivalent in Hx0k.
+      rewrite lt_bool_equivalent in Hx0k.
       assert (enum_val (Ordinal H12) <> x0).
       {
         intro.
@@ -1162,20 +1161,20 @@ Proof.
       2: { exact H17. }
       assert (enum_rank x0 < k = true).
       {
-        rewrite lt_mathcomp_equivalent.
+        rewrite lt_bool_equivalent.
         assert ((k.-1 < k)%coq_nat).
         { apply Arith_base.lt_pred_n_n_stt. exact H10. }
         apply Nat.lt_trans with (m:=k.-1); tauto.
       }
       rewrite H18.
-      rewrite <- lt_mathcomp_equivalent in Hx0k. rewrite Hx0k.
+      rewrite <- lt_bool_equivalent in Hx0k. rewrite Hx0k.
       reflexivity.
     }
     {
-      rewrite lt_mathcomp_equivalent_not in Hx0k.
+      rewrite lt_bool_equivalent_not in Hx0k.
       destruct (enum_rank x0 < k) eqn:Ix0k.
       {
-        rewrite lt_mathcomp_equivalent in Ix0k.
+        rewrite lt_bool_equivalent in Ix0k.
         pose proof (lt_eq_lt_dec (enum_rank x0) k.-1).
         destruct H17. destruct s.
         { tauto. }
@@ -1198,7 +1197,7 @@ Proof.
         }
       }
       {
-        rewrite lt_mathcomp_equivalent_not in Ix0k.
+        rewrite lt_bool_equivalent_not in Ix0k.
         assert (nat_of_ord (enum_rank x0) <> k.-1).
         {
           intro.
@@ -1221,7 +1220,7 @@ Proof.
         }
         rewrite replace_unchanges.
         2: { exact H18. }
-        rewrite <- lt_mathcomp_equivalent_not in Hx0k. rewrite Hx0k.
+        rewrite <- lt_bool_equivalent_not in Hx0k. rewrite Hx0k.
         reflexivity.
       }
     }

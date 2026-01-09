@@ -2,13 +2,21 @@
 Require Import Logic.Epsilon.
 From mathcomp Require Import all_ssreflect.
 
+Lemma sub_n_n_0 (n : nat) :
+  n - n = 0.
+Proof.
+  induction n.
+  - reflexivity.
+  - simpl. exact IHn.
+Qed.
+
 Lemma add1_lt (m n : nat) :
   m < n <-> m.+1 < n.+1.
 Proof.
   intuition.
 Qed.
 
-Lemma lt_mathcomp_equivalent (m n : nat) :
+Lemma lt_bool_equivalent (m n : nat) :
   m < n = true <-> (m < n)%coq_nat.
 Proof.
   generalize dependent m.
@@ -29,10 +37,10 @@ Proof.
   }
 Qed.
 
-Lemma lt_mathcomp_equivalent_not (m n : nat) :
+Lemma lt_bool_equivalent_not (m n : nat) :
   m < n = false <-> ~ (m < n)%coq_nat.
 Proof.
-  rewrite <- lt_mathcomp_equivalent. unfold not.
+  rewrite <- lt_bool_equivalent. unfold not.
   destruct (m < n).
   {
     split.
@@ -46,7 +54,7 @@ Proof.
   }
 Qed.
 
-Lemma le_mathcomp_equivalent (m n : nat) :
+Lemma le_bool_equivalent (m n : nat) :
   m <= n = true <-> (m <= n)%coq_nat.
 Proof.
   generalize dependent n.

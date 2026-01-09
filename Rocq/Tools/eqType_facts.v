@@ -3,36 +3,55 @@ Require Import Classical.
 Require Import Logic.FunctionalExtensionality.
 From mathcomp Require Import all_ssreflect.
 
-Lemma eq_mathcomp_equivalent {T : eqType} (m n : T) :
+Lemma eq_bool_equivalent {T : eqType} (m n : T) :
   m == n = true <-> m = n.
 Proof.
   split; intro; by apply/eqP.
 Qed.
 
+Lemma eq_bool_equivalent_not {T : eqType} (m n : T) :
+  m == n = false <-> m <> n.
+Proof.
+  split.
+  {
+    intro fal. unfold not. intro tru.
+    rewrite tru in fal. rewrite eq_refl in fal.
+    inversion fal.
+  }
+  {
+    intro ne.
+    unfold not in ne.
+    rewrite <- eq_bool_equivalent in ne.
+    destruct (m == n).
+    { exfalso. apply ne. reflexivity. }
+    { reflexivity. }
+  }
+Qed.
+
 Definition replace {A: eqType} {B : A -> Type}
-(before_replace : forall a : A, B a) (a : A) (b : B a) :
+(before_replace : forall a : A, B a) (a0 : A) (b0 : B a0) :
   forall a : A, B a.
 Proof.
   intro.
-  pose proof (eq_comparable a a0).
+  pose proof (eq_comparable a0 a).
   unfold decidable in H.
   destruct H.
-  - rewrite <- e. exact b.
-  - exact (before_replace a0).
+  - rewrite <- e. exact b0.
+  - exact (before_replace a).
 Defined.
 
 Lemma replace_changes {A: eqType} {B : A -> Type}
-(before_replace : forall a : A, B a) (a : A) (b : B a) :
-  replace before_replace a b a = b.
+(before_replace : forall a : A, B a) (a0 : A) (b0 : B a0) :
+  replace before_replace a0 b0 a0 = b0.
 Proof.
   unfold replace.
-  destruct (eq_comparable (T:=A) a a).
+  destruct (eq_comparable (T:=A) a0 a0).
   - rewrite <- eq_rect_eq. reflexivity.
   - exfalso. apply n. reflexivity.
 Qed.
 
-Lemma replace_unchanges {A: eqType} {B : A -> Type}
-(before_replace : forall a : A, B a) (a a' : A) (b : B a) (Eaa' : a <> a') :
+Lemma replace_unchanges {A: eqType} {B : A -> Type} {a a' : A}
+(before_replace : forall a : A, B a) (b : B a) (ne_aa' : a <> a') :
   replace before_replace a b a' = before_replace a'.
 Proof.
   unfold replace.

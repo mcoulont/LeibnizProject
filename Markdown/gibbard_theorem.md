@@ -204,7 +204,7 @@ Since by (4b), $\neg x I_k y$, the two cases exhaust the possibilities.Therefore
 ■
 --MATH_END--
 
-[//]: # Rocq (782-1262)
+[//]: # Rocq (782-1261)
 
 --MATH_START--
 $\mathbf{Corollary\text{ }1}$\
@@ -217,7 +217,7 @@ Therefore (4c) is false, and $x f(\vec P) y$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (1264-1314)
+[//]: # Rocq (1263-1313)
 
 --MATH_START--
 $\mathbf{Corollary\text{ }2}$\
@@ -231,7 +231,7 @@ Thus since $g(\vec {s'}) = g(\sigma(\vec P)) = v(\vec P)$, we have $v(\vec P) \n
 ■
 --MATH_END--
 
-[//]: # Rocq (1316-1345)
+[//]: # Rocq (1315-1344)
 
 --MATH_START--
 $\mathbf{Corollary\text{ }3}$\
@@ -242,7 +242,7 @@ This is the contrapositive of Corollary 2. \
 ■
 --MATH_END--
 
-[//]: # Rocq (1347-1362)
+[//]: # Rocq (1346-1361)
 
 --MATH_START--
 $\mathbf{Assertion\text{ }2}$\
@@ -281,7 +281,7 @@ Since $x f(\vec {P'}) z$, by Corollary 2 to Assertion 1, $z \neq v(\vec {P'})$. 
 ■
 --MATH_END--
 
-[//]: # Rocq (1364-1714)
+[//]: # Rocq (1363-1713)
 
 --MATH_START--
 $\mathbf{Assertion\text{ }3}$\
@@ -297,7 +297,7 @@ Therefore, since the Arrow theorem says that no social welfare function satisfie
 ■
 --MATH_END--
 
-[//]: # Rocq (1716-1777)
+[//]: # Rocq (1715-1776)
 
 --MATH_START--
 $\mathbf{Assertion\text{ }4}$\
@@ -317,7 +317,7 @@ We have shown, then, that if $s(y) = \sigma_k(P^y)$, then (6) is satisfied. Thus
 ■
 --MATH_END--
 
-[//]: # Rocq (1779-1880)
+[//]: # Rocq (1778-1879)
 
 --MATH_START--
 $\mathbf{Gibbard's\text{ }theorem}$\
@@ -329,7 +329,7 @@ By Arrow's theorem together with Assertion 3, $f$ admits a dictator, which is om
 ■
 --MATH_END--
 
-[//]: # Rocq (1882-1905)
+[//]: # Rocq (1881-1904)
 
 
 ## Gibbard-Satterthwaite theorem
@@ -341,7 +341,7 @@ Throughout this section, let $I$ the finite set of individuals (voters) of a soc
 The strategies are prefence orders on the set of alternatives (for every voter).
 --MATH_END--
 
-[//]: # Rocq (1911-1920)
+[//]: # Rocq (1910-1919)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -350,7 +350,7 @@ $$v(\vec {P'}) P_k v(\vec {P})$$
 For, then, if $P_k$ is $k$'s real preference ordering, given the way the others vote, $k$ prefers the result of expressing preference ordering $P'_k$ to that of expressing $P_k$.
 --MATH_END--
 
-[//]: # Rocq (1922-1927)
+[//]: # Rocq (1921-1926)
 
 --MATH_START--
 $\mathbf{Gibbard-Satterthwaite\text{ }theorem}$\
@@ -364,7 +364,7 @@ But since $v(\vec P) \in X$ and $v(\vec {P}_{k/P^*}) \in X$, from (2), $v(\vec P
 ■
 --MATH_END--
 
-[//]: # Rocq (1929-1969)
+[//]: # Rocq (1928-1968)
 
 
 ## An illustrative example

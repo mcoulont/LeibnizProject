@@ -16,3 +16,4 @@ Require Import many_worlds_interpretation.
 Require Import physics_with_free_will.
 Require Import definition_intelligence.
 Require Import definition_power.
+Require Import gains_from_trade.

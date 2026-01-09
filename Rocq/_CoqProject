@@ -2,10 +2,13 @@
 ./Tools/basics.v
 ./Tools/relation_facts.v
 ./Tools/eqType_facts.v
+./Tools/nat_facts.v
+./Tools/reals_facts.v
 ./Tools/finType_facts.v
 ./Tools/ssrfun_facts.v
 ./Tools/ssrnat_facts.v
 ./Tools/boolp_facts.v
+./Tools/bigop_facts.v
 ./Tools/preference.v
 ./Articles/ethics_first_steps.v
 ./Articles/every_ethic_without_dead_end_is_utilitarian.v
@@ -25,4 +28,5 @@
 ./Articles/physics_with_free_will.v
 ./Articles/definition_intelligence.v
 ./Articles/definition_power.v
+./Articles/gains_from_trade.v
 ./gather.v
