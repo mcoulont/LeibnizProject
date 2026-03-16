@@ -8,10 +8,11 @@ Require Import Logic.Epsilon.
 Require Import Logic.FunctionalExtensionality.
 Require Import Logic.ClassicalEpsilon.
 Require Import Reals.
-From mathcomp Require Import all_ssreflect.
+From mathcomp Require Import all_ssreflect fintype fingroup perm.
 From mathcomp.classical Require Import boolp.
 
 Require Import eqType_facts.
+Require Import perm.
 Require Import relation_facts.
 Require Import preference.
 Require Import reals_facts.
@@ -321,6 +322,15 @@ Proof.
   apply Rplus_le_compat.
 Qed.
 
+Lemma sum_real_constants (A: finType) (c : R) :
+  sum_reals (fun _ : A => c) = c * INR #|A|.
+Proof.
+  unfold sum_reals.
+  rewrite big_const.
+  rewrite iter_plus_0.
+  reflexivity.
+Qed.
+
 Lemma sum_reals_additive {A: finType} (E1 E2 : A -> R) :
   sum_reals (
     fun a => E1 a + E2 a
@@ -379,7 +389,7 @@ Proof.
   }
   assert (xpredT a0 = true) as tru. { reflexivity. }
   pose proof (
-    @big_only1 R 0 Rplus__canonical__Monoid_Law A a0 xpredT (
+    @big_only1 R 0 reals_Monoid_Law A a0 xpredT (
       fun (a : A) => if a == a0 then c else 0
     ) tru null_case
   ) as sum_only1.
@@ -473,6 +483,18 @@ Proof.
     }
     { rewrite Rplus_0_r. reflexivity. }
   }
+Qed.
+
+Lemma sum_reals_perm {A : finType} (f : A -> R) (σ : {perm A}) :
+  sum_reals (PermutationsActingOnFunctions f σ) = sum_reals f.
+Proof.
+  unfold PermutationsActingOnFunctions. unfold sum_reals.
+  rewrite (
+    reindex_inj (@perm_inj A σ) (F:=f) (P := fun _ => true) (x:=0%R) (
+      op:=reals_SemiGroup_com_law
+    )
+  ).
+  reflexivity.
 Qed.
 
 Lemma sum_nonnegative_reals_is_nonnegative {A : finType} {f : A -> R}

@@ -497,25 +497,35 @@ Proof.
   unfold commutative. apply Rplus_comm.
 Qed.
 
-Definition reals_HB_isComLaw_axioms : Monoid.isComLaw.axioms_ R 0%R Rplus :=
+Definition reals_Monoid_isComLaw_axioms : Monoid.isComLaw.axioms_ R 0%R Rplus :=
   {|
-    Monoid.isComLaw.opA := reals_HB_associative; Monoid.isComLaw.opC := reals_HB_commutative;
+    Monoid.isComLaw.opA := reals_HB_associative ;
+    Monoid.isComLaw.opC := reals_HB_commutative ;
     Monoid.isComLaw.op1m := Rplus_0_l
   |}.
 
-Definition reals_HB_isLaw_axioms : SemiGroup.isLaw.axioms_ R Rplus :=
+Definition reals_SemiGroup_isLaw_axioms : SemiGroup.isLaw.axioms_ R Rplus :=
   Monoid.Builders_15.Monoid_isComLaw__to__SemiGroup_isLaw
-    (idm:=0%R) (op:=Rplus) reals_HB_isComLaw_axioms.
+    (idm:=0%R) (op:=Rplus) reals_Monoid_isComLaw_axioms.
 
-Definition reals_HB_isMonoidLaw_axioms : Monoid.isMonoidLaw.axioms_ R 0%R Rplus :=
-  Monoid.Builders_15.Monoid_isComLaw__to__Monoid_isMonoidLaw (idm:=0%R) (op:=Rplus) reals_HB_isComLaw_axioms.
+Definition reals_isMonoidLaw_axioms : Monoid.isMonoidLaw.axioms_ R 0%R Rplus :=
+  Monoid.Builders_15.Monoid_isComLaw__to__Monoid_isMonoidLaw (idm:=0%R) (
+    op:=Rplus
+  ) reals_Monoid_isComLaw_axioms.
 
-Definition Rplus__canonical__Monoid_Law : Monoid.law 0%R :=
+Definition reals_Monoid_Law : Monoid.law 0%R :=
   {|
     Monoid.Law.sort := Rplus;
     Monoid.Law.class :=
     {|
-      Monoid.Law.SemiGroup_isLaw_mixin := reals_HB_isLaw_axioms ;
-      Monoid.Law.Monoid_isMonoidLaw_mixin := reals_HB_isMonoidLaw_axioms
+      Monoid.Law.SemiGroup_isLaw_mixin := reals_SemiGroup_isLaw_axioms ;
+      Monoid.Law.Monoid_isMonoidLaw_mixin := reals_isMonoidLaw_axioms
     |}
   |}.
+
+Definition reals_SemiGroup_isCommutativeLaw_axioms :
+SemiGroup.isCommutativeLaw.axioms_ R Rplus :=
+  SemiGroup.isCommutativeLaw.phant_Build reals_HB_commutative.
+
+Definition reals_SemiGroup_com_law : SemiGroup.com_law R :=
+  SemiGroup.ComLaw.pack_ reals_SemiGroup_isLaw_axioms reals_SemiGroup_isCommutativeLaw_axioms.

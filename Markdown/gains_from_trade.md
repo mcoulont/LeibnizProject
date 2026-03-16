@@ -25,7 +25,7 @@ One can produce a finite (possibly null) quantity of every good or service and o
 
 --MATH_START--
 $\mathbf{Definition}$\
-Let $WP = {\mathbb R}_+ ^ C$ be the set of work products, a work product giving a produced quantity for each commodity.
+Let $WP = {\mathbb R}_+ ^ C$ be the set of work products, a work product giving a produced quantity for each commodity. \
 Unprodictivity means producing none of any commodity.
 --MATH_END--
 
