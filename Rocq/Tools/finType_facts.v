@@ -8,14 +8,15 @@ Require Import Logic.Epsilon.
 Require Import Logic.FunctionalExtensionality.
 Require Import Logic.ClassicalEpsilon.
 Require Import Reals.
-From mathcomp Require Import all_ssreflect fintype fingroup perm.
+From mathcomp Require Import all_ssreflect fintype fingroup perm rat.
 From mathcomp.classical Require Import boolp.
 
+Require Import relation_facts.
 Require Import eqType_facts.
 Require Import perm.
-Require Import relation_facts.
-Require Import preference.
+Require Import rationals_facts.
 Require Import reals_facts.
+Require Import preference.
 
 Open Scope nat_scope.
 
@@ -44,7 +45,7 @@ Proof.
   reflexivity.
 Qed.
 
-Lemma instance_makes_card_nonnull {T : finType} (t : T) :
+Lemma instance_makes_card_positive {T : finType} (t : T) :
   0 < #|T|.
 Proof.
   specialize (fintype0 t). intro.
@@ -254,7 +255,7 @@ Definition sum_reals {A : finType} (f : A -> R) : R :=
 Definition sum_reals_in {A : finType} (f : A -> R) : R :=
   (\big[+%R/0%R]_(i in A) (f i)%R).
 
-Lemma iter_plus (x y : R) (n : nat) :
+Lemma iter_Rplus (x y : R) (n : nat) :
   iter n (fun z => x + z) y = x * (INR n) + y.
 Proof.
   induction n.
@@ -271,31 +272,31 @@ Proof.
   }
 Qed.
 
-Lemma iter_plus_0 (x : R) (n : nat) :
+Lemma iter_Rplus_0 (x : R) (n : nat) :
   iter n (fun z => x + z) 0 = x * (INR n).
-Proof. by rewrite iter_plus Rplus_0_r. Qed.
+Proof. by rewrite iter_Rplus Rplus_0_r. Qed.
 
-Lemma sum_reals_const (A: finType) (x : R) :
+Lemma sum_reals_const (A : finType) (x : R) :
   sum_reals (fun (a : A) => x) = (INR #|A|) * x.
 Proof.
   unfold sum_reals.
-  by rewrite big_const iter_plus_0 Rmult_comm.
+  by rewrite big_const iter_Rplus_0 Rmult_comm.
 Qed.
 
-Lemma sum_reals_in_const (A: finType) (x : R) :
+Lemma sum_reals_in_const (A : finType) (x : R) :
   sum_reals_in (fun (a : A) => x) = (INR #|A|) * x.
 Proof.
   unfold sum_reals_in.
-  by rewrite big_const iter_plus_0 Rmult_comm.
+  by rewrite big_const iter_Rplus_0 Rmult_comm.
 Qed.
 
-Lemma sum_reals_0 (A: finType) :
+Lemma sum_reals_0 (A : finType) :
   sum_reals (fun (_ : A) => 0) = 0.
 Proof.
   by rewrite sum_reals_const Rmult_0_r.
 Qed.
 
-Lemma sum_reals_eq {A: finType} (E1 E2 : A -> R) :
+Lemma sum_reals_eq {A : finType} (E1 E2 : A -> R) :
   (forall a, E1 a = E2 a) ->
   sum_reals E1 = sum_reals E2.
 Proof.
@@ -305,7 +306,7 @@ Proof.
   auto.
 Qed.
 
-Lemma sum_reals_le {A: finType} (E1 E2 : A -> R) :
+Lemma sum_reals_le {A : finType} (E1 E2 : A -> R) :
   (forall a, E1 a <= E2 a) ->
   sum_reals E1 <= sum_reals E2.
 Proof.
@@ -322,16 +323,16 @@ Proof.
   apply Rplus_le_compat.
 Qed.
 
-Lemma sum_real_constants (A: finType) (c : R) :
+Lemma sum_real_constants (A : finType) (c : R) :
   sum_reals (fun _ : A => c) = c * INR #|A|.
 Proof.
   unfold sum_reals.
   rewrite big_const.
-  rewrite iter_plus_0.
+  rewrite iter_Rplus_0.
   reflexivity.
 Qed.
 
-Lemma sum_reals_additive {A: finType} (E1 E2 : A -> R) :
+Lemma sum_reals_additive {A : finType} (E1 E2 : A -> R) :
   sum_reals (
     fun a => E1 a + E2 a
   ) = sum_reals E1 + sum_reals E2.
@@ -348,7 +349,7 @@ Proof.
   apply Rplus_comm.
 Qed.
 
-Lemma sum_reals_inv {A: finType} (E : A -> R) :
+Lemma sum_reals_inv {A : finType} (E : A -> R) :
   sum_reals (
     fun a => - E a
   ) = - sum_reals E.
@@ -361,7 +362,7 @@ Proof.
   intro a. rewrite Rplus_opp_r. reflexivity.
 Qed.
 
-Lemma sum_reals_minus {A: finType} (E1 E2 : A -> R) :
+Lemma sum_reals_minus {A : finType} (E1 E2 : A -> R) :
   sum_reals (
     fun a => E1 a - E2 a
   ) = sum_reals E1 - sum_reals E2.
@@ -371,7 +372,7 @@ Proof.
   reflexivity.
 Qed.
 
-Lemma sum_all_null_but_1 {A : finType} (a0 : A) (c : R) :
+Lemma sum_reals_all_null_but_1 {A : finType} (a0 : A) (c : R) :
   sum_reals (fun (a : A) => if a == a0 then c else 0) = c.
 Proof.
   unfold sum_reals.
@@ -425,7 +426,7 @@ Proof.
   }
   rewrite dec.
   rewrite sum_reals_additive.
-  rewrite sum_all_null_but_1. rewrite sum_all_null_but_1.
+  rewrite sum_reals_all_null_but_1. rewrite sum_reals_all_null_but_1.
   reflexivity.
 Qed.
 
@@ -437,7 +438,7 @@ Proof.
   pose proof (sum_reals_additive E (
     fun a => if a == a0 then c else 0
   )) as sra.
-  rewrite sum_all_null_but_1 in sra.
+  rewrite sum_reals_all_null_but_1 in sra.
   rewrite <- sra.
   apply sum_reals_eq.
   intro a.
@@ -490,7 +491,7 @@ Lemma sum_reals_perm {A : finType} (f : A -> R) (σ : {perm A}) :
 Proof.
   unfold PermutationsActingOnFunctions. unfold sum_reals.
   rewrite (
-    reindex_inj (@perm_inj A σ) (F:=f) (P := fun _ => true) (x:=0%R) (
+    reindex_inj ( @perm_inj A σ) (F:=f) (P := fun _ => true) (x:=0%R) (
       op:=reals_SemiGroup_com_law
     )
   ).
@@ -583,3 +584,130 @@ Proof.
   destruct (a == a0); reflexivity.
 Qed.
 
+Close Scope R_scope.
+
+Open Scope rat_scope.
+
+Definition sum_rationals {A : finType} (f : A -> rat) : rat :=
+  (\big[addq/0]_a (f a)).
+
+Lemma iter_rat_plus (x y : rat) (n : nat) :
+  iter n (fun z => x + z) y = x * (nat_to_rat n) + y.
+Proof.
+  induction n.
+  {
+    simpl. rewrite nat_to_rat_0.
+    rewrite mulq0r. rewrite addq0l.
+    reflexivity.
+  }
+  {
+    rewrite iterS. rewrite IHn.
+    rewrite S_nat_to_rat. rewrite mulq_addr. rewrite <- addqA.
+    rewrite mulq1r. rewrite addqC. rewrite <- addqA.
+    rewrite (addqC x y).
+    reflexivity.
+  }
+Qed.
+
+Lemma iter_rat_plus_0 (x : rat) (n : nat) :
+  iter n (fun z => x + z) 0 = x * (nat_to_rat n).
+Proof.
+  rewrite iter_rat_plus addq0r. reflexivity.
+Qed.
+
+Lemma sum_rationals_eq {A : finType} (E1 E2 : A -> rat) :
+  (forall a, E1 a = E2 a) ->
+  sum_rationals E1 = sum_rationals E2.
+Proof.
+  unfold sum_rationals.
+  intro eqE.
+  apply eq_bigr.
+  auto.
+Qed.
+
+Lemma sum_rational_constants (A: finType) (c : rat) :
+  sum_rationals (fun _ : A => c) = c * nat_to_rat #|A|.
+Proof.
+  unfold sum_rationals.
+  rewrite big_const.
+  rewrite iter_rat_plus_0.
+  reflexivity.
+Qed.
+
+Lemma sum_rationals_additive {A : finType} (E1 E2 : A -> rat) :
+  sum_rationals (
+    fun a => E1 a + E2 a
+  ) = sum_rationals E1 + sum_rationals E2.
+Proof.
+  unfold sum_rationals.
+  assert (0 = 0 + 0) as plus00. { rewrite addq0r. reflexivity. }
+  elim/big_ind3: _ => // r1 r2 r3 r4 r5 r6.
+  intros s321 s654.
+  rewrite s321. rewrite s654.
+  rewrite <- addqA. rewrite <- addqA.
+  assert (r1 + (r5 + r4) = r5 + (r1 + r4)) as eqr.
+  2: { rewrite eqr. reflexivity. }
+  rewrite addqA. rewrite addqA.
+  assert (r1 + r5 = r5 + r1) as eqr'. { apply addqC. }
+  rewrite eqr'. reflexivity.
+Qed.
+
+Lemma sum_rationals_all_null_but_1 {A : finType} (a0 : A) (c : rat) :
+  sum_rationals (fun (a : A) => if a == a0 then c else 0) = c.
+Proof.
+  unfold sum_rationals.
+  assert (
+    forall a,
+      a != a0 ->
+      true ->
+      (fun (a : A) => if a == a0 then c else 0) a = 0
+  ) as null_case.
+  {
+    intros a ne tru.
+    destruct (a == a0).
+    { inversion ne. }
+    { reflexivity. }
+  }
+  assert (xpredT a0 = true) as tru. { reflexivity. }
+  pose proof (
+    @big_only1 rat 0 rationals_Monoid_Law A a0 xpredT (
+      fun (a : A) => if a == a0 then c else 0
+    ) tru null_case
+  ) as sum_only1.
+  simpl in sum_only1. rewrite eq_refl in sum_only1.
+  exact sum_only1.
+Qed.
+
+Lemma sum_rationals_add_to_term {A : finType} (E : A -> rat) (a0 : A) (c : rat) :
+  sum_rationals (
+    fun a => if a == a0 then E a0 + c else E a
+  ) = sum_rationals E + c.
+Proof.
+  pose proof (sum_rationals_additive E (
+    fun a => if a == a0 then c else 0
+  )) as sra.
+  rewrite sum_rationals_all_null_but_1 in sra.
+  rewrite <- sra.
+  apply sum_rationals_eq.
+  intro a.
+  destruct (a == a0) eqn:Eaa0.
+  {
+    rewrite eq_bool_equivalent in Eaa0. rewrite Eaa0.
+    reflexivity.
+  }
+  { rewrite addq0r. reflexivity. }
+Qed.
+
+Lemma sum_rationals_perm {A : finType} (f : A -> rat) (σ : {perm A}) :
+  sum_rationals (PermutationsActingOnFunctions f σ) = sum_rationals f.
+Proof.
+  unfold PermutationsActingOnFunctions. unfold sum_rationals.
+  rewrite (
+    reindex_inj ( @perm_inj A σ) (F:=f) (P := fun _ => true) (x:=0%Q) (
+      op:=rationals_SemiGroup_com_law
+    )
+  ).
+  reflexivity.
+Qed.
+
+Close Scope rat_scope.

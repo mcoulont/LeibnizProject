@@ -795,7 +795,7 @@ Proof.
   destruct H1.
   { apply Exy. rewrite H1. reflexivity. }
   unfold outcome_when_dominant_strategies in H1.
-  pose proof (instance_makes_card_nonnull (enum_val (Ordinal inh) : Individual)).
+  pose proof (instance_makes_card_positive (enum_val (Ordinal inh) : Individual)).
   pose proof (lt_bool_equivalent 0 #|Individual|).
   assert ((0 < #|Individual|)%coq_nat).
   { tauto. }

@@ -528,4 +528,7 @@ SemiGroup.isCommutativeLaw.axioms_ R Rplus :=
   SemiGroup.isCommutativeLaw.phant_Build reals_HB_commutative.
 
 Definition reals_SemiGroup_com_law : SemiGroup.com_law R :=
-  SemiGroup.ComLaw.pack_ reals_SemiGroup_isLaw_axioms reals_SemiGroup_isCommutativeLaw_axioms.
+  SemiGroup.ComLaw.pack_ reals_SemiGroup_isLaw_axioms
+  reals_SemiGroup_isCommutativeLaw_axioms.
+
+Close Scope R_scope.

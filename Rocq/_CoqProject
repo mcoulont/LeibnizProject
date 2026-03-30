@@ -4,6 +4,7 @@
 ./Tools/eqType_facts.v
 ./Tools/nat_facts.v
 ./Tools/perm.v
+./Tools/rationals_facts.v
 ./Tools/reals_facts.v
 ./Tools/finType_facts.v
 ./Tools/ssrfun_facts.v
