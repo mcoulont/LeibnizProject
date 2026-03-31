@@ -362,6 +362,19 @@ Proof.
   intro a. rewrite Rplus_opp_r. reflexivity.
 Qed.
 
+Lemma sum_reals_mult_constant {A : finType} (E : A -> R) (k : R) :
+  sum_reals (
+    fun a => k * E a
+  ) = k * sum_reals E.
+Proof.
+  unfold sum_reals.
+  assert (0 = k * 0) as mulk0. { rewrite Rmult_0_r. reflexivity. }
+  elim/big_ind2: _ => // r1 r3 r2 r4.
+  intro k31. intro k42.
+  rewrite k31. rewrite k42.
+  rewrite Rmult_plus_distr_l. reflexivity.
+Qed.
+
 Lemma sum_reals_minus {A : finType} (E1 E2 : A -> R) :
   sum_reals (
     fun a => E1 a - E2 a
@@ -650,6 +663,19 @@ Proof.
   rewrite addqA. rewrite addqA.
   assert (r1 + r5 = r5 + r1) as eqr'. { apply addqC. }
   rewrite eqr'. reflexivity.
+Qed.
+
+Lemma sum_rationals_mult_constant {A : finType} (E : A -> rat) (k : rat) :
+  sum_rationals (
+    fun a => k * E a
+  ) = k * sum_rationals E.
+Proof.
+  unfold sum_rationals.
+  assert (0 = k * 0) as mulk0. { rewrite mulq0r. reflexivity. }
+  elim/big_ind2: _ => // r1 r3 r2 r4.
+  intro k31. intro k42.
+  rewrite k31. rewrite k42.
+  rewrite mulq_addr. reflexivity.
 Qed.
 
 Lemma sum_rationals_all_null_but_1 {A : finType} (a0 : A) (c : rat) :

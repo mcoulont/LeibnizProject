@@ -162,6 +162,93 @@ Proof.
   apply rat_plus_lt_compat_l. rewrite subq_gt0. exact ltjm.
 Qed.
 
+Definition currency_change (dist : @Profile Individual MonetaryValue)
+(k : MonetaryValue) :
+@Profile Individual MonetaryValue :=
+  fun i => k * dist i.
+
+Definition is_linear (redi : Redistribution) : Prop :=
+  forall (cont : @Profile Individual MonetaryValue) (k : MonetaryValue),
+    sval redi (currency_change cont k) = currency_change (sval redi cont) k.
+
+Lemma capitalism_is_linear :
+  is_linear pure_capitalism_Redistribution.
+Proof.
+  unfold is_linear. unfold pure_capitalism_Redistribution.
+  intro cont. intro k.
+  simpl.
+  unfold pure_capitalism.
+  reflexivity.
+Qed.
+
+Lemma communism_is_linear (i : Individual) :
+  is_linear (pure_communism_Redistribution i).
+Proof.
+  unfold is_linear. unfold pure_communism_Redistribution.
+  intro cont. intro k.
+  simpl.
+  unfold pure_communism. unfold currency_change. unfold total_value.
+  rewrite sum_rationals_mult_constant.
+  unfold divq. rewrite mulqA.
+  reflexivity.
+Qed.
+
+Definition is_fair (redi : Redistribution) : Prop :=
+  forall (cont : @Profile Individual MonetaryValue) (i j : Individual),
+    le_rat (cont i) (cont j) ->
+    le_rat (sval redi cont i) (sval redi cont j).
+
+Lemma capitalism_is_fair :
+  is_fair pure_capitalism_Redistribution.
+Proof.
+  unfold is_fair. unfold pure_capitalism_Redistribution.
+  intro cont. intro i. intro j.
+  simpl.
+  unfold pure_capitalism.
+  intro conc. exact conc.
+Qed.
+
+Lemma communism_is_fair (i0 : Individual) :
+  is_fair (pure_communism_Redistribution i0).
+Proof.
+  unfold is_fair. unfold pure_communism_Redistribution.
+  intro cont. intro i. intro j.
+  simpl.
+  unfold pure_communism.
+  intro.
+  apply le_rat_reflexive.
+Qed.
+
+Definition is_strictly_fair (redi : Redistribution) : Prop :=
+  forall (cont : @Profile Individual MonetaryValue) (i j : Individual),
+    lt_rat (cont i) (cont j) ->
+    lt_rat (sval redi cont i) (sval redi cont j).
+
+Lemma capitalism_is_strictly_fair :
+  is_strictly_fair pure_capitalism_Redistribution.
+Proof.
+  unfold is_strictly_fair. unfold pure_capitalism_Redistribution.
+  intro cont. intro i. intro j.
+  simpl.
+  unfold pure_capitalism.
+  intro conc. exact conc.
+Qed.
+
+Lemma communism_not_strictly_fair {i0 j0 : Individual} (neij0 : j0 <> i0) :
+  ~ is_strictly_fair (pure_communism_Redistribution i0).
+Proof.
+  unfold is_strictly_fair. unfold pure_communism_Redistribution.
+  intro sf.
+  specialize (sf (fun i => if i == i0 then 1 else 0)). specialize (sf j0 i0).
+  unfold pure_communism in sf.
+  simpl in sf. rewrite eq_refl in sf.
+  rewrite <- eq_bool_equivalent_not in neij0. rewrite neij0 in sf.
+  rewrite lt_rat_0_1 in sf. rewrite lt_rat_irreflexive in sf.
+  unfold is_true in sf.
+  assert (true = true) as taut. { reflexivity. }
+  specialize (sf taut). inversion sf.
+Qed.
+
 Close Scope rat_scope.
 
 End definition_capitalism_communism.

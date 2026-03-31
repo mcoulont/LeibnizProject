@@ -446,6 +446,19 @@ Proof.
   }
 Qed.
 
+Lemma le_rat_reflexive (x : rat) :
+  le_rat x x.
+Proof.
+  rewrite <- subq_ge0. rewrite ssralg.GRing.addrN. reflexivity.
+Qed.
+
+Lemma lt_rat_irreflexive (x : rat) :
+  lt_rat x x = false.
+Proof.
+  rewrite lt_rat_def. unfold negb. rewrite eq_refl.
+  apply Bool.andb_false_l.
+Qed.
+
 Lemma le_rat_S (r : rat) :
   le_rat r (r + 1).
 Proof.
@@ -683,5 +696,4 @@ Definition rationals_SemiGroup_com_law : SemiGroup.com_law rat :=
   SemiGroup.ComLaw.pack_ rationals_SemiGroup_isLaw_axioms
   rationals_SemiGroup_isCommutativeLaw_axioms.
 
-(* Close Scope Q_scope. *)
 Close Scope rat_scope.

@@ -15,7 +15,7 @@ With wealth being represented as money (that is as a number):
 - purely ccommunist redistribution equally retributes every individual, whatever its contribution.
 
 --MATH_START--
-Throughout this page, let $I$ be the finite set of individuals. \
+Throughout this page, let $I$ be the finite set of individuals (with $N$ as the number of individuals). \
 Contributions by individuals are represented by their monetary value, which is a rational number (potentially negative, in case of vandalism for example). So are retributions to individuals.
 --MATH_END--
 
@@ -58,7 +58,6 @@ $$\begin{align*}
     {\mathbb Q}^I &\to {\mathbb Q}^I\\
     c &\mapsto ({i_0 \in I} &\mapsto \frac {\sum_{i \in I} c(i)} N)
 \end{align*}$$
-(where $N$ is the number of individuals).
 --MATH_END--
 
 [//]: # Rocq (49-73)
@@ -142,3 +141,39 @@ $\forall c \in {\mathbb Q}^I, i \in I, c' \in {\mathbb Q} \text{ such that } c(i
 --MATH_END--
 
 [//]: # Rocq (119-163)
+
+
+## Linear redistributions
+
+A redistribution is linear if multiplying all the contributions by the same factor multiplies all the retributions accordingly. This is the same as saying that the redistribution does not change with a currency change. Pure capitalism and pure communism are linear.
+
+--MATH_START--
+$\mathbf{Definition}$\
+The redistribution $r: {\mathbb Q}^I \to {\mathbb Q}^I$ is said linear if
+$$\forall c \in {\mathbb Q}^I, k \in {\mathbb Q}, r(k c) = k r(c)$$
+(where $k c$ denotes $c$ where all the individual contributions are multiplied by $k$)
+--MATH_END--
+
+[//]: # Rocq (165-172)
+
+--MATH_START--
+$\mathbf{Lemma}$\
+Pure capitalism is linear.
+
+$\mathbf{proof:}$\
+$r(k c) = k c = k r(c)$. \
+■
+--MATH_END--
+
+[//]: # Rocq (174-182)
+
+--MATH_START--
+$\mathbf{Lemma}$\
+Pure communism is linear.
+
+$\mathbf{proof:}$\
+$r(k c) = i \mapsto \frac {\sum_{j \in I} k c(j)} N = i \mapsto k \frac {\sum_{j \in I} c(j)} N = k r(c)$. \
+■
+--MATH_END--
+
+[//]: # Rocq (184-194)
