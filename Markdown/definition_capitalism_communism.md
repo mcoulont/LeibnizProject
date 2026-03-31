@@ -4,6 +4,7 @@ author: Marc Coulont-Robert
 lang: "en"
 keywords:
   - Economics
+  - Taxation
 ...
 
 
