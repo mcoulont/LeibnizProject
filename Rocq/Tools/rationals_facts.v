@@ -1,15 +1,5 @@
 
 Require Import Classical.
-(* Require Import QArith.
-From mathcomp Require Import all_ssreflect.
-
-Open Scope Q_scope.
-
-Definition nat_to_rat (n : nat) : Q := inject_Z (Z.of_nat n).
-
-(* Lemma nat_to_rat_0 : nat_to_rat 0%nat == 0. *)
-Lemma nat_to_rat_0 : nat_to_rat 0%nat = 0.
-Proof. reflexivity. Qed. *)
 From mathcomp Require Import all_ssreflect rat ssrint.
 
 Require Import eqType_facts.
@@ -30,8 +20,6 @@ Proof.
   reflexivity.
 Qed.
 
-(* Lemma ratz_1 : ratz 1%Z == 1.
-Proof. reflexivity. Qed. *)
 Lemma ratz_1 : ratz 1%Z = 1.
 Proof.
   rewrite ratz_frac.
@@ -39,7 +27,6 @@ Proof.
 Qed.
 
 Lemma ratz_inj (n m : nat) :
-  (* ratz n = ratz m -> n = m. *)
   ratz n = ratz m -> n = m.
 Proof.
   intro eqr.
@@ -52,7 +39,6 @@ Qed.
 
 Definition nat_to_rat (n : nat) : rat := ratz (Posz n).
 
-(* Lemma nat_to_rat_0 : nat_to_rat 0%nat == 0. *)
 Lemma nat_to_rat_0 : nat_to_rat 0%nat = 0.
 Proof.
   unfold nat_to_rat.
@@ -62,7 +48,6 @@ Qed.
 
 Lemma nat_to_rat_inj (n m : nat) :
   nat_to_rat n = nat_to_rat m -> n = m.
-  (* nat_to_rat n == nat_to_rat m -> n = m. *)
 Proof.
   unfold nat_to_rat.
   intro eqrz.
@@ -72,7 +57,6 @@ Qed.
 
 Lemma S_nat_to_rat (n : nat) :
   nat_to_rat (n.+1) = nat_to_rat n + 1.
-  (* nat_to_rat (n.+1) == nat_to_rat n + 1. *)
 Proof.
   unfold nat_to_rat.
   rewrite <- ratz_1.
@@ -203,7 +187,6 @@ Proof.
   apply rat_plus_opp_r_uniq. apply addNq.
 Qed.
 
-(* Lemma mulq_inv (x : rat) : *)
 Lemma mulq_inv {x : rat} (ne0 : x <> 0) :
   x / x = 1.
 Proof.
@@ -313,69 +296,6 @@ Proof.
   apply nex0. exact eqx0.
 Qed.
 
-(* Lemma rat_mult_div_swap (r1 r2 r3 : Q):
-  r1 * r2 / r3 == r1 / r3 * r2.
-Proof.
-  unfold Qeq.
-  rewrite Pos2Z.inj_mul. rewrite Pos2Z.inj_mul. rewrite Pos2Z.inj_mul.
-  rewrite Pos2Z.inj_mul.
-  rewrite Qnum_mult. rewrite Qnum_mult. rewrite Qnum_mult. rewrite Qnum_mult.
-  Open Scope Z_scope.
-  assert (Qnum r1 = 0 \/ Qnum r1 <> 0) as taut1. { tauto. }
-  destruct taut1 as [eqr10|eqr10].
-  {
-    rewrite eqr10.
-    rewrite Z.mul_0_l. rewrite Z.mul_0_l. rewrite Z.mul_0_l. rewrite Z.mul_0_l.
-    reflexivity.
-  }
-  {
-    rewrite Zmult_assoc_reverse. rewrite Zmult_assoc_reverse.
-    rewrite Zmult_assoc_reverse. rewrite Zmult_assoc_reverse.
-    rewrite Zmult_assoc_reverse. rewrite Zmult_assoc_reverse.
-    rewrite Z.mul_cancel_l. 2: { exact eqr10. }
-    rewrite <- Zmult_assoc_reverse. rewrite <- Zmult_assoc_reverse.
-    rewrite <- Zmult_assoc_reverse.
-    assert (Qnum r2 * (Qnum (/ r3)) = (Qnum (/ r3) * Qnum r2)) as comm23.
-    { apply Z.mul_comm. }
-    rewrite comm23.
-    rewrite Zmult_assoc_reverse. rewrite Zmult_assoc_reverse.
-    rewrite Zmult_assoc_reverse.
-    assert (Qnum (/ r3) = 0%Z \/ Qnum (/ r3) <> 0) as taut3. { tauto. }
-    destruct taut3 as [eqr30|eqr30].
-    {
-      rewrite eqr30.
-      rewrite Z.mul_0_l. rewrite Z.mul_0_l.
-      reflexivity.
-    }
-    {
-      rewrite Z.mul_cancel_l. 2: { exact eqr30. }
-      assert (Qnum r2 = 0 \/ Qnum r2 <> 0) as taut2. { tauto. }
-      destruct taut2 as [eqr20|eqr20].
-      {
-        rewrite eqr20.
-        rewrite Z.mul_0_l.
-        reflexivity.
-      }
-      {
-        rewrite Z.mul_cancel_l. 2: { exact eqr20. }
-        rewrite Z.mul_cancel_l. 2: { intro eqd10. inversion eqd10. }
-        apply Z.mul_comm.
-      }
-    }
-  }
-  Close Scope Z_scope.
-Qed.
-
-Fact Qplus_assoc : associative Qplus.
-Proof.
-  unfold associative.
-  Print Qred.
-  Search Qeq_refl.
-  Search Qplus_assoc.
-move=> x y z; rewrite -[x]valqK -[y]valqK -[z]valqK.
-by rewrite ?addq_frac ?addq_subdefA// ?addq_subdefE ?mulf_neq0 ?denq_neq0.
-Qed. *)
-
 Lemma lt_rat_0_1 : lt_rat 0 1.
 Proof. reflexivity. Qed.
 
@@ -404,7 +324,6 @@ Lemma rat_plus_lt_compat_r (r r1 r2 : rat) :
 Proof.
   rewrite lt_rat_def. rewrite lt_rat_def.
   intro lt12.
-  (* destruct (r2 != r1) eqn:eq12. *)
   destruct (r2 == r1) eqn:eq12.
   { simpl in lt12. inversion lt12. }
   {
@@ -483,30 +402,9 @@ Proof.
   exact led.
 Qed.
 
-(* Lemma rat_lt_0_opp {r : rat} (negr : lt_rat r 0) :
-  lt_rat 0 (- r).
-Proof.
-  rewrite <- subq_gt0 in negr.
-  unfold subq in negr. rewrite addq0l in negr.
-  exact negr.
-Qed. *)
 Lemma rat_lt_0_opp (r : rat) :
-  (* lt_rat r 0 <-> lt_rat 0 (- r). *)
   lt_rat r 0 = lt_rat 0 (- r).
 Proof.
-  (* split.
-  {
-    intro negr.
-    rewrite <- subq_gt0 in negr.
-    unfold subq in negr. rewrite addq0l in negr.
-    exact negr.
-  }
-  {
-    intro negr.
-    rewrite <- subq_gt0.
-    unfold subq. rewrite addq0l.
-    exact negr.
-  } *)
   rewrite <- subq_gt0.
   unfold subq. rewrite addq0l.
   symmetry. reflexivity.

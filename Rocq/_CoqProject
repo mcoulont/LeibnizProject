@@ -3,7 +3,7 @@
 ./Tools/relation_facts.v
 ./Tools/eqType_facts.v
 ./Tools/nat_facts.v
-./Tools/perm.v
+./Tools/permutations.v
 ./Tools/rationals_facts.v
 ./Tools/reals_facts.v
 ./Tools/finType_facts.v
@@ -32,4 +32,5 @@
 ./Articles/definition_power.v
 ./Articles/gains_from_trade.v
 ./Articles/definition_capitalism_communism.v
+./Articles/only_capitalism_makes_independent.v
 ./gather.v

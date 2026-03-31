@@ -4,7 +4,7 @@ From mathcomp Require Import all_ssreflect fintype fingroup perm rat.
 
 Require Import eqType_facts.
 Require Import finType_facts.
-Require Import perm.
+Require Import permutations.
 Require Import rationals_facts.
 Require Import ssrnat_facts.
 Require Import ethics_in_society.

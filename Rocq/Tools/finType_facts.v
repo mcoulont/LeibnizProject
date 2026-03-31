@@ -13,7 +13,7 @@ From mathcomp.classical Require Import boolp.
 
 Require Import relation_facts.
 Require Import eqType_facts.
-Require Import perm.
+Require Import permutations.
 Require Import rationals_facts.
 Require Import reals_facts.
 Require Import preference.
