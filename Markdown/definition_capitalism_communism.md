@@ -63,7 +63,7 @@ $$\begin{align*}
 [//]: # Rocq (49-73)
 
 
-## Egalitarian redistributions
+## Egalitarian redistribution
 
 A redistribution is egalitarian if the retribution to every individual doesn't depend on who the individual is. Everyone receives equal treatment.
 
@@ -143,7 +143,7 @@ $\forall c \in {\mathbb Q}^I, i \in I, c' \in {\mathbb Q} \text{ such that } c(i
 [//]: # Rocq (119-163)
 
 
-## Linear redistributions
+## Linear redistribution
 
 A redistribution is linear if multiplying all the contributions by the same factor multiplies all the retributions accordingly. This is the same as saying that the redistribution does not change with a currency change. Pure capitalism and pure communism are linear.
 
@@ -177,3 +177,39 @@ $r(k c) = i \mapsto \frac {\sum_{j \in I} k c(j)} N = i \mapsto k \frac {\sum_{j
 --MATH_END--
 
 [//]: # Rocq (184-194)
+
+
+## Fairness
+
+A fair redistribution will retribute more to an individual who contributes more. Pure capitalism is oviously fair as one earns exactly what one contributes. For pure communism, it is not so as everyone earns the same whatever the work done.
+
+--MATH_START--
+$\mathbf{Definition}$\
+The redistribution $r: {\mathbb Q}^I \to {\mathbb Q}^I$ is said fair if $\forall c \in {\mathbb Q}^I, i, j \in I, c(i) \le c(j) \Rightarrow$ r(i) \le r(j)$
+And it is said strictly fair if $\forall c \in {\mathbb Q}^I, i, j \in I, c(i) \lt c(j) \Rightarrow$ r(i) \lt r(j)$
+--MATH_END--
+
+[//]: # Rocq (196-204)
+
+--MATH_START--
+$\mathbf{Lemma}$\
+Pure capitalism is fair and strictly fair.
+
+$\mathbf{proof:}$\
+As $r(i) = c(i)$, the two implications are obvious. \
+■
+--MATH_END--
+
+[//]: # Rocq (206-224)
+
+--MATH_START--
+$\mathbf{Lemma}$\
+Pure communism is fair but not strictly fair (if there are at least two individuals).
+
+$\mathbf{proof:}$\
+$\forall i, j \in I, r(i) = r(j)$ which makes the first implication true. \
+But it is not true that $r(i) \lt r(j)$ when $c(i) \lt c(j)$. \
+■
+--MATH_END--
+
+[//]: # Rocq (226-250)

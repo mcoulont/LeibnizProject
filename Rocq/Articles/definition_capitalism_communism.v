@@ -198,10 +198,25 @@ Definition is_fair (redi : Redistribution) : Prop :=
     le_rat (cont i) (cont j) ->
     le_rat (sval redi cont i) (sval redi cont j).
 
+Definition is_strictly_fair (redi : Redistribution) : Prop :=
+  forall (cont : @Profile Individual MonetaryValue) (i j : Individual),
+    lt_rat (cont i) (cont j) ->
+    lt_rat (sval redi cont i) (sval redi cont j).
+
 Lemma capitalism_is_fair :
   is_fair pure_capitalism_Redistribution.
 Proof.
   unfold is_fair. unfold pure_capitalism_Redistribution.
+  intro cont. intro i. intro j.
+  simpl.
+  unfold pure_capitalism.
+  intro conc. exact conc.
+Qed.
+
+Lemma capitalism_is_strictly_fair :
+  is_strictly_fair pure_capitalism_Redistribution.
+Proof.
+  unfold is_strictly_fair. unfold pure_capitalism_Redistribution.
   intro cont. intro i. intro j.
   simpl.
   unfold pure_capitalism.
@@ -217,21 +232,6 @@ Proof.
   unfold pure_communism.
   intro.
   apply le_rat_reflexive.
-Qed.
-
-Definition is_strictly_fair (redi : Redistribution) : Prop :=
-  forall (cont : @Profile Individual MonetaryValue) (i j : Individual),
-    lt_rat (cont i) (cont j) ->
-    lt_rat (sval redi cont i) (sval redi cont j).
-
-Lemma capitalism_is_strictly_fair :
-  is_strictly_fair pure_capitalism_Redistribution.
-Proof.
-  unfold is_strictly_fair. unfold pure_capitalism_Redistribution.
-  intro cont. intro i. intro j.
-  simpl.
-  unfold pure_capitalism.
-  intro conc. exact conc.
 Qed.
 
 Lemma communism_not_strictly_fair {i0 j0 : Individual} (neij0 : j0 <> i0) :
