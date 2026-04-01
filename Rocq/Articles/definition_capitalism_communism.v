@@ -96,7 +96,7 @@ Proof.
   apply fintype0 in i.
   assert (~ nat_to_rat #|Individual| = 0) as inhi.
   { apply not_0_nat_to_rat. exact i. }
-  apply rat_inv_neq_0_compat. exact inhi.
+  rewrite rat_inv_neq_0_compat. exact inhi.
 Qed.
 
 Definition encourages_work (redi : Redistribution) : Prop :=
@@ -160,6 +160,54 @@ Proof.
   rewrite sradd in sre. rewrite <- sre.
   rewrite <- addq0r at 1.
   apply rat_plus_lt_compat_l. rewrite subq_gt0. exact ltjm.
+Qed.
+
+Definition work_incentive {c c' : rat} (redi : Redistribution) (i : Individual)
+(cont : @Profile Individual MonetaryValue) (ltcc' : lt_rat c c') :
+rat :=
+  sval redi (replace cont i c') i - sval redi (replace cont i c) i.
+
+Lemma work_incentive_capitalism {c c' : rat} (i : Individual)
+(cont : @Profile Individual MonetaryValue) (ltcc' : lt_rat c c') :
+  work_incentive pure_capitalism_Redistribution i cont ltcc' = c' - c.
+Proof.
+  unfold pure_capitalism_Redistribution. unfold work_incentive.
+  simpl.
+  unfold pure_capitalism.
+  rewrite replace_changes. rewrite replace_changes.
+  reflexivity.
+Qed.
+
+Lemma work_incentive_communism {c c' : rat} (i : Individual)
+(cont : @Profile Individual MonetaryValue) (ltcc' : lt_rat c c') :
+  work_incentive (pure_communism_Redistribution i) i cont ltcc' =
+  (c' - c) / nat_to_rat #|Individual|.
+Proof.
+  unfold pure_communism_Redistribution. unfold work_incentive.
+  simpl.
+  unfold pure_communism.
+  unfold total_value.
+  unfold divq. rewrite <- rat_mul_minus_distr_r.
+  pose proof (not_0_nat_to_rat (fintype0 i)) as posc.
+  rewrite <- rat_inv_neq_0_compat in posc.
+  rewrite rat_mult_inj_r.
+  2: { exact posc. }
+  rewrite <- sum_rationals_minus.
+  rewrite <- (sum_rationals_all_null_but_1 i (c' - c)).
+  apply sum_rationals_eq. intro j.
+  destruct (j == i) eqn:Eji.
+  {
+    rewrite eq_bool_equivalent in Eji. rewrite Eji.
+    rewrite replace_changes. rewrite replace_changes.
+    reflexivity.
+  }
+  {
+    rewrite eq_bool_equivalent_not in Eji. apply nesym in Eji.
+    rewrite replace_unchanges. rewrite replace_unchanges.
+    2: { exact Eji. }
+    2: { exact Eji. }
+    { apply addq_opp. }
+  }
 Qed.
 
 Definition currency_change (dist : @Profile Individual MonetaryValue)

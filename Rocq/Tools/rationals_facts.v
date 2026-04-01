@@ -202,16 +202,24 @@ Proof.
   }
 Qed.
 
-Lemma rat_inv_neq_0_compat {x : rat} (ne0 : x <> 0) :
-  x^-1 <> 0.
+Lemma rat_inv_neq_0_compat (x : rat) :
+  x^-1 <> 0 <-> x <> 0.
 Proof.
-  intro invx0.
-  rewrite <- eq_bool_equivalent_not in ne0.
-  assert (is_true (x != 0)) as ne0'.
-  { unfold negb. rewrite ne0. reflexivity. }
-  pose proof (mulVq ne0') as onex.
-  rewrite invx0 in onex. rewrite mulq0l in onex.
-  inversion onex.
+  split.
+  {
+    intro nei0. intro eqx0.
+    apply nei0.
+    rewrite eqx0. apply invq0.
+  }
+  {
+    intro ne0. intro invx0.
+    rewrite <- eq_bool_equivalent_not in ne0.
+    assert (is_true (x != 0)) as ne0'.
+    { unfold negb. rewrite ne0. reflexivity. }
+    pose proof (mulVq ne0') as onex.
+    rewrite invx0 in onex. rewrite mulq0l in onex.
+    inversion onex.
+  }
 Qed.
 
 Lemma rat_mult_inj_r (x y z: rat) :
@@ -283,6 +291,13 @@ Proof.
     reflexivity.
   }
   apply (rat_plus_inj_r eqtr).
+Qed.
+
+Lemma rat_mul_minus_distr_r (r r1 r2 : rat) :
+  (r1 - r2) * r = r1 * r - r2 * r.
+Proof.
+  unfold subq. rewrite mulq_addl.
+  rewrite rat_opp_mul. reflexivity.
 Qed.
 
 Lemma rat_mul_nonnulls_is_nonnull {x y : rat} (nex0 : x <> 0) (ney0 : y <> 0) :
@@ -498,7 +513,7 @@ Proof.
   pose proof le_rat_total as tot. unfold total in tot. specialize (tot 0 x^-1).
   assert (x^-1 <> 0) as nninv.
   {
-    apply rat_inv_neq_0_compat. intro eqx0.
+    rewrite rat_inv_neq_0_compat. intro eqx0.
     rewrite eqx0 in posx. inversion posx.
   }
   rewrite lt_rat_def.

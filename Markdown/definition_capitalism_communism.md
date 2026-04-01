@@ -142,6 +142,49 @@ $\forall c \in {\mathbb Q}^I, i \in I, c' \in {\mathbb Q} \text{ such that } c(i
 
 [//]: # Rocq (119-163)
 
+The work incentive of an individual between two contributions is the difference between the corresponding retributions.
+
+--MATH_START--
+$\mathbf{Definition}$\
+Let $r: {\mathbb Q}^I \to {\mathbb Q}^I$ be a redistribution. \
+Let $i \in I$ be an individual. \
+Let $q, q' \in Q$ be quantities (representing individual contributions) such that $c \lt c'$. \
+Let $c \in {\mathbb Q}^I$ be a contribution profile. \
+The wotk incentive from contribution $q$ to $q'$ for $i$ is defined as
+$$r(c_{i \leftarrow q'})(i) - r(c_{i \leftarrow q})(i)$$
+--MATH_END--
+
+[//]: # Rocq (165-168)
+
+In pure capitalism the work incentive between two contributions is just the difference between them.
+
+--MATH_START--
+$\mathbf{Lemma}$\
+In pure capitalism the wotk incentive from contribution $q$ to $q'$ for whatever individual is $q' - q$.
+
+$\mathbf{proof:}$\
+Obvious from the definition. \
+■
+--MATH_END--
+
+[//]: # Rocq (170-179)
+
+In pure communism the work incentive between two contributions is the difference between them divided by the number of individuals (the benefit of the extra work provided is split among individuals).
+
+--MATH_START--
+$\mathbf{Lemma}$\
+In pure communism the wotk incentive from contribution $q$ to $q'$ for whatever individual is $\frac {q' - q} N$.
+
+$\mathbf{proof:}$\
+$r(c_{i \leftarrow q'})(i) - r(c_{i \leftarrow q})(i)$ \
+$= \frac {q' + \sum_{j \ne i \in I} c(j)} N - \frac {q + \sum_{j \ne i \in I} c(j)} N$ \
+$= \frac {q' + \sum_{j \ne i \in I} c(j) - (q + \sum_{j \ne i \in I} c(j))} N$ \
+$= \frac {q' - q} N$ \
+■
+--MATH_END--
+
+[//]: # Rocq (181-211)
+
 
 ## Linear redistribution
 
@@ -154,7 +197,7 @@ $$\forall c \in {\mathbb Q}^I, k \in {\mathbb Q}, r(k c) = k r(c)$$
 (where $k c$ denotes $c$ where all the individual contributions are multiplied by $k$)
 --MATH_END--
 
-[//]: # Rocq (165-172)
+[//]: # Rocq (213-220)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -165,7 +208,7 @@ $r(k c) = k c = k r(c)$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (174-182)
+[//]: # Rocq (222-230)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -176,7 +219,7 @@ $r(k c) = i \mapsto \frac {\sum_{j \in I} k c(j)} N = i \mapsto k \frac {\sum_{j
 ■
 --MATH_END--
 
-[//]: # Rocq (184-194)
+[//]: # Rocq (232-242)
 
 
 ## Fairness
@@ -189,7 +232,7 @@ The redistribution $r: {\mathbb Q}^I \to {\mathbb Q}^I$ is said fair if $\forall
 And it is said strictly fair if $\forall c \in {\mathbb Q}^I, i, j \in I, c(i) \lt c(j) \Rightarrow$ r(i) \lt r(j)$
 --MATH_END--
 
-[//]: # Rocq (196-204)
+[//]: # Rocq (244-252)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -200,7 +243,7 @@ As $r(i) = c(i)$, the two implications are obvious. \
 ■
 --MATH_END--
 
-[//]: # Rocq (206-224)
+[//]: # Rocq (254-272)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -212,4 +255,4 @@ But it is not true that $r(i) \lt r(j)$ when $c(i) \lt c(j)$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (226-250)
+[//]: # Rocq (274-298)

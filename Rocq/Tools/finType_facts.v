@@ -647,6 +647,12 @@ Proof.
   reflexivity.
 Qed.
 
+Lemma sum_rationals_0 (A : finType) :
+  sum_rationals (fun (_ : A) => 0) = 0.
+Proof.
+  by rewrite sum_rational_constants mulq0l.
+Qed.
+
 Lemma sum_rationals_additive {A : finType} (E1 E2 : A -> rat) :
   sum_rationals (
     fun a => E1 a + E2 a
@@ -665,6 +671,25 @@ Proof.
   rewrite eqr'. reflexivity.
 Qed.
 
+Lemma sum_rationals_inv {A : finType} (E : A -> rat) :
+  sum_rationals (
+    fun a => - E a
+  ) = - sum_rationals E.
+Proof.
+  apply (
+    @rat_plus_inj_r (sum_rationals (fun a : A => - E a))
+    (- sum_rationals E) (sum_rationals E)
+  ).
+  rewrite addNq.
+  rewrite <- sum_rationals_additive.
+  rewrite frac0q.
+  assert (zeroq = 0) as eq0. { reflexivity. }
+  rewrite eq0.
+  rewrite <- sum_rationals_0 with (A:=A).
+  apply sum_rationals_eq.
+  intro a. rewrite addNq. reflexivity.
+Qed.
+
 Lemma sum_rationals_mult_constant {A : finType} (E : A -> rat) (k : rat) :
   sum_rationals (
     fun a => k * E a
@@ -676,6 +701,16 @@ Proof.
   intro k31. intro k42.
   rewrite k31. rewrite k42.
   rewrite mulq_addr. reflexivity.
+Qed.
+
+Lemma sum_rationals_minus {A : finType} (E1 E2 : A -> rat) :
+  sum_rationals (
+    fun a => E1 a - E2 a
+  ) = sum_rationals E1 - sum_rationals E2.
+Proof.
+  unfold subq.
+  rewrite sum_rationals_additive. rewrite sum_rationals_inv.
+  reflexivity.
 Qed.
 
 Lemma sum_rationals_all_null_but_1 {A : finType} (a0 : A) (c : rat) :
