@@ -14,6 +14,6 @@
     * `Templates/general.js`
     * All the files of `Articles/`
 
-- `git push`
+- `gitk` to check the situation, then `git push`
 
 - run `Scripts/CheckProd.sh` which checks that there are no broken links.
