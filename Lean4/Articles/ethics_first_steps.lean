@@ -21,7 +21,7 @@ def strictly_more_restrictive (e1 e2 : @Ethic State Action) (state : State) : Pr
   -- intro h
 
 def ethicless : @Ethic State Action :=
-  fun state => (fun action => true)
+  fun _ => (fun _ => true)
 
 -- strange error "unknown identifier 'lemma'":
 -- lemma ethicless_least_restrictive (e : @Ethic State Action) (state : State) :
