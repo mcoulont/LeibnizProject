@@ -37,7 +37,7 @@ Obviously, every ethic is more restrictive than itself and is not strictly more 
 --MATH_END--
 
 [//]: # Rocq (12-36)
-[//]: # Lean4 (9-14)
+[//]: # Lean4 (9-30)
 
 A void ethic allows every action. An ethicless person has a void ethic. The void ethic is the least restrictive of all.
 
@@ -53,4 +53,4 @@ Obviously, every ethic is more restrictive than the void ethic.
 --MATH_END--
 
 [//]: # Rocq (38-45)
-[//]: # Lean4 (23-24)
+[//]: # Lean4 (32-40)
