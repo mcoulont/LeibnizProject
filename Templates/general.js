@@ -39,7 +39,7 @@ if (currentPageIsHomepage()) {
             proversIcons[i].onclick = switchProver;
             proversIcons[i].style.cursor = "pointer";
 
-            if ("rocq-code" == proversIcons[i].parentElement.className) {
+            if (proversIcons[i].parentElement.className.includes("rocq-code")) {
                 proversIcons[i].title += "\nClick to switch to Lean4";
             } else {
                 proversIcons[i].title += "\nClick to switch to Rocq";
