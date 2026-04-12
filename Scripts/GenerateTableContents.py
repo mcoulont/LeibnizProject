@@ -18,6 +18,8 @@ FOLDER_HTML = "Articles/"
 REGEX_BASENAME_ROCQ_PROJECT = "(#\\s*)?\\./Articles/([a-z0-9_]+)\\.v($|\\s)"
 REGEX_BASENAME_LEAN_PROJECT = "(--\\s*)?import\\s+Articles\\.([a-z0-9_]+)($|\\s)"
 REGEX_KEYWORDS = "keywords:\\n  - ([a-zA-Z0-9 ]+)\\n(  - ([a-zA-Z0-9 ]+)\\n)?"
+TOKEN_ROCQ_INDEX = '<div id="rocq-index">'
+TOKEN_LEAN_INDEX = '<div id="lean-index">'
 
 
 class Section:
@@ -133,7 +135,8 @@ if __name__ == "__main__":
     body_html = """<div>
         <div class="choose-display">
             <div class="choose-display-item" id="choose-table">Table of contents</div>
-            <div class="choose-display-item" id="choose-index">Rocq index</div>
+            <div class="choose-display-item" id="choose-rocq-index">Rocq index</div>
+            <div class="choose-display-item" id="choose-lean-index">Lean index</div>
             <!--div class="choose-display-item choose-display-filler"></div-->
         </div>
     </div>"""
@@ -248,7 +251,11 @@ if __name__ == "__main__":
 
     body_html += "</div>"
 
-    body_html += '<div id="rocq-index">'
+    body_html += TOKEN_ROCQ_INDEX
+
+    body_html += "</div>"
+
+    body_html += TOKEN_LEAN_INDEX
 
     body_html += "</div>"
 

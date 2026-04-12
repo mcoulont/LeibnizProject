@@ -57,8 +57,8 @@ def check_first_last_lines(
 
 if __name__ == "__main__":
 	file_article_md = sys.argv[1]
-	folder_rocq = sys.argv[2]
-	folder_lean = sys.argv[3]
+	folder_rocq_articles = sys.argv[2]
+	folder_lean_articles = sys.argv[3]
 
 
 	if not file_article_md.endswith(SUFFIXE_MARKDOWN):
@@ -81,9 +81,9 @@ if __name__ == "__main__":
 
 	basename = file_article_md.split('/')[-1][:-len(SUFFIXE_MARKDOWN)]
 
-	if basename + ".v" in listdir(folder_rocq + "/"):
+	if basename + ".v" in listdir(folder_rocq_articles + "/"):
 		rocq_lines = open(
-			folder_rocq + "/" + basename + ".v",
+			folder_rocq_articles + "/" + basename + ".v",
 			encoding="utf-8"
 		).readlines()
 
@@ -104,9 +104,9 @@ if __name__ == "__main__":
 				]) + "\n```\n"
 			)
 
-	if basename + ".lean" in listdir(folder_lean + "/"):
+	if basename + ".lean" in listdir(folder_lean_articles + "/"):
 		lean_lines = open(
-			folder_lean + "/" + basename + ".lean",
+			folder_lean_articles + "/" + basename + ".lean",
 			encoding="utf-8"
 		).readlines()
 

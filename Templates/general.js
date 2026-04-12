@@ -2,16 +2,24 @@
 // Initialization
 
 const chooseDisplayTable = document.getElementById("choose-table");
-const chooseDisplayIndex = document.getElementById("choose-index");
+const chooseDisplayRocqIndex = document.getElementById("choose-rocq-index");
+const chooseDisplayLeanIndex = document.getElementById("choose-lean-index");
 
 const buttonShowMath = document.getElementById("switch-visibility-math");
 const buttonShowCode = document.getElementById("switch-visibility-code");
 
+const Tab = {
+  Table: 0,
+  RocqIndex: 1,
+  LeanIndex: 2
+};
+
 if (currentPageIsHomepage()) {
-    var tableDisplayed = true;
+    var displayedTab = Tab.Table;
 
     chooseDisplayTable.onclick = displayTable;
-    chooseDisplayIndex.onclick = displayIndex;
+    chooseDisplayRocqIndex.onclick = displayRocqIndex;
+    chooseDisplayLeanIndex.onclick = displayLeanIndex;
 } else {
     if (
         ! leanIsUsed() ||
@@ -138,13 +146,19 @@ function switchShowCode() {
 }
 
 function displayTable() {
-    tableDisplayed = true
+    displayedTab = Tab.Table;
 
     refreshDisplay();
 }
 
-function displayIndex() {
-    tableDisplayed = false
+function displayRocqIndex() {
+    displayedTab = Tab.RocqIndex;
+
+    refreshDisplay();
+}
+
+function displayLeanIndex() {
+    displayedTab = Tab.LeanIndex;
 
     refreshDisplay();
 }
@@ -171,16 +185,27 @@ function setDisplayByClassName(className, display) {
 
 function refreshDisplay() {
     if (currentPageIsHomepage()) {
-        if (tableDisplayed) {
-            chooseDisplayTable.style.borderTop = "5px solid #B2F613"
-            chooseDisplayIndex.style.borderTop = "5px solid #0C151C"
-            setDisplay("table-contents", "inline");
-            setDisplay("rocq-index", "none");
-        } else {
+        if (Tab.RocqIndex == displayedTab) {
             chooseDisplayTable.style.borderTop = "5px solid #0C151C"
-            chooseDisplayIndex.style.borderTop = "5px solid #B2F613"
+            chooseDisplayRocqIndex.style.borderTop = "5px solid #B2F613"
+            chooseDisplayLeanIndex.style.borderTop = "5px solid #0C151C"
             setDisplay("table-contents", "none");
             setDisplay("rocq-index", "inline");
+            setDisplay("lean-index", "none");
+        } else if (Tab.LeanIndex == displayedTab) {
+            chooseDisplayTable.style.borderTop = "5px solid #0C151C"
+            chooseDisplayRocqIndex.style.borderTop = "5px solid #0C151C"
+            chooseDisplayLeanIndex.style.borderTop = "5px solid #B2F613"
+            setDisplay("table-contents", "none");
+            setDisplay("rocq-index", "none");
+            setDisplay("lean-index", "inline");
+        } else {
+            chooseDisplayTable.style.borderTop = "5px solid #B2F613"
+            chooseDisplayRocqIndex.style.borderTop = "5px solid #0C151C"
+            chooseDisplayLeanIndex.style.borderTop = "5px solid #0C151C"
+            setDisplay("table-contents", "inline");
+            setDisplay("rocq-index", "none");
+            setDisplay("lean-index", "none");
         }
     } else {
         if (codeIsShown()) {
