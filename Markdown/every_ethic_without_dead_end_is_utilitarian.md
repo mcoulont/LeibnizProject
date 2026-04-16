@@ -109,7 +109,7 @@ $$\begin{align*}
 --MATH_END--
 
 [//]: # Rocq (41-43)
-[//]: # Lean4 (42-52)
+[//]: # Lean4 (42-53)
 
 If the ethic has no dead end, this gives a utility function it maximizes.
 
@@ -129,4 +129,4 @@ And $e(s, a)=⊤ \iff au(a) = 1$ results from the definition of the associated u
 --MATH_END--
 
 [//]: # Rocq (45-70)
-[//]: # Lean4 (54-98)
+[//]: # Lean4 (55-98)

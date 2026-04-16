@@ -79,7 +79,7 @@ By the previous lemma, $\forall s \in S$, $s$ is not a dead end for $e$, which m
 --MATH_END--
 
 [//]: # Rocq (30-36)
-[//]: # Lean4 (33-40)
+[//]: # Lean4 (33-39)
 
 
 ## Maximum utility reached for a unique action
@@ -94,7 +94,7 @@ $$\begin{cases*}
 --MATH_END--
 
 [//]: # Rocq (38-40)
-[//]: # Lean4 (42-44)
+[//]: # Lean4 (41-43)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -102,7 +102,7 @@ An utilitarian ethic $e$ is said to always have a unique action maximizing its u
 --MATH_END--
 
 [//]: # Rocq (42-44)
-[//]: # Lean4 (46-48)
+[//]: # Lean4 (45-47)
 
 
 ## An utilitarian ethic has a unique function maximizing its utility if and only if it leaves no freedom
@@ -119,7 +119,7 @@ Let $e$ be a utilitarian ethic, $uf$ its utility function and $s$ a state. \
 --MATH_END--
 
 [//]: # Rocq (46-82)
-[//]: # Lean4 (50-106)
+[//]: # Lean4 (49-101)
 
 --MATH_START--
 $\mathbf{Corollary}$\
@@ -135,4 +135,4 @@ $\iff e$ never leaves freedom \
 --MATH_END--
 
 [//]: # Rocq (84-97)
-[//]: # Lean4 (108-127)
+[//]: # Lean4 (103-118)

@@ -34,8 +34,7 @@ lemma never_leaves_freedom_implies_never_has_dead_end (ethic: @Ethic State Actio
 never_leaves_freedom ethic → without_dead_end ethic := by
   unfold without_dead_end
   unfold never_leaves_freedom
-  intro h
-  intro state
+  intro h state
   apply no_freedom_implies_no_dead_end
   apply h
 
@@ -53,10 +52,7 @@ theorem utilitarian_ethic_no_freedom_iff_max_for_unique_action
 (_ethic_maximizes_uf : maximizes ethic uf) (state: State),
 utilitarian_ethic_unique_maximum uf state ↔
 leaves_no_freedom ethic state := by
-  intro ethic
-  intro uf
-  intro ethic_maximizes_uf
-  intro state
+  intro ethic uf ethic_maximizes_uf state
   unfold maximizes at ethic_maximizes_uf
   constructor
   · intro h0
@@ -75,8 +71,7 @@ leaves_no_freedom ethic state := by
       rw [← ethic_maximizes_uf] at h1
       exact h1
     · simp
-      intro y
-      intro h3
+      intro y h3
       specialize h2 y
       apply h2
       specialize ethic_maximizes_uf state
@@ -111,18 +106,14 @@ lemma utilitarian_ethic_never_freedom_iff_always_maximum_for_unique_action
 (_ethic_maximizes_uf : maximizes ethic uf),
 utilitarian_ethic_always_unique_maximum uf ↔
 never_leaves_freedom ethic := by
-  intro ethic
-  intro uf
-  intro ethic_maximizes_uf
+  intro ethic uf ethic_maximizes_uf
   unfold utilitarian_ethic_always_unique_maximum
   unfold never_leaves_freedom
   constructor
-  · intro h
-    intro state
+  · intro h state
     specialize h state
     rw [← utilitarian_ethic_no_freedom_iff_max_for_unique_action ethic uf] <;> tauto
-  · intro h
-    intro state
+  · intro h state
     specialize h state
     rw [utilitarian_ethic_no_freedom_iff_max_for_unique_action ethic uf] <;> tauto
 

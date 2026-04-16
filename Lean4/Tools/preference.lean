@@ -2,7 +2,7 @@
 import Mathlib.Order.Defs.Unbundled
 
 def preference_order {T : Type} (R : T -> T -> Prop) : Prop :=
-  Transitive R ∧ Total R
+  IsTrans T R ∧ Std.Total R
 
 structure PreferenceSpace where
   carrier : Type

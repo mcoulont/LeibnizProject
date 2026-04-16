@@ -45,16 +45,16 @@ def associated_utility (ethic : @Ethic State Action) : State → Action → ℕ 
 lemma le_preference_order : preference_order Nat.le := by
   unfold preference_order
   constructor
-  · apply transitive_le
-  · apply le_total
+  · apply isTrans_le
+  · refine { total := ?_ }
+    apply le_total
 
 def associatedPreferenceSpace :
   PreferenceSpace := @PreferenceSpace.mk ℕ Nat.le le_preference_order
 
 lemma every_ethic_without_dead_end_is_utilitarian2 :
 ∀ (ethic : @Ethic State Action), without_dead_end ethic → is_utilitarian ethic := by
-  intro ethic
-  intro h
+  intro ethic h
   unfold is_utilitarian
   exists associatedPreferenceSpace
   exists (associated_utility ethic)
