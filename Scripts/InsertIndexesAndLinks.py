@@ -241,7 +241,8 @@ def detect_objects_to_point_to(
 					] = LinkToProverObject(
 						res_search_object[1],
 						prover_file + ".html#" +
-						res_search_object[3],
+						res_search_object[3] + "_" +
+						("rocq" if for_rocq else "lean"),
 						True
 					)
 
@@ -321,7 +322,9 @@ def insert_indexes_and_links(
 				html_prover_code_block = sub(
 					REGEX_ROCQ_OBJECT_POINTED_TO if for_rocq
 					else REGEX_LEAN_OBJECT_POINTED_TO,
-					'\\g<1>\\g<2>\\g<3><span id="\\g<4>">\\g<4></span>\\g<6>',
+					'\\g<1>\\g<2>\\g<3><span id="\\g<4>_' +
+					("rocq" if for_rocq else "lean") +
+					'">\\g<4></span>\\g<6>',
 					str(prover_code_block)
 				)
 
