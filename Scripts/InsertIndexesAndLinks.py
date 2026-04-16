@@ -230,8 +230,8 @@ def detect_objects_to_point_to(
 					] = LinkToProverObject(
 						res_search_object[1],
 						"https://github.com/mcoulont/LeibnizProject/tree/master/" +
-						("Rocq/Tools/" + prover_file +".v#L") if for_rocq
-						else ("Lean4/Tools/" + prover_file + ".lean#L") +
+						(("Rocq/Tools/" + prover_file + ".v#L") if for_rocq
+						else ("Lean4/Tools/" + prover_file + ".lean#L")) +
 						str(line_number),
 						False
 					)
