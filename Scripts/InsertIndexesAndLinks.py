@@ -367,7 +367,9 @@ def insert_indexes_and_links(
 		html_prover_index += (
 			'<div class="index-item"><a href="' + url_prefix +
 			links_to_prover_objects[prover_object].get_url() +
-			'">' + prover_object + '</a> (' +
+			'" onclick="chooseDisplayProver(' +
+			('true' if for_rocq else 'false') +
+			');">' + prover_object + '</a> (' +
 			links_to_prover_objects[prover_object].get_object_type_for_index() +
 			')</div>'
 		)

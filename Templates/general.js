@@ -180,6 +180,11 @@ function setDisplayByClassName(className, display) {
     }
 }
 
+function chooseDisplayProver(for_rocq) {
+    localStorage.setItem("prover", for_rocq ? "Rocq" : "Lean4");
+    localStorage.setItem("showCode", "true");
+}
+
 
 // Variables/display synchronization
 
