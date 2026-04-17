@@ -11,8 +11,8 @@ variable {State : Type}
 variable {Action : Type}
 variable {Individual : Type}
 
-open ethics_first_steps
 open Equiv
+open ethics_first_steps
 
 def Profile (T  : Type) : Type := Individual -> T
 
@@ -38,11 +38,14 @@ def identity : Perm Individual := 1
 
 def IndividualsPermutationsActingOnStates :
 Type :=
-  { permutation : State -> Perm Individual -> State // ∀ (state : State), (
-    permutation state identity = state ∧
-    ∀ (σ τ : Perm Individual),
-      permutation (permutation state σ) τ = permutation state (σ • τ)
-  )}
+  {
+    permutation : State -> Perm Individual -> State //
+    ∀ (state : State), (
+      permutation state identity = state ∧
+      ∀ (σ τ : Perm Individual),
+        permutation (permutation state σ) τ = permutation state (σ • τ)
+    )
+  }
 
 def permutation_State
 (ipos : @IndividualsPermutationsActingOnStates State Individual) :

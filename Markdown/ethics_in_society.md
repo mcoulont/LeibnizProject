@@ -58,7 +58,7 @@ Then $(s, i)_\sigma$ is defined as $(s_\sigma, \sigma (i))$.
 --MATH_END--
 
 [//]: # Rocq (37-58)
-[//]: # Lean4 (35-58)
+[//]: # Lean4 (35-61)
 
 An individual ethic tells for each subjective state if a given action is "right" or "wrong". As a subjective state can put anyone's shoes, so can an individual ethic.
 
@@ -68,7 +68,7 @@ The set $IE$ of individual ethics is ${\{⊥ ,⊤\}}^{SubjS × A}$.
 --MATH_END--
 
 [//]: # Rocq (60-60)
-[//]: # Lean4 (60-61)
+[//]: # Lean4 (63-64)
 
 An ethical profile gives the ethic of each individual.
 
@@ -84,4 +84,4 @@ Individuals $i, j \in I$ of an ethical profile $ep$ are said to always have the 
 --MATH_END--
 
 [//]: # Rocq (62-72)
-[//]: # Lean4 (63-75)
+[//]: # Lean4 (66-78)
