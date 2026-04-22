@@ -8,3 +8,4 @@ import Articles.every_ethic_without_dead_end_is_utilitarian
 import Articles.utilitarian_ethic_no_freedom_iff_maximum_for_unique_action
 import Articles.ethics_in_society
 import Articles.definition_capitalism_communism
+import Articles.only_capitalism_makes_independent

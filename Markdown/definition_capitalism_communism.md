@@ -33,7 +33,7 @@ Being given a profile of contributions made by every individual $c \in {\mathbb 
 --MATH_END--
 
 [//]: # Rocq (20-34)
-[//]: # Lean4 (19-34)
+[//]: # Lean4 (19-35)
 
 
 ## Capitalism and communism
@@ -50,7 +50,7 @@ $$\begin{align*}
 --MATH_END--
 
 [//]: # Rocq (36-47)
-[//]: # Lean4 (36-48)
+[//]: # Lean4 (37-49)
 
 Pure communism retributes every individual the same amount, regardless of its contribution.
 
@@ -64,7 +64,7 @@ $$\begin{align*}
 --MATH_END--
 
 [//]: # Rocq (49-73)
-[//]: # Lean4 (50-68)
+[//]: # Lean4 (51-69)
 
 
 ## Egalitarian redistribution
@@ -79,7 +79,7 @@ $$\forall σ \in S_I, c \in {\mathbb Q}^I, {r(c)}_σ = r(c_σ)$$
 --MATH_END--
 
 [//]: # Rocq (75-78)
-[//]: # Lean4 (70-73)
+[//]: # Lean4 (71-74)
 
 As in pure capitalism everyone is retributed depending solely on its contribution, it is egalitarian.
 
@@ -93,7 +93,7 @@ $\forall σ \in S_I, c \in {\mathbb Q}^I, {r(c)}_σ = i \mapsto r(c)(σ(i) = i \
 --MATH_END--
 
 [//]: # Rocq (80-84)
-[//]: # Lean4 (75-77)
+[//]: # Lean4 (76-78)
 
 Pure communism is unsurprisingly egalitarian as well.
 
@@ -107,7 +107,7 @@ $\forall σ \in S_I, c \in {\mathbb Q}^I, {r(c)}_σ = \frac {\sum_{i \in I} c(i)
 --MATH_END--
 
 [//]: # Rocq (86-100)
-[//]: # Lean4 (79-94)
+[//]: # Lean4 (80-95)
 
 
 ## Work incentive
@@ -122,7 +122,7 @@ $$\forall c \in {\mathbb Q}^I, i \in I, c' \in {\mathbb Q} \text{ such that } c(
 --MATH_END--
 
 [//]: # Rocq (102-106)
-[//]: # Lean4 (96-100)
+[//]: # Lean4 (97-101)
 
 Pure capitalism encourages the work as increasing one's contribution increases one's retribution up to the same amount.
 
@@ -136,7 +136,7 @@ $\forall c \in {\mathbb Q}^I, i \in I, c' \in {\mathbb Q} \text{ such that } c(i
 --MATH_END--
 
 [//]: # Rocq (108-117)
-[//]: # Lean4 (102-108)
+[//]: # Lean4 (103-109)
 
 Pure communism encourages the work but the reward is divided by the number of individuals.
 
@@ -150,7 +150,7 @@ $\forall c \in {\mathbb Q}^I, i \in I, c' \in {\mathbb Q} \text{ such that } c(i
 --MATH_END--
 
 [//]: # Rocq (119-163)
-[//]: # Lean4 (110-145)
+[//]: # Lean4 (111-146)
 
 The work incentive of an individual between two contributions is the difference between the corresponding retributions.
 
@@ -165,7 +165,7 @@ $$r(c_{i \leftarrow q'})(i) - r(c_{i \leftarrow q})(i)$$
 --MATH_END--
 
 [//]: # Rocq (165-168)
-[//]: # Lean4 (147-151)
+[//]: # Lean4 (187-152)
 
 In pure capitalism the work incentive between two contributions is just the difference between them.
 
@@ -179,7 +179,7 @@ Obvious from the definition. \
 --MATH_END--
 
 [//]: # Rocq (170-179)
-[//]: # Lean4 (153-160)
+[//]: # Lean4 (154-161)
 
 In pure communism the work incentive between two contributions is the difference between them divided by the number of individuals (the benefit of the extra work provided is split among individuals).
 
@@ -196,7 +196,7 @@ $= \frac {q' - q} N$ \
 --MATH_END--
 
 [//]: # Rocq (181-211)
-[//]: # Lean4 (162-213)
+[//]: # Lean4 (163-214)
 
 
 ## Linear redistribution
@@ -211,7 +211,7 @@ $$\forall c \in {\mathbb Q}^I, k \in {\mathbb Q}, r(k c) = k r(c)$$
 --MATH_END--
 
 [//]: # Rocq (213-220)
-[//]: # Lean4 (215-222)
+[//]: # Lean4 (216-223)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -223,7 +223,7 @@ $r(k c) = k c = k r(c)$. \
 --MATH_END--
 
 [//]: # Rocq (222-230)
-[//]: # Lean4 (224-230)
+[//]: # Lean4 (225-231)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -235,7 +235,7 @@ $r(k c) = i \mapsto \frac {\sum_{j \in I} k c(j)} N = i \mapsto k \frac {\sum_{j
 --MATH_END--
 
 [//]: # Rocq (232-242)
-[//]: # Lean4 (232-244)
+[//]: # Lean4 (233-245)
 
 
 ## Fairness
@@ -249,7 +249,7 @@ And it is said strictly fair if $\forall c \in {\mathbb Q}^I, i, j \in I, c(i) \
 --MATH_END--
 
 [//]: # Rocq (244-252)
-[//]: # Lean4 (246-254)
+[//]: # Lean4 (247-255)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -261,7 +261,7 @@ As $r(i) = c(i)$, the two implications are obvious. \
 --MATH_END--
 
 [//]: # Rocq (254-272)
-[//]: # Lean4 (256-272)
+[//]: # Lean4 (257-273)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -274,4 +274,4 @@ But it is not true that $r(i) \lt r(j)$ when $c(i) \lt c(j)$. \
 --MATH_END--
 
 [//]: # Rocq (274-298)
-[//]: # Lean4 (274-300)
+[//]: # Lean4 (275-301)

@@ -26,6 +26,7 @@ Prop :=
     @total_value Individual Individuals (redi dist) =
     @total_value Individual Individuals dist
 
+@[reducible]
 def Redistribution : Type :=
   {
     redi : @Profile Individual MonetaryValue -> @Profile Individual MonetaryValue //
@@ -218,7 +219,7 @@ def currency_change (dist : @Profile Individual MonetaryValue)
   fun i => k * dist i
 
 def is_linear (redi : @Redistribution Individual Individuals) : Prop :=
-  forall (cont : @Profile Individual MonetaryValue) (k : MonetaryValue),
+  ∀ (cont : @Profile Individual MonetaryValue) (k : MonetaryValue),
     redi.val (currency_change cont k) = currency_change (redi.val cont) k
 
 lemma capitalism_is_linear :

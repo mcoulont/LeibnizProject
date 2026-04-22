@@ -19,6 +19,7 @@ Throughout this page, let $I$ be the finite set of individuals (with $N$ as the 
 --MATH_END--
 
 [//]: # Rocq (13-13)
+[//]: # Lean4 (7-9)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -27,6 +28,7 @@ $$\exists f \in {\mathbb Q}^{\mathbb Q} \text{ such that } \forall c \in {\mathb
 --MATH_END--
 
 [//]: # Rocq (17-22)
+[//]: # Lean4 (14-19)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -38,6 +40,7 @@ Own retriubtion is own contribution and thus does not depend on contributions of
 --MATH_END--
 
 [//]: # Rocq (24-32)
+[//]: # Lean4 (21-27)
 
 --MATH_START--
 $\mathbf{Proposition}$\
@@ -50,3 +53,4 @@ Let $c \in {\mathbb Q}$. In a situation where everyone contributes up to $c$, we
 --MATH_END--
 
 [//]: # Rocq (34-73)
+[//]: # Lean4 (29-68)
