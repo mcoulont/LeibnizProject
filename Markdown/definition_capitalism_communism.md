@@ -165,7 +165,7 @@ $$r(c_{i \leftarrow q'})(i) - r(c_{i \leftarrow q})(i)$$
 --MATH_END--
 
 [//]: # Rocq (165-168)
-[//]: # Lean4 (187-152)
+[//]: # Lean4 (148-152)
 
 In pure capitalism the work incentive between two contributions is just the difference between them.
 

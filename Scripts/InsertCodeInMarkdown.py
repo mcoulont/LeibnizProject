@@ -23,6 +23,17 @@ def check_first_last_lines(
 	extension_code_file
 ) -> None:
 	try:
+		if int(code_occurrence.group(1)) > int(code_occurrence.group(2)):
+			print(
+				"Error: in " + basename + " regarding line numbers: " +
+				code_occurrence.group(1) +
+				" should not be greater than " +
+				code_occurrence.group(2) +
+				"\n",
+				file=sys.stderr
+			)
+			exit(1)
+
 		if lines[
 			int(code_occurrence.group(1)) - 1
 		].lstrip('\\s').startswith('\n'):
