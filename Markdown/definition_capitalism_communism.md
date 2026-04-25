@@ -199,23 +199,23 @@ $= \frac {q' - q} N$ \
 [//]: # Lean4 (163-214)
 
 
-## Linear redistribution
+## Stability by currency change
 
-A redistribution is linear if multiplying all the contributions by the same factor multiplies all the retributions accordingly. This is the same as saying that the redistribution does not change with a currency change. Pure capitalism and pure communism are linear.
+A redistribution is stable by currency change if multiplying all the contributions by the same factor multiplies all the retributions accordingly. This is the same as saying that the redistribution does not change with a currency change. Pure capitalism and pure communism are stable by currency change.
 
 --MATH_START--
 $\mathbf{Definition}$\
-The redistribution $r: {\mathbb Q}^I \to {\mathbb Q}^I$ is said linear if
+The redistribution $r: {\mathbb Q}^I \to {\mathbb Q}^I$ is said stable by currency change if
 $$\forall c \in {\mathbb Q}^I, k \in {\mathbb Q}, r(k c) = k r(c)$$
 (where $k c$ denotes $c$ where all the individual contributions are multiplied by $k$)
 --MATH_END--
 
 [//]: # Rocq (213-220)
-[//]: # Lean4 (216-223)
+[//]: # Lean4 (216-224)
 
 --MATH_START--
 $\mathbf{Lemma}$\
-Pure capitalism is linear.
+Pure capitalism is stable by currency change.
 
 $\mathbf{proof:}$\
 $r(k c) = k c = k r(c)$. \
@@ -223,11 +223,11 @@ $r(k c) = k c = k r(c)$. \
 --MATH_END--
 
 [//]: # Rocq (222-230)
-[//]: # Lean4 (225-231)
+[//]: # Lean4 (226-232)
 
 --MATH_START--
 $\mathbf{Lemma}$\
-Pure communism is linear.
+Pure communism is stable by currency change.
 
 $\mathbf{proof:}$\
 $r(k c) = i \mapsto \frac {\sum_{j \in I} k c(j)} N = i \mapsto k \frac {\sum_{j \in I} c(j)} N = k r(c)$. \
@@ -235,7 +235,7 @@ $r(k c) = i \mapsto \frac {\sum_{j \in I} k c(j)} N = i \mapsto k \frac {\sum_{j
 --MATH_END--
 
 [//]: # Rocq (232-242)
-[//]: # Lean4 (233-245)
+[//]: # Lean4 (234-246)
 
 
 ## Fairness
@@ -249,7 +249,7 @@ And it is said strictly fair if $\forall c \in {\mathbb Q}^I, i, j \in I, c(i) \
 --MATH_END--
 
 [//]: # Rocq (244-252)
-[//]: # Lean4 (247-255)
+[//]: # Lean4 (248-256)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -261,7 +261,7 @@ As $r(i) = c(i)$, the two implications are obvious. \
 --MATH_END--
 
 [//]: # Rocq (254-272)
-[//]: # Lean4 (257-273)
+[//]: # Lean4 (258-274)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -274,4 +274,4 @@ But it is not true that $r(i) \lt r(j)$ when $c(i) \lt c(j)$. \
 --MATH_END--
 
 [//]: # Rocq (274-298)
-[//]: # Lean4 (275-301)
+[//]: # Lean4 (276-302)

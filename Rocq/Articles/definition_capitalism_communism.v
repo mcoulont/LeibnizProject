@@ -215,24 +215,24 @@ Definition currency_change (dist : @Profile Individual MonetaryValue)
 @Profile Individual MonetaryValue :=
   fun i => k * dist i.
 
-Definition is_linear (redi : Redistribution) : Prop :=
+Definition stable_by_currency_change (redi : Redistribution) : Prop :=
   forall (cont : @Profile Individual MonetaryValue) (k : MonetaryValue),
     sval redi (currency_change cont k) = currency_change (sval redi cont) k.
 
-Lemma capitalism_is_linear :
-  is_linear pure_capitalism_Redistribution.
+Lemma capitalism_stable_by_currency_change :
+  stable_by_currency_change pure_capitalism_Redistribution.
 Proof.
-  unfold is_linear. unfold pure_capitalism_Redistribution.
+  unfold stable_by_currency_change. unfold pure_capitalism_Redistribution.
   intro cont. intro k.
   simpl.
   unfold pure_capitalism.
   reflexivity.
 Qed.
 
-Lemma communism_is_linear (i : Individual) :
-  is_linear (pure_communism_Redistribution i).
+Lemma communism_stable_by_currency_change (i : Individual) :
+  stable_by_currency_change (pure_communism_Redistribution i).
 Proof.
-  unfold is_linear. unfold pure_communism_Redistribution.
+  unfold stable_by_currency_change. unfold pure_communism_Redistribution.
   intro cont. intro k.
   simpl.
   unfold pure_communism. unfold currency_change. unfold total_value.

@@ -218,21 +218,22 @@ def currency_change (dist : @Profile Individual MonetaryValue)
 @Profile Individual MonetaryValue :=
   fun i => k * dist i
 
-def is_linear (redi : @Redistribution Individual Individuals) : Prop :=
+def stable_by_currency_change (redi : @Redistribution Individual Individuals) :
+Prop :=
   ∀ (cont : @Profile Individual MonetaryValue) (k : MonetaryValue),
     redi.val (currency_change cont k) = currency_change (redi.val cont) k
 
-lemma capitalism_is_linear :
-@is_linear Individual Individuals pure_capitalism_Redistribution := by
-  unfold is_linear pure_capitalism_Redistribution
+lemma capitalism_stable_by_currency_change :
+@stable_by_currency_change Individual Individuals pure_capitalism_Redistribution := by
+  unfold stable_by_currency_change pure_capitalism_Redistribution
   intro cont k
   simp
   unfold pure_capitalism
   tauto
 
-lemma communism_is_linear (inh : Fintype.card Individual ≠ 0) :
-is_linear (pure_communism_Redistribution inh) := by
-  unfold is_linear pure_communism_Redistribution
+lemma communism_stable_by_currency_change (inh : Fintype.card Individual ≠ 0) :
+stable_by_currency_change (pure_communism_Redistribution inh) := by
+  unfold stable_by_currency_change pure_communism_Redistribution
   intro cont k
   simp
   unfold pure_communism currency_change total_value
