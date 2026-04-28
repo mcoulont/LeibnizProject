@@ -20,6 +20,7 @@ Throughout this page, let $I$ the finite set of individuals of a society, $S$ be
 --MATH_END--
 
 [//]: # Rocq (9-11)
+[//]: # Lean4 (6-10)
 
 
 ## Objectivity
@@ -33,6 +34,7 @@ $$\forall state \in S, i \in I, \sigma \in S_I, a \in A, e((s, i)_\sigma, a) = e
 --MATH_END--
 
 [//]: # Rocq (13-27)
+[//]: # Lean4 (15-29)
 
 
 ## Disapproval
@@ -49,6 +51,7 @@ $$\exists a \in A, e_j((s, j), a) = ⊤ \text{ and } e_j((s, i), a) = ⊥$$
 --MATH_END--
 
 [//]: # Rocq (29-56)
+[//]: # Lean4 (31-58)
 
 
 ## Disapproval with objective individual ethics
@@ -66,6 +69,7 @@ As $e_i((s, j), a) = e_j((s, j), a)$, it's not possible that $e_j((s, j), a) = �
 --MATH_END--
 
 [//]: # Rocq (58-69)
+[//]: # Lean4 (60-76)
 
 If two individuals are objective and may not disapprove with one another, then they have the same ethic.
 
@@ -94,6 +98,7 @@ Together with $(1)$, this gives that $j$ may disapprove $i$, which is in contrad
 --MATH_END--
 
 [//]: # Rocq (71-163)
+[//]: # Lean4 (78-172)
 
 Overall, in a society where everyone is objective in his ethic, there is no possible disapproval if and only everyone has the same ethic.
 
@@ -109,3 +114,4 @@ $\Leftarrow$ is obtained by generalizing the last lemma on all individuals and s
 --MATH_END--
 
 [//]: # Rocq (165-193)
+[//]: # Lean4 (174-213)
