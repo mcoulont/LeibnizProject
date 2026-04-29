@@ -1,4 +1,7 @@
 
+import Mathlib.Data.Real.Basic
+import Mathlib.Algebra.Order.CompleteField
+
 import Tools.eqtype_facts
 import Tools.permutations
 import Tools.fintype_facts
@@ -14,7 +17,7 @@ open Finset BigOperators Equiv
 open ethics_in_society
 
 @[reducible]
-def MonetaryValue : Type := Rat
+def MonetaryValue : Type := ℝ
 
 def total_value (dist : @Profile Individual MonetaryValue) : MonetaryValue :=
   ∑ i : Individual, dist i
@@ -30,7 +33,6 @@ Prop :=
 def Redistribution : Type :=
   {
     redi : @Profile Individual MonetaryValue -> @Profile Individual MonetaryValue //
-    -- preserves_total redi
     @preserves_total Individual Individuals redi
   }
 
@@ -62,7 +64,7 @@ lemma pure_communism_preserves_total (inh : Fintype.card Individual ≠ 0) :
   intro emp
   exfalso
   apply inh
-  exact Rat.natCast_eq_zero_iff.mp emp
+  exact Nat.cast_eq_zero.mp emp
 
 noncomputable def pure_communism_Redistribution (inh : Fintype.card Individual ≠ 0) :
 @Redistribution Individual Individuals :=
@@ -91,7 +93,7 @@ lemma communism_is_egalitarian (inh : Fintype.card Individual ≠ 0) :
   · refine (mul_left_inj' ?_).mpr ?_
     · exact Nat.cast_ne_zero.mpr inh
     · simp
-      rw [<- sum_rationals_perm]
+      rw [<- sum_reals_perm]
       tauto
 
 def encourages_work (redi : @Redistribution Individual Individuals) : Prop :=
@@ -119,14 +121,13 @@ lemma communism_encourages_work (inh : Fintype.card Individual ≠ 0) :
   have smp :
       (∑ i, replace cont j m i) / ↑(Fintype.card Individual) * ↑(Fintype.card Individual) =
       ∑ i, replace cont j m i := by
-    refine Rat.div_mul_cancel ?_
-    refine Ne.symm (Rat.ne_of_lt ?_)
-    exact Rat.natCast_pos.mpr inh'
-  refine (Rat.div_lt_iff ?_).mpr ?_
-  · exact Rat.natCast_pos.mpr inh'
-  · rw [smp]
-    refine (Rat.lt_iff_sub_pos (∑ i, cont i) (∑ i, replace cont j m i)).mpr ?_
-    rw [<- sum_rationals_sub]
+    refine div_mul_cancel₀ (∑ i, replace cont j m i) ?_
+    refine Ne.symm (ne_of_lt ?_)
+    exact Nat.cast_pos'.mpr inh'
+  refine (div_lt_div_iff_of_pos_right ?_).mpr ?_
+  · exact Nat.cast_pos'.mpr inh'
+  · rw [<- sub_pos]
+    rw [<- sum_reals_sub]
     refine (sum_pos_iff_of_nonneg ?_).mpr ?_
     · intro i iu
       rcases eq : decide (i = j) with true|false
@@ -138,8 +139,8 @@ lemma communism_encourages_work (inh : Fintype.card Individual ≠ 0) :
         rw [eqij]
         rw [replace_changes]
         have lejm : cont j <= m := by
-          exact Rat.le_of_lt ltjm
-        exact (Rat.le_iff_sub_nonneg (cont j) m).mp lejm
+          exact Std.le_of_lt ltjm
+        exact sub_nonneg_of_le lejm
     · exists j
       simp
       rw [replace_changes]
@@ -183,7 +184,7 @@ lemma work_incentive_communism {c c' : MonetaryValue} (i : Individual)
   rw [divdist]
   refine (div_left_inj' ?_).mpr ?_
   · exact Nat.cast_ne_zero.mpr inh
-  · rw [<- sum_rationals_sub]
+  · rw [<- sum_reals_sub]
     have smc :
         (fun j => replace cont i c' j - replace cont i c j) =
         (fun j => if j = i then c' - c else 0) := by
@@ -241,7 +242,7 @@ stable_by_currency_change (pure_communism_Redistribution inh) := by
   apply funext
   intro i
   have muldi : ∑ x, k * cont x = k * ∑ i, cont i := by
-      exact sum_rationals_mult_constant cont k
+      exact sum_reals_mult_constant cont k
   rw [muldi]
   exact Eq.symm (mul_div_assoc' k (∑ i, cont i) ↑(Fintype.card Individual))
 
@@ -280,21 +281,22 @@ is_fair (pure_communism_Redistribution inh) := by
   simp
   unfold pure_communism
   intro leij
-  exact Rat.le_refl
+  simp
 
--- I don't get why it doesn't compile with the line immediately below:
--- lemma communism_not_strictly_fair {i j : Individual} (neij : j ≠ i) :
-lemma communism_not_strictly_fair {i j : Individual} [DecidableEq Individual] (neij : j ≠ i) :
+-- I don't get why it doesn't compile without [DecidableEq Individual]
+-- (eqInd is there)
+lemma communism_not_strictly_fair {i j : Individual} [DecidableEq Individual]
+(neij : j ≠ i) :
 ¬ @is_strictly_fair Individual Individuals (
   pure_communism_Redistribution (inhabited_implies_nonnull_card i)
 ) := by
   unfold is_strictly_fair pure_communism_Redistribution
   intro sf
-  specialize (sf (fun i_1 : Individual => if i_1 = i then (1 : Rat) else (0 : Rat)) j i)
-  have eqii : (if i = i then (1 : Rat) else 0) = 1 := by
+  specialize (sf (fun i_1 : Individual => if i_1 = i then (1 : ℝ) else (0 : ℝ)) j i)
+  have eqii : (if i = i then (1 : ℝ) else 0) = 1 := by
     exact if_pos rfl
   rw [eqii] at sf
-  have ji10 : (if j = i then (1 : Rat) else 0) = 0 := by
+  have ji10 : (if j = i then (1 : ℝ) else 0) = 0 := by
     exact if_neg neij
   rw [ji10] at sf
   simp at sf

@@ -16,11 +16,10 @@ With wealth being represented as money (that is as a number):
 
 --MATH_START--
 Throughout this page, let $I$ be the finite set of individuals (with $N$ as the number of individuals). \
-Contributions by individuals are represented by their monetary value, which is a rational number (potentially negative, in case of vandalism for example). So are retributions to individuals.
+Contributions by individuals are represented by their monetary value, which is a real number (potentially negative, in case of vandalism for example). So are retributions to individuals.
 --MATH_END--
 
-[//]: # Rocq (14-18)
-[//]: # Lean4 (9-17)
+[//]: # Lean4 (12-20)
 
 
 ## Redistribution
@@ -29,11 +28,10 @@ In a society people work, contributing to the community up to a magnitude typica
 
 --MATH_START--
 $\mathbf{Definition}$\
-Being given a profile of contributions made by every individual $c \in {\mathbb Q}^I$, a redistribution function returns a retribution $r \in {\mathbb Q}^I$, which is the money given back to every individual, with the constraint of wealth conservation: $\sum_{i \in I} c(i) = \sum_{i \in I} r(i)$.
+Being given a profile of contributions made by every individual $c \in {\mathbb R}^I$, a redistribution function returns a retribution $r \in {\mathbb R}^I$, which is the money given back to every individual, with the constraint of wealth conservation: $\sum_{i \in I} c(i) = \sum_{i \in I} r(i)$.
 --MATH_END--
 
-[//]: # Rocq (20-34)
-[//]: # Lean4 (19-35)
+[//]: # Lean4 (22-37)
 
 
 ## Capitalism and communism
@@ -44,13 +42,12 @@ Pure capitalism retributes every individual up to his contribution.
 $\mathbf{Definition}$\
 Pure capitalism is the redistribution defined by
 $$\begin{align*}
-    {\mathbb Q}^I &\to {\mathbb Q}^I\\
+    {\mathbb R}^I &\to {\mathbb R}^I\\
     c &\mapsto c
 \end{align*}$$
 --MATH_END--
 
-[//]: # Rocq (36-47)
-[//]: # Lean4 (37-49)
+[//]: # Lean4 (39-51)
 
 Pure communism retributes every individual the same amount, regardless of its contribution.
 
@@ -58,13 +55,12 @@ Pure communism retributes every individual the same amount, regardless of its co
 $\mathbf{Definition}$\
 Pure communism is the redistribution defined by
 $$\begin{align*}
-    {\mathbb Q}^I &\to {\mathbb Q}^I\\
+    {\mathbb R}^I &\to {\mathbb R}^I\\
     c &\mapsto ({i_0 \in I} &\mapsto \frac {\sum_{i \in I} c(i)} N)
 \end{align*}$$
 --MATH_END--
 
-[//]: # Rocq (49-73)
-[//]: # Lean4 (51-69)
+[//]: # Lean4 (53-71)
 
 
 ## Egalitarian redistribution
@@ -73,13 +69,12 @@ A redistribution is egalitarian if the retribution to every individual doesn't d
 
 --MATH_START--
 $\mathbf{Definition}$\
-The redistribution $r: {\mathbb Q}^I \to {\mathbb Q}^I$ is said egalitarian if
-$$\forall σ \in S_I, c \in {\mathbb Q}^I, {r(c)}_σ = r(c_σ)$$
-(where $S_I$ denotes the set of permutations on $I$ and $d_σ(i) = d(σ(i))$ $\forall d \in {\mathbb Q}^I, σ \in S_I$).
+The redistribution $r: {\mathbb R}^I \to {\mathbb R}^I$ is said egalitarian if
+$$\forall σ \in S_I, c \in {\mathbb R}^I, {r(c)}_σ = r(c_σ)$$
+(where $S_I$ denotes the set of permutations on $I$ and $d_σ(i) = d(σ(i))$ $\forall d \in {\mathbb R}^I, σ \in S_I$).
 --MATH_END--
 
-[//]: # Rocq (75-78)
-[//]: # Lean4 (71-74)
+[//]: # Lean4 (73-76)
 
 As in pure capitalism everyone is retributed depending solely on its contribution, it is egalitarian.
 
@@ -88,12 +83,11 @@ $\mathbf{Lemma}$\
 Pure capitalism is egalitarian.
 
 $\mathbf{proof:}$\
-$\forall σ \in S_I, c \in {\mathbb Q}^I, {r(c)}_σ = i \mapsto r(c)(σ(i) = i \mapsto c(σ(i)) = i \mapsto r(c(σ(i))) = r(c_σ)$. \
+$\forall σ \in S_I, c \in {\mathbb R}^I, {r(c)}_σ = i \mapsto r(c)(σ(i) = i \mapsto c(σ(i)) = i \mapsto r(c(σ(i))) = r(c_σ)$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (80-84)
-[//]: # Lean4 (76-78)
+[//]: # Lean4 (78-80)
 
 Pure communism is unsurprisingly egalitarian as well.
 
@@ -102,12 +96,11 @@ $\mathbf{Lemma}$\
 Pure communism is egalitarian.
 
 $\mathbf{proof:}$\
-$\forall σ \in S_I, c \in {\mathbb Q}^I, {r(c)}_σ = \frac {\sum_{i \in I} c(i)} N = r(c_σ)$. \
+$\forall σ \in S_I, c \in {\mathbb R}^I, {r(c)}_σ = \frac {\sum_{i \in I} c(i)} N = r(c_σ)$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (86-100)
-[//]: # Lean4 (80-95)
+[//]: # Lean4 (82-97)
 
 
 ## Work incentive
@@ -116,13 +109,12 @@ An individual is encouraged to work if increasing its contribution increases its
 
 --MATH_START--
 $\mathbf{Definition}$\
-The redistribution $r: {\mathbb Q}^I \to {\mathbb Q}^I$ is said to encourage the work if
-$$\forall c \in {\mathbb Q}^I, i \in I, c' \in {\mathbb Q} \text{ such that } c(i) < c', r(c)(i) < r(c_{i \leftarrow c'})(i)$$
+The redistribution $r: {\mathbb R}^I \to {\mathbb R}^I$ is said to encourage the work if
+$$\forall c \in {\mathbb R}^I, i \in I, c' \in {\mathbb R} \text{ such that } c(i) < c', r(c)(i) < r(c_{i \leftarrow c'})(i)$$
 (where $c_{i \leftarrow c'}$ denotes the profile of contributions $c$ in which $i$'s contribution is replaced with $c'$).
 --MATH_END--
 
-[//]: # Rocq (102-106)
-[//]: # Lean4 (97-101)
+[//]: # Lean4 (99-103)
 
 Pure capitalism encourages the work as increasing one's contribution increases one's retribution up to the same amount.
 
@@ -131,12 +123,11 @@ $\mathbf{Lemma}$\
 Pure capitalism encourages the work.
 
 $\mathbf{proof:}$\
-$\forall c \in {\mathbb Q}^I, i \in I, c' \in {\mathbb Q} \text{ such that } c(i) < c', r(c)(i) = c(i) < c' = r(c_{i \leftarrow c'})(i)$. \
+$\forall c \in {\mathbb R}^I, i \in I, c' \in {\mathbb R} \text{ such that } c(i) < c', r(c)(i) = c(i) < c' = r(c_{i \leftarrow c'})(i)$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (108-117)
-[//]: # Lean4 (103-109)
+[//]: # Lean4 (105-111)
 
 Pure communism encourages the work but the reward is divided by the number of individuals.
 
@@ -145,27 +136,25 @@ $\mathbf{Lemma}$\
 Pure communism encourages the work.
 
 $\mathbf{proof:}$\
-$\forall c \in {\mathbb Q}^I, i \in I, c' \in {\mathbb Q} \text{ such that } c(i) < c', r(c)(i) = \frac {\sum_{j \in I} c(j)} N < \frac {(\sum_{j \ne i \in I} c(j)) + c'} N = r(c_{i \leftarrow c'})(i)$. \
+$\forall c \in {\mathbb R}^I, i \in I, c' \in {\mathbb R} \text{ such that } c(i) < c', r(c)(i) = \frac {\sum_{j \in I} c(j)} N < \frac {(\sum_{j \ne i \in I} c(j)) + c'} N = r(c_{i \leftarrow c'})(i)$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (119-163)
-[//]: # Lean4 (111-146)
+[//]: # Lean4 (113-147)
 
 The work incentive of an individual between two contributions is the difference between the corresponding retributions.
 
 --MATH_START--
 $\mathbf{Definition}$\
-Let $r: {\mathbb Q}^I \to {\mathbb Q}^I$ be a redistribution. \
+Let $r: {\mathbb R}^I \to {\mathbb R}^I$ be a redistribution. \
 Let $i \in I$ be an individual. \
-Let $q, q' \in Q$ be quantities (representing individual contributions) such that $c \lt c'$. \
-Let $c \in {\mathbb Q}^I$ be a contribution profile. \
+Let $q, q' \in {\mathbb R}$ be quantities (representing individual contributions) such that $c \lt c'$. \
+Let $c \in {\mathbb R}^I$ be a contribution profile. \
 The wotk incentive from contribution $q$ to $q'$ for $i$ is defined as
 $$r(c_{i \leftarrow q'})(i) - r(c_{i \leftarrow q})(i)$$
 --MATH_END--
 
-[//]: # Rocq (165-168)
-[//]: # Lean4 (148-152)
+[//]: # Lean4 (149-153)
 
 In pure capitalism the work incentive between two contributions is just the difference between them.
 
@@ -178,8 +167,7 @@ Obvious from the definition. \
 ■
 --MATH_END--
 
-[//]: # Rocq (170-179)
-[//]: # Lean4 (154-161)
+[//]: # Lean4 (155-162)
 
 In pure communism the work incentive between two contributions is the difference between them divided by the number of individuals (the benefit of the extra work provided is split among individuals).
 
@@ -195,8 +183,7 @@ $= \frac {q' - q} N$ \
 ■
 --MATH_END--
 
-[//]: # Rocq (181-211)
-[//]: # Lean4 (163-214)
+[//]: # Lean4 (164-215)
 
 
 ## Stability by currency change
@@ -205,13 +192,12 @@ A redistribution is stable by currency change if multiplying all the contributio
 
 --MATH_START--
 $\mathbf{Definition}$\
-The redistribution $r: {\mathbb Q}^I \to {\mathbb Q}^I$ is said stable by currency change if
-$$\forall c \in {\mathbb Q}^I, k \in {\mathbb Q}, r(k c) = k r(c)$$
+The redistribution $r: {\mathbb R}^I \to {\mathbb R}^I$ is said stable by currency change if
+$$\forall c \in {\mathbb R}^I, k \in {\mathbb R}, r(k c) = k r(c)$$
 (where $k c$ denotes $c$ where all the individual contributions are multiplied by $k$)
 --MATH_END--
 
-[//]: # Rocq (213-220)
-[//]: # Lean4 (216-224)
+[//]: # Lean4 (217-225)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -222,8 +208,7 @@ $r(k c) = k c = k r(c)$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (222-230)
-[//]: # Lean4 (226-232)
+[//]: # Lean4 (227-233)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -234,8 +219,7 @@ $r(k c) = i \mapsto \frac {\sum_{j \in I} k c(j)} N = i \mapsto k \frac {\sum_{j
 ■
 --MATH_END--
 
-[//]: # Rocq (232-242)
-[//]: # Lean4 (234-246)
+[//]: # Lean4 (235-247)
 
 
 ## Fairness
@@ -244,12 +228,11 @@ A fair redistribution will retribute more to an individual who contributes more.
 
 --MATH_START--
 $\mathbf{Definition}$\
-The redistribution $r: {\mathbb Q}^I \to {\mathbb Q}^I$ is said fair if $\forall c \in {\mathbb Q}^I, i, j \in I, c(i) \le c(j) \Rightarrow$ r(i) \le r(j)$
-And it is said strictly fair if $\forall c \in {\mathbb Q}^I, i, j \in I, c(i) \lt c(j) \Rightarrow$ r(i) \lt r(j)$
+The redistribution $r: {\mathbb R}^I \to {\mathbb R}^I$ is said fair if $\forall c \in {\mathbb R}^I, i, j \in I, c(i) \le c(j) \Rightarrow$ r(i) \le r(j)$
+And it is said strictly fair if $\forall c \in {\mathbb R}^I, i, j \in I, c(i) \lt c(j) \Rightarrow$ r(i) \lt r(j)$
 --MATH_END--
 
-[//]: # Rocq (244-252)
-[//]: # Lean4 (248-256)
+[//]: # Lean4 (249-257)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -260,8 +243,7 @@ As $r(i) = c(i)$, the two implications are obvious. \
 ■
 --MATH_END--
 
-[//]: # Rocq (254-272)
-[//]: # Lean4 (258-274)
+[//]: # Lean4 (259-275)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -273,5 +255,4 @@ But it is not true that $r(i) \lt r(j)$ when $c(i) \lt c(j)$. \
 ■
 --MATH_END--
 
-[//]: # Rocq (274-298)
-[//]: # Lean4 (276-302)
+[//]: # Lean4 (277-304)

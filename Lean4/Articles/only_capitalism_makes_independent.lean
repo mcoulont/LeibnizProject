@@ -37,7 +37,6 @@ redi = @pure_capitalism_Redistribution Individual Individuals := by
     apply retribution_depends_only_on_own_contribution_capitalism
   · intro rdoc
     have sumc := redi.property
-    --simp at sumc
     ext cont
     unfold retribution_depends_only_on_own_contribution at rdoc
     obtain ⟨retr, rdo⟩ := rdoc
@@ -51,7 +50,6 @@ redi = @pure_capitalism_Redistribution Individual Individuals := by
       unfold preserves_total at sumc
       specialize (sumc (fun _ => mv))
       unfold total_value at sumc
-      --simp at rdo
       apply sum_congr at rdo
       rewrite [rdo] at sumc
       simp at sumc

@@ -17,5 +17,3 @@ Require Import physics_with_free_will.
 Require Import definition_intelligence.
 Require Import definition_power.
 Require Import gains_from_trade.
-Require Import definition_capitalism_communism.
-Require Import only_capitalism_makes_independent.
