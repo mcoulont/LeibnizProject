@@ -21,10 +21,11 @@ if (currentPageIsHomepage()) {
     chooseDisplayRocqIndex.onclick = displayRocqIndex;
     chooseDisplayLeanIndex.onclick = displayLeanIndex;
 } else {
-    if (
-        ! leanIsUsed() ||
-        localStorage.getItem("prover") != "Lean4"
-    ) {
+    if (! leanIsUsed()) {
+        localStorage.setItem("prover", "Rocq");
+    } else if (! rocqIsUsed()) {
+        localStorage.setItem("prover", "Lean4");
+    } else if (localStorage.getItem("prover") != "Lean4") {
         localStorage.setItem("prover", "Rocq");
     }
 
