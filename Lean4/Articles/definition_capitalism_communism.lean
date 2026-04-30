@@ -2,9 +2,10 @@
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Calculus.Deriv.Add
 
-import Tools.eqtype_facts
+import Tools.eqtype
+import Tools.function
 import Tools.permutations
-import Tools.fintype_facts
+import Tools.fintype
 import Articles.ethics_in_society
 
 namespace definition_capitalism_communism
@@ -22,65 +23,112 @@ def MonetaryValue : Type := ℝ
 def total_value (dist : @Profile Individual MonetaryValue) : MonetaryValue :=
   ∑ i : Individual, dist i
 
-def preserves_total
+def accounts_at_equilibirum (government_spending : MonetaryValue)
 (redi : @Profile Individual MonetaryValue -> @Profile Individual MonetaryValue) :
 Prop :=
   ∀ (dist : @Profile Individual MonetaryValue),
-    @total_value Individual Individuals (redi dist) =
+    @total_value Individual Individuals (redi dist) + government_spending =
     @total_value Individual Individuals dist
 
 @[reducible]
-def Redistribution : Type :=
+def Redistribution (government_spending : MonetaryValue) : Type :=
   {
     redi : @Profile Individual MonetaryValue -> @Profile Individual MonetaryValue //
-    @preserves_total Individual Individuals redi
+    @accounts_at_equilibirum Individual Individuals government_spending redi
   }
 
 def pure_capitalism :
 @Profile Individual MonetaryValue -> @Profile Individual MonetaryValue :=
   id
 
-lemma pure_capitalism_preserves_total :
-@preserves_total Individual Individuals (@pure_capitalism Individual) := by
-  unfold pure_capitalism
-  unfold preserves_total
-  intro dist
-  tauto
-
-def pure_capitalism_Redistribution : @Redistribution Individual Individuals :=
-  ⟨ pure_capitalism, pure_capitalism_preserves_total ⟩
-
-noncomputable def pure_communism :
+noncomputable def pure_capitalism_costs_equally_divided
+(government_spending : MonetaryValue) :
 @Profile Individual MonetaryValue -> @Profile Individual MonetaryValue :=
-  fun (dist : @Profile Individual MonetaryValue) => fun _ =>
-    @total_value Individual Individuals dist / (Fintype.card Individual : MonetaryValue)
+  fun (cont : @Profile Individual MonetaryValue) => fun i =>
+  cont i - government_spending / Fintype.card Individual
 
-lemma pure_communism_preserves_total (inh : Fintype.card Individual ≠ 0) :
-@preserves_total Individual Individuals (@pure_communism Individual Individuals) := by
-  unfold pure_communism preserves_total total_value
+lemma pure_capitalism_costs_equally_divided_0 :
+@pure_capitalism_costs_equally_divided Individual Individuals 0 =
+@pure_capitalism Individual := by
+  unfold pure_capitalism_costs_equally_divided pure_capitalism
+  apply funext
+  simp
+
+lemma pure_capitalism_costs_equally_divided_at_equilibirum
+(inh : Fintype.card Individual ≠ 0) (government_spending : MonetaryValue) :
+@accounts_at_equilibirum Individual Individuals government_spending (
+  @pure_capitalism_costs_equally_divided Individual Individuals government_spending
+) := by
+  unfold pure_capitalism_costs_equally_divided accounts_at_equilibirum
+  intro dist
+  unfold total_value
+  simp
+  rw [mul_comm]
+  rw [division_def]
+  rw [mul_assoc]
+  rw [inv_mul_cancel₀]
+  · simp
+  · exact Nat.cast_ne_zero.mpr inh
+
+noncomputable def pure_capitalism_costs_equally_divided_Redistribution
+(inh : Fintype.card Individual ≠ 0) (government_spending : MonetaryValue) :
+@Redistribution Individual Individuals government_spending :=
+  ⟨ pure_capitalism_costs_equally_divided government_spending,
+    pure_capitalism_costs_equally_divided_at_equilibirum inh government_spending ⟩
+
+def pure_capitalism_Redistribution (inh : Fintype.card Individual ≠ 0) :
+@Redistribution Individual Individuals 0 :=
+  ⟨
+    pure_capitalism,
+    pure_capitalism_costs_equally_divided_0 ▸
+    pure_capitalism_costs_equally_divided_at_equilibirum inh 0
+  ⟩
+
+noncomputable def pure_communism (government_spending : MonetaryValue) :
+@Profile Individual MonetaryValue -> @Profile Individual MonetaryValue :=
+  fun (cont : @Profile Individual MonetaryValue) => fun _ =>
+  (@total_value Individual Individuals cont - government_spending) /
+  (Fintype.card Individual : MonetaryValue)
+
+lemma pure_communism_at_equilibirum (inh : Fintype.card Individual ≠ 0)
+(government_spending : MonetaryValue) :
+@accounts_at_equilibirum Individual Individuals government_spending
+(@pure_communism Individual Individuals government_spending) := by
+  unfold pure_communism accounts_at_equilibirum total_value
   intro dist
   simp
-  refine mul_div_cancel_of_imp' ?_
-  intro emp
-  exfalso
-  apply inh
-  exact Nat.cast_eq_zero.mp emp
+  rw [mul_div_cancel_of_imp']
+  · simp
+  · intro emp
+    exfalso
+    apply inh
+    exact Nat.cast_eq_zero.mp emp
 
-noncomputable def pure_communism_Redistribution (inh : Fintype.card Individual ≠ 0) :
-@Redistribution Individual Individuals :=
-  ⟨ pure_communism, pure_communism_preserves_total inh ⟩
+noncomputable def pure_communism_Redistribution (inh : Fintype.card Individual ≠ 0)
+(government_spending : MonetaryValue) :
+@Redistribution Individual Individuals government_spending :=
+  ⟨ pure_communism government_spending,
+    pure_communism_at_equilibirum inh government_spending ⟩
 
-def is_egalitarian (redi : @Redistribution Individual Individuals) : Prop :=
+def is_egalitarian (government_spending : MonetaryValue)
+(redi : @Redistribution Individual Individuals government_spending) :
+Prop :=
   ∀ (σ : Perm Individual) (cont : @Profile Individual MonetaryValue),
     PermutationsActingOnFunctions (redi.val cont) σ =
     redi.val (PermutationsActingOnFunctions cont σ)
 
-lemma capitalism_is_egalitarian :
-@is_egalitarian Individual Individuals pure_capitalism_Redistribution := by
+lemma capitalism_is_egalitarian (inh : Fintype.card Individual ≠ 0)
+(government_spending : MonetaryValue) :
+@is_egalitarian Individual Individuals government_spending (
+  pure_capitalism_costs_equally_divided_Redistribution inh government_spending
+ ) := by
   tauto
 
-lemma communism_is_egalitarian (inh : Fintype.card Individual ≠ 0) :
-@is_egalitarian Individual Individuals (pure_communism_Redistribution inh) := by
+lemma communism_is_egalitarian (inh : Fintype.card Individual ≠ 0)
+(government_spending : MonetaryValue) :
+@is_egalitarian Individual Individuals government_spending (
+  pure_communism_Redistribution inh government_spending
+) := by
   unfold is_egalitarian pure_communism_Redistribution
   simp
   unfold pure_communism PermutationsActingOnFunctions total_value
@@ -96,22 +144,31 @@ lemma communism_is_egalitarian (inh : Fintype.card Individual ≠ 0) :
       rw [<- sum_reals_perm]
       tauto
 
-def encourages_work (redi : @Redistribution Individual Individuals) : Prop :=
+def encourages_work {government_spending : MonetaryValue}
+(redi : @Redistribution Individual Individuals government_spending) :
+Prop :=
   ∀ (cont : @Profile Individual MonetaryValue) (m : MonetaryValue)
   (i : Individual),
     cont i < m →
     redi.val cont i < redi.val (replace cont i m) i
 
-lemma capitalism_encourages_work :
-@encourages_work Individual eqInd Individuals pure_capitalism_Redistribution := by
-  unfold encourages_work pure_capitalism_Redistribution pure_capitalism
+lemma capitalism_encourages_work (inh : Fintype.card Individual ≠ 0)
+(government_spending : MonetaryValue) :
+@encourages_work Individual eqInd Individuals government_spending (
+  pure_capitalism_costs_equally_divided_Redistribution inh government_spending
+ ) := by
+  unfold encourages_work pure_capitalism_costs_equally_divided_Redistribution
+  unfold pure_capitalism_costs_equally_divided
   intro cont m i ltim
   simp
   rewrite [replace_changes]
   exact ltim
 
-lemma communism_encourages_work (inh : Fintype.card Individual ≠ 0) :
-@encourages_work Individual eqInd Individuals (pure_communism_Redistribution inh) := by
+lemma communism_encourages_work (inh : Fintype.card Individual ≠ 0)
+(government_spending : MonetaryValue) :
+@encourages_work Individual eqInd Individuals government_spending (
+  pure_communism_Redistribution inh government_spending
+) := by
   unfold encourages_work pure_communism_Redistribution
   intro cont m j ltjm
   simp
@@ -126,7 +183,8 @@ lemma communism_encourages_work (inh : Fintype.card Individual ≠ 0) :
     exact Nat.cast_pos'.mpr inh'
   refine (div_lt_div_iff_of_pos_right ?_).mpr ?_
   · exact Nat.cast_pos'.mpr inh'
-  · rw [<- sub_pos]
+  · simp
+    rw [<- sub_pos]
     rw [<- sum_reals_sub]
     refine (sum_pos_iff_of_nonneg ?_).mpr ?_
     · intro i iu
@@ -146,56 +204,71 @@ lemma communism_encourages_work (inh : Fintype.card Individual ≠ 0) :
       rw [replace_changes]
       exact ltjm
 
-def work_incentive_between {c1 c2 : MonetaryValue}
-(redi : @Redistribution Individual Individuals) (i : Individual)
+def work_incentive_between {c1 c2 : MonetaryValue} {government_spending : MonetaryValue}
+(redi : @Redistribution Individual Individuals government_spending) (i : Individual)
 (cont : @Profile Individual MonetaryValue) :
 MonetaryValue :=
   redi.val (replace cont i c2) i - redi.val (replace cont i c1) i
 
-def retribution_function (redi : @Redistribution Individual Individuals)
+def retribution_function {government_spending : MonetaryValue}
+(redi : @Redistribution Individual Individuals government_spending)
 (i : Individual) (cont : @Profile Individual MonetaryValue) :
 MonetaryValue -> MonetaryValue :=
   fun c => redi.val (replace cont i c) i
 
 @[reducible]
-noncomputable def instantaneous_work_incentive {c0 : MonetaryValue}
-{redi : @Redistribution Individual Individuals} {i : Individual}
+noncomputable def instantaneous_work_incentive {government_spending : MonetaryValue}
+{i : Individual} {c0 : MonetaryValue}
+{redi : @Redistribution Individual Individuals government_spending}
 {cont : @Profile Individual MonetaryValue}
 (_ : DifferentiableAt ℝ (
-  @retribution_function Individual eqInd Individuals redi i cont
+  @retribution_function Individual eqInd Individuals government_spending redi i cont
 ) c0) :
 MonetaryValue :=
-  deriv (@retribution_function Individual eqInd Individuals redi i cont) c0
+  deriv (
+    @retribution_function Individual eqInd Individuals government_spending redi i cont
+  ) c0
 
-lemma work_incentive_capitalism_between {c c' : MonetaryValue} (i : Individual)
-(cont : @Profile Individual MonetaryValue) :
+lemma work_incentive_capitalism_between (government_spending : MonetaryValue)
+(i : Individual) (c c' : MonetaryValue) (cont : @Profile Individual MonetaryValue) :
 (
-  @work_incentive_between Individual eqInd Individuals c c'
-  pure_capitalism_Redistribution i cont
+  @work_incentive_between Individual eqInd Individuals c c' government_spending
+  (pure_capitalism_costs_equally_divided_Redistribution (
+    inhabited_implies_nonnull_card i
+  ) government_spending) i cont
 ) = c' - c := by
-  unfold pure_capitalism_Redistribution work_incentive_between pure_capitalism
+  unfold pure_capitalism_costs_equally_divided_Redistribution
+  unfold work_incentive_between pure_capitalism_costs_equally_divided
   simp
   rw [replace_changes]
   rw [replace_changes]
 
-lemma instantaneous_work_incentive_capitalism {c0 : MonetaryValue} (i : Individual)
-{cont : @Profile Individual MonetaryValue}
+lemma instantaneous_work_incentive_capitalism {government_spending : MonetaryValue}
+{i : Individual} {c0 : MonetaryValue} {cont : @Profile Individual MonetaryValue}
 (diff : DifferentiableAt ℝ (
-  @retribution_function Individual eqInd Individuals pure_capitalism_Redistribution
-  i cont
+  @retribution_function Individual eqInd Individuals government_spending (
+    pure_capitalism_costs_equally_divided_Redistribution (
+      inhabited_implies_nonnull_card i
+    ) government_spending
+  ) i cont
 ) c0) :
-@instantaneous_work_incentive Individual eqInd Individuals c0
-pure_capitalism_Redistribution i cont diff = 1 := by
-  unfold pure_capitalism_Redistribution instantaneous_work_incentive pure_capitalism
+@instantaneous_work_incentive Individual eqInd Individuals government_spending i c0
+(pure_capitalism_costs_equally_divided_Redistribution (
+  inhabited_implies_nonnull_card i
+) government_spending) cont diff = 1 := by
+  unfold pure_capitalism_costs_equally_divided_Redistribution
+  unfold instantaneous_work_incentive pure_capitalism_costs_equally_divided
   unfold retribution_function replace
   simp
 
-lemma work_incentive_communism_between {c c' : MonetaryValue} (i : Individual)
-(cont : @Profile Individual MonetaryValue) :
-@work_incentive_between Individual eqInd Individuals c c' (
-  pure_communism_Redistribution (inhabited_implies_nonnull_card i)
-) i cont =
-(c' - c) / Fintype.card Individual := by
+lemma work_incentive_communism_between (government_spending : MonetaryValue)
+(i : Individual) (c c' : MonetaryValue) (cont : @Profile Individual MonetaryValue) :
+(
+  @work_incentive_between Individual eqInd Individuals c c' government_spending
+  (pure_communism_Redistribution (
+    inhabited_implies_nonnull_card i
+  ) government_spending) i cont
+) = (c' - c) / Fintype.card Individual := by
   unfold pure_communism_Redistribution work_incentive_between
   simp
   unfold pure_communism total_value
@@ -203,13 +276,16 @@ lemma work_incentive_communism_between {c c' : MonetaryValue} (i : Individual)
     apply inhabited_implies_nonnull_card
     exact i
   have divdist :
-      (∑ i_1, replace cont i c' i_1) / ↑(Fintype.card Individual) -
-      (∑ i_1, replace cont i c i_1) / ↑(Fintype.card Individual) =
+      (∑ i_1, replace cont i c' i_1 - government_spending) / ↑(Fintype.card Individual) -
+      (∑ i_1, replace cont i c i_1 - government_spending) / ↑(Fintype.card Individual) =
       (∑ i_1, replace cont i c' i_1 - ∑ i_1, replace cont i c i_1) /
       ↑(Fintype.card Individual) := by
+    rw [sub_div]
+    rw [sub_div]
+    simp
     exact
       div_sub_div_same (∑ i_1, replace cont i c' i_1) (∑ i_1, replace cont i c i_1)
-        ↑(Fintype.card Individual)
+      ↑(Fintype.card Individual)
   rw [divdist]
   refine (div_left_inj' ?_).mpr ?_
   · exact Nat.cast_ne_zero.mpr inh
@@ -243,18 +319,23 @@ lemma work_incentive_communism_between {c c' : MonetaryValue} (i : Individual)
     rw [eqsum]
     exact Fintype.sum_ite_eq' i fun j ↦ c' - c
 
-lemma instantaneous_work_incentive_communism {c0 : MonetaryValue} (i : Individual)
-{cont : @Profile Individual MonetaryValue}
-(diff : DifferentiableAt ℝ (fun c =>
-  (pure_communism_Redistribution (inhabited_implies_nonnull_card i)).val (replace cont i c) i
+lemma instantaneous_work_incentive_communism {government_spending : MonetaryValue}
+{i : Individual} {c0 : MonetaryValue} {cont : @Profile Individual MonetaryValue}
+(diff : DifferentiableAt ℝ (
+  @retribution_function Individual eqInd Individuals government_spending (
+    pure_communism_Redistribution (
+      inhabited_implies_nonnull_card i
+    ) government_spending
+  ) i cont
 ) c0) :
-@instantaneous_work_incentive Individual eqInd Individuals c0 (
-  pure_communism_Redistribution (inhabited_implies_nonnull_card i)
-) i cont diff = 1 / Fintype.card Individual := by
+@instantaneous_work_incentive Individual eqInd Individuals government_spending i c0
+(pure_communism_Redistribution (
+  inhabited_implies_nonnull_card i
+) government_spending) cont diff = 1  / Fintype.card Individual := by
   unfold pure_communism_Redistribution instantaneous_work_incentive pure_communism
   unfold retribution_function replace total_value
   simp
-  have dist : (
+  have distr : (
     deriv (fun c ↦ (∑ x, if x = i then c else cont x) / ↑(Fintype.card Individual)) c0 =
     deriv (fun c ↦ (∑ x, if x = i then c else cont x)) c0 / ↑(Fintype.card Individual)
   ) := by
@@ -264,7 +345,7 @@ lemma instantaneous_work_incentive_communism {c0 : MonetaryValue} (i : Individua
       (fun c ↦ ∑ x, if x = i then c else cont x)
       c0
     ).symm
-  rw [<- dist]
+  rw [<- distr]
   have derd : (
     deriv (fun c ↦ (∑ x, if x = i then c else cont x) / ↑(Fintype.card Individual)) c0 =
     deriv (fun c ↦ (∑ x, if x = i then c else cont x)) c0  / ↑(Fintype.card Individual)
@@ -324,68 +405,152 @@ lemma instantaneous_work_incentive_communism {c0 : MonetaryValue} (i : Individua
       rw [Fintype.sum_eq_single i all0]
       simp
 
-def currency_change (dist : @Profile Individual MonetaryValue)
-(k : MonetaryValue) :
+def currency_change {k : MonetaryValue} (_ : 0 < k)  (mv : MonetaryValue) :
+MonetaryValue :=
+  mv * k
+
+noncomputable def currency_change_inverse {k : MonetaryValue} (_ : 0 < k)
+(mv : MonetaryValue) :
+MonetaryValue :=
+  mv / k
+
+lemma inverse_currency_change {k : MonetaryValue} (pos : 0 < k) :
+Inverse (@currency_change k pos) (@currency_change_inverse k pos) := by
+  unfold currency_change currency_change_inverse Inverse
+  apply And.intro
+  · intro x
+    simp
+    field_simp
+  · intro x
+    simp
+    field_simp
+
+def currency_change_distribution {k : MonetaryValue} (pos : 0 < k)
+(dist : @Profile Individual MonetaryValue) :
 @Profile Individual MonetaryValue :=
-  fun i => k * dist i
+  fun i => currency_change pos (dist i)
 
-def stable_by_currency_change (redi : @Redistribution Individual Individuals) :
-Prop :=
-  ∀ (cont : @Profile Individual MonetaryValue) (k : MonetaryValue),
-    redi.val (currency_change cont k) = currency_change (redi.val cont) k
+noncomputable def currency_change_distribution_inverse {k : MonetaryValue}
+(pos : 0 < k) (dist : @Profile Individual MonetaryValue) :
+@Profile Individual MonetaryValue :=
+  fun i => currency_change_inverse pos (dist i)
 
-lemma capitalism_stable_by_currency_change :
-@stable_by_currency_change Individual Individuals pure_capitalism_Redistribution := by
-  unfold stable_by_currency_change pure_capitalism_Redistribution
-  intro cont k
-  simp
-  unfold pure_capitalism
-  tauto
+lemma inverse_currency_change_distribution {k : MonetaryValue} (pos : 0 < k) :
+Inverse (@currency_change_distribution Individual k pos)
+(currency_change_distribution_inverse pos) := by
+  unfold currency_change_distribution currency_change_distribution_inverse Inverse
+  apply And.intro
+  · intro dist
+    simp
+    apply funext
+    intro i
+    rw [(inverse_currency_change pos).left]
+  · intro dist
+    simp
+    apply funext
+    intro i
+    rw [(inverse_currency_change pos).right]
 
-lemma communism_stable_by_currency_change (inh : Fintype.card Individual ≠ 0) :
-stable_by_currency_change (pure_communism_Redistribution inh) := by
-  unfold stable_by_currency_change pure_communism_Redistribution
-  intro cont k
-  simp
-  unfold pure_communism currency_change total_value
-  simp
-  apply funext
+noncomputable def currency_change_redistribution {k : MonetaryValue} (pos : 0 < k)
+(redi : @Profile Individual MonetaryValue -> @Profile Individual MonetaryValue) :
+@Profile Individual MonetaryValue -> @Profile Individual MonetaryValue :=
+  fun cont => currency_change_distribution pos (redi (
+    currency_change_distribution_inverse pos cont
+  ))
+
+lemma currency_change_at_equilibrium {k : MonetaryValue}
+{government_spending : MonetaryValue}
+{redi : @Profile Individual MonetaryValue -> @Profile Individual MonetaryValue}
+(pos : 0 < k)
+(equi : @accounts_at_equilibirum Individual Individuals government_spending redi) :
+@accounts_at_equilibirum Individual Individuals (government_spending * k) (
+  currency_change_redistribution pos redi
+) := by
+  unfold accounts_at_equilibirum currency_change_redistribution
+  intro dist
+  unfold total_value currency_change_distribution
+  unfold currency_change currency_change_distribution_inverse
+  have distr : (
+    ∑ i, (redi (fun i ↦ currency_change_inverse pos (dist i)) i * k) =
+    (∑ i, redi (fun i ↦ currency_change_inverse pos (dist i)) i) * k
+  ) := by
+    exact Eq.symm (sum_mul univ (redi fun i ↦ currency_change_inverse pos (dist i)) k)
+  rw [distr]
+  unfold currency_change_inverse
+  unfold accounts_at_equilibirum at equi
+  specialize (equi (currency_change_distribution_inverse pos dist))
+  unfold total_value currency_change_distribution_inverse at equi
+  unfold currency_change_inverse at equi
+  have mulk :(
+    (∑ i, redi (fun i ↦ dist i / k) i + government_spending) * k =
+    (∑ i, dist i / k) * k
+  ) := by
+    exact (mul_right_cancel_iff_of_pos pos).mpr equi
+  rw [add_mul] at mulk
+  rw [mulk]
+  rw [mul_comm]
+  rw [Finset.mul_sum]
+  refine Eq.symm (Fintype.sum_congr dist (fun a ↦ k * (dist a / k)) ?_)
   intro i
-  have muldi : ∑ x, k * cont x = k * ∑ i, cont i := by
-      exact sum_reals_mult_constant cont k
-  rw [muldi]
-  exact Eq.symm (mul_div_assoc' k (∑ i, cont i) ↑(Fintype.card Individual))
+  simp
+  rw [mul_comm]
+  rw [division_def]
+  rw [mul_assoc]
+  have invk : k⁻¹ * k = 1 := by
+    refine inv_mul_cancel₀ ?_
+    exact Ne.symm (Std.ne_of_lt pos)
+  rw [invk]
+  simp
 
-def is_fair (redi : @Redistribution Individual Individuals) : Prop :=
+noncomputable def change_currency_Redistribution {k : MonetaryValue}
+{government_spending : MonetaryValue}
+(redi : @Redistribution Individual Individuals government_spending)
+(pos : 0 < k) :
+@Redistribution Individual Individuals (government_spending * k) :=
+  ⟨ currency_change_redistribution pos redi,
+    currency_change_at_equilibrium pos redi.property ⟩
+
+def is_fair {government_spending : MonetaryValue}
+(redi : @Redistribution Individual Individuals government_spending) :
+Prop :=
   ∀ (cont : @Profile Individual MonetaryValue) (i j : Individual),
     cont i <= cont j ->
     redi.val cont i <= redi.val cont j
 
-def is_strictly_fair (redi : @Redistribution Individual Individuals) : Prop :=
+def is_strictly_fair {government_spending : MonetaryValue}
+(redi : @Redistribution Individual Individuals government_spending) :
+Prop :=
   ∀ (cont : @Profile Individual MonetaryValue) (i j : Individual),
     cont i < cont j ->
     redi.val cont i < redi.val cont j
 
-lemma capitalism_is_fair :
-@is_fair Individual Individuals pure_capitalism_Redistribution := by
-  unfold is_fair pure_capitalism_Redistribution
+lemma capitalism_is_fair (inh : Fintype.card Individual ≠ 0)
+(government_spending : MonetaryValue) :
+@is_fair Individual Individuals government_spending (
+  pure_capitalism_costs_equally_divided_Redistribution inh government_spending
+) := by
+  unfold is_fair pure_capitalism_costs_equally_divided_Redistribution
   intro cont i j
   simp
-  unfold pure_capitalism
+  unfold pure_capitalism_costs_equally_divided
   intro conc
-  exact conc
+  exact tsub_le_tsub_right conc (government_spending / ↑(Fintype.card Individual))
 
-lemma capitalism_is_strictly_fair :
-@is_strictly_fair Individual Individuals pure_capitalism_Redistribution := by
-  unfold is_strictly_fair pure_capitalism_Redistribution
+lemma capitalism_is_strictly_fair (inh : Fintype.card Individual ≠ 0)
+(government_spending : MonetaryValue) :
+@is_strictly_fair Individual Individuals government_spending (
+  pure_capitalism_costs_equally_divided_Redistribution inh government_spending
+) := by
+  unfold is_strictly_fair pure_capitalism_costs_equally_divided_Redistribution
   intro cont i j
   simp
-  unfold pure_capitalism
+  unfold pure_capitalism_costs_equally_divided
   intro conc
-  exact conc
+  exact sub_lt_sub_right conc (government_spending / ↑(Fintype.card Individual))
 
-lemma communism_is_fair (inh : Fintype.card Individual ≠ 0) :
-is_fair (pure_communism_Redistribution inh) := by
+lemma communism_is_fair (inh : Fintype.card Individual ≠ 0)
+(government_spending : MonetaryValue) :
+is_fair (pure_communism_Redistribution inh government_spending) := by
   unfold is_fair pure_communism_Redistribution
   intro cont i j
   simp
@@ -393,12 +558,10 @@ is_fair (pure_communism_Redistribution inh) := by
   intro leij
   simp
 
--- I don't get why it doesn't compile without [DecidableEq Individual]
--- (eqInd is there)
 lemma communism_not_strictly_fair {i j : Individual} [DecidableEq Individual]
-(neij : j ≠ i) :
-¬ @is_strictly_fair Individual Individuals (
-  pure_communism_Redistribution (inhabited_implies_nonnull_card i)
+(government_spending : MonetaryValue) (neij : j ≠ i) :
+¬ @is_strictly_fair Individual Individuals government_spending (
+  pure_communism_Redistribution (inhabited_implies_nonnull_card i) government_spending
 ) := by
   unfold is_strictly_fair pure_communism_Redistribution
   intro sf

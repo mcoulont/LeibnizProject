@@ -1,7 +1,8 @@
 
-import Tools.eqtype_facts
+import Tools.eqtype
+import Tools.function
 import Tools.permutations
-import Tools.fintype_facts
+import Tools.fintype
 import Tools.preference
 import Articles.ethics_first_steps
 import Articles.every_ethic_without_dead_end_is_utilitarian

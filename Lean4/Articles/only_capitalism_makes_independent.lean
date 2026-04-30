@@ -11,53 +11,71 @@ variable {Individuals : Fintype Individual}
 open Fintype
 open definition_capitalism_communism ethics_in_society
 
-def retribution_depends_only_on_own_contribution
-(redi : @Redistribution Individual Individuals) :
+def retribution_depends_only_on_own_contribution {government_spending : MonetaryValue}
+(redi : @Redistribution Individual Individuals government_spending) :
 Prop :=
   ∃ (f : MonetaryValue -> MonetaryValue),
   ∀ (cont : @Profile Individual MonetaryValue) (i : Individual),
     redi.val cont i = f (cont i)
 
-lemma retribution_depends_only_on_own_contribution_capitalism :
+lemma retribution_depends_only_on_own_contribution_capitalism
+(inh : Fintype.card Individual ≠ 0) (government_spending : MonetaryValue) :
 retribution_depends_only_on_own_contribution (
-  @pure_capitalism_Redistribution Individual Individuals
+  pure_capitalism_costs_equally_divided_Redistribution inh government_spending
 ) := by
-  exists id
+  exists (fun mv => mv - government_spending / Fintype.card Individual)
   intro cont i
-  tauto
+  unfold pure_capitalism_costs_equally_divided_Redistribution
+  unfold pure_capitalism_costs_equally_divided
+  simp
 
-theorem only_pure_capitalism_makes_independent
-(redi : @Redistribution Individual Individuals) (i0 : Individual) :
+theorem only_pure_capitalism_makes_independent {government_spending : MonetaryValue}
+(inh : Fintype.card Individual ≠ 0)
+(redi : @Redistribution Individual Individuals government_spending) :
 retribution_depends_only_on_own_contribution redi <->
-redi = @pure_capitalism_Redistribution Individual Individuals := by
+redi = pure_capitalism_costs_equally_divided_Redistribution inh government_spending := by
   apply Iff.intro
   rotate_left
-  · intro pc
-    rewrite [pc]
+  · intro eqca
+    rw [eqca]
     apply retribution_depends_only_on_own_contribution_capitalism
   · intro rdoc
     have sumc := redi.property
     ext cont
     unfold retribution_depends_only_on_own_contribution at rdoc
     obtain ⟨retr, rdo⟩ := rdoc
-    unfold pure_capitalism_Redistribution
+    unfold pure_capitalism_costs_equally_divided_Redistribution
     simp
-    unfold pure_capitalism
-    have defretr : retr = id := by
+    unfold pure_capitalism_costs_equally_divided
+    have defretr : retr = (fun mv => mv - government_spending / Fintype.card Individual) := by
       apply funext
       intro mv
       specialize (rdo (fun _ => mv))
-      unfold preserves_total at sumc
+      unfold accounts_at_equilibirum at sumc
       specialize (sumc (fun _ => mv))
       unfold total_value at sumc
       apply sum_congr at rdo
       rewrite [rdo] at sumc
       simp at sumc
-      rcases sumc with eqrmv|emp
-      rotate_left
-      · have inh : Fintype.card Individual ≠ 0 := inhabited_implies_nonnull_card i0
-        tauto
-      · tauto
+      have defgs : (
+        government_spending = ↑(card Individual) * mv - ↑(card Individual) * retr mv
+      ) := by
+        exact eq_sub_of_add_eq' sumc
+      rw [defgs]
+      have muld : (
+        (↑(card Individual) * mv - ↑(card Individual) * retr mv) / ↑(card Individual) =
+        (↑(card Individual) * mv) / ↑(card Individual) -
+        ↑(card Individual) * retr mv / ↑(card Individual)
+      ) := by
+        exact sub_div (↑(card Individual) * mv) (
+          ↑(card Individual) * retr mv
+        ) ↑(card Individual)
+      rw [muld]
+      rw [mul_div_cancel_left₀]
+      · rw [mul_div_cancel_left₀]
+        · simp
+        · exact Nat.cast_ne_zero.mpr inh
+      · exact Nat.cast_ne_zero.mpr inh
     specialize (rdo cont)
     apply funext
     intro i
