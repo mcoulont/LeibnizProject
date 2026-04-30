@@ -150,30 +150,54 @@ Let $r: {\mathbb R}^I \to {\mathbb R}^I$ be a redistribution. \
 Let $i \in I$ be an individual. \
 Let $q, q' \in {\mathbb R}$ be quantities (representing individual contributions) such that $c \lt c'$. \
 Let $c \in {\mathbb R}^I$ be a contribution profile. \
-The wotk incentive from contribution $q$ to $q'$ for $i$ is defined as
+The work incentive between contributions $q$ and $q'$ for $i$ is defined as
 $$r(c_{i \leftarrow q'})(i) - r(c_{i \leftarrow q})(i)$$
 --MATH_END--
 
 [//]: # Lean4 (149-153)
 
+--MATH_START--
+$\mathbf{Definition}$\
+Let $r: {\mathbb R}^I \to {\mathbb R}^I$ be a redistribution. \
+Let $i \in I$ be an individual. \
+Let $q \in {\mathbb R}$ be a quantity (representing an individual contribution). \
+Let $c \in {\mathbb R}^I$ be a contribution profile. \
+The instantaneous work incentive at contribution $q$ for $i$ is defined as
+$$\frac {\mathrm{d} r(c_{i \leftarrow q})(i)} {\mathrm{d} q}$$
+It may not exist, in case the function is not differentiable.
+--MATH_END--
+
+[//]: # Lean4 (155-168)
+
 In pure capitalism the work incentive between two contributions is just the difference between them.
 
 --MATH_START--
 $\mathbf{Lemma}$\
-In pure capitalism the wotk incentive from contribution $q$ to $q'$ for whatever individual is $q' - q$.
+In pure capitalism the work incentive between contributions $q$ and $q'$ for whatever individual is $q' - q$.
 
 $\mathbf{proof:}$\
 Obvious from the definition. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (155-162)
+[//]: # Lean4 (170-179)
+
+--MATH_START--
+$\mathbf{Lemma}$\
+In pure capitalism the instantaneous work incentive is the function constant at $1$.
+
+$\mathbf{proof:}$\
+$\frac {\mathrm{d} r(c_{i \leftarrow q})(i)} {\mathrm{d} q} = \frac {\mathrm{d} q} {\mathrm{d} q} = 1$. \
+■
+--MATH_END--
+
+[//]: # Lean4 (181-191)
 
 In pure communism the work incentive between two contributions is the difference between them divided by the number of individuals (the benefit of the extra work provided is split among individuals).
 
 --MATH_START--
 $\mathbf{Lemma}$\
-In pure communism the wotk incentive from contribution $q$ to $q'$ for whatever individual is $\frac {q' - q} N$.
+In pure communism the work incentive between contributions $q$ and $q'$ for whatever individual is $\frac {q' - q} N$.
 
 $\mathbf{proof:}$\
 $r(c_{i \leftarrow q'})(i) - r(c_{i \leftarrow q})(i)$ \
@@ -183,7 +207,18 @@ $= \frac {q' - q} N$ \
 ■
 --MATH_END--
 
-[//]: # Lean4 (164-215)
+[//]: # Lean4 (193-244)
+
+--MATH_START--
+$\mathbf{Lemma}$\
+In pure communism the instantaneous work incentive is the function constant at $\frac 1 N$.
+
+$\mathbf{proof:}$\
+$\frac {\mathrm{d} r(c_{i \leftarrow q})(i)} {\mathrm{d} q} = \frac {\mathrm{d} \frac q N} {\mathrm{d} q} = \frac 1 N$. \
+■
+--MATH_END--
+
+[//]: # Lean4 (246-325)
 
 
 ## Stability by currency change
@@ -197,7 +232,7 @@ $$\forall c \in {\mathbb R}^I, k \in {\mathbb R}, r(k c) = k r(c)$$
 (where $k c$ denotes $c$ where all the individual contributions are multiplied by $k$)
 --MATH_END--
 
-[//]: # Lean4 (217-225)
+[//]: # Lean4 (327-335)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -208,7 +243,7 @@ $r(k c) = k c = k r(c)$. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (227-233)
+[//]: # Lean4 (337-343)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -219,7 +254,7 @@ $r(k c) = i \mapsto \frac {\sum_{j \in I} k c(j)} N = i \mapsto k \frac {\sum_{j
 ■
 --MATH_END--
 
-[//]: # Lean4 (235-247)
+[//]: # Lean4 (345-367)
 
 
 ## Fairness
@@ -232,7 +267,7 @@ The redistribution $r: {\mathbb R}^I \to {\mathbb R}^I$ is said fair if $\forall
 And it is said strictly fair if $\forall c \in {\mathbb R}^I, i, j \in I, c(i) \lt c(j) \Rightarrow$ r(i) \lt r(j)$
 --MATH_END--
 
-[//]: # Lean4 (249-257)
+[//]: # Lean4 (369-376)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -243,7 +278,7 @@ As $r(i) = c(i)$, the two implications are obvious. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (259-275)
+[//]: # Lean4 (378-385)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -255,4 +290,4 @@ But it is not true that $r(i) \lt r(j)$ when $c(i) \lt c(j)$. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (277-304)
+[//]: # Lean4 (387-414)

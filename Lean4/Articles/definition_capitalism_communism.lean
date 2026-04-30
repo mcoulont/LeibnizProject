@@ -1,6 +1,6 @@
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.Order.CompleteField
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Add
 
 import Tools.eqtype_facts
 import Tools.permutations
@@ -146,28 +146,57 @@ lemma communism_encourages_work (inh : Fintype.card Individual ≠ 0) :
       rw [replace_changes]
       exact ltjm
 
-def work_incentive {c c' : MonetaryValue}
+def work_incentive_between {c1 c2 : MonetaryValue}
 (redi : @Redistribution Individual Individuals) (i : Individual)
 (cont : @Profile Individual MonetaryValue) :
 MonetaryValue :=
-  redi.val (replace cont i c') i - redi.val (replace cont i c) i
+  redi.val (replace cont i c2) i - redi.val (replace cont i c1) i
 
-lemma work_incentive_capitalism {c c' : MonetaryValue} (i : Individual)
+def retribution_function (redi : @Redistribution Individual Individuals)
+(i : Individual) (cont : @Profile Individual MonetaryValue) :
+MonetaryValue -> MonetaryValue :=
+  fun c => redi.val (replace cont i c) i
+
+@[reducible]
+noncomputable def instantaneous_work_incentive {c0 : MonetaryValue}
+{redi : @Redistribution Individual Individuals} {i : Individual}
+{cont : @Profile Individual MonetaryValue}
+(_ : DifferentiableAt ℝ (
+  @retribution_function Individual eqInd Individuals redi i cont
+) c0) :
+MonetaryValue :=
+  deriv (@retribution_function Individual eqInd Individuals redi i cont) c0
+
+lemma work_incentive_capitalism_between {c c' : MonetaryValue} (i : Individual)
 (cont : @Profile Individual MonetaryValue) :
-@work_incentive Individual eqInd Individuals c c' pure_capitalism_Redistribution
-i cont = c' - c := by
-  unfold pure_capitalism_Redistribution work_incentive pure_capitalism
+(
+  @work_incentive_between Individual eqInd Individuals c c'
+  pure_capitalism_Redistribution i cont
+) = c' - c := by
+  unfold pure_capitalism_Redistribution work_incentive_between pure_capitalism
   simp
   rw [replace_changes]
   rw [replace_changes]
 
-lemma work_incentive_communism {c c' : MonetaryValue} (i : Individual)
+lemma instantaneous_work_incentive_capitalism {c0 : MonetaryValue} (i : Individual)
+{cont : @Profile Individual MonetaryValue}
+(diff : DifferentiableAt ℝ (
+  @retribution_function Individual eqInd Individuals pure_capitalism_Redistribution
+  i cont
+) c0) :
+@instantaneous_work_incentive Individual eqInd Individuals c0
+pure_capitalism_Redistribution i cont diff = 1 := by
+  unfold pure_capitalism_Redistribution instantaneous_work_incentive pure_capitalism
+  unfold retribution_function replace
+  simp
+
+lemma work_incentive_communism_between {c c' : MonetaryValue} (i : Individual)
 (cont : @Profile Individual MonetaryValue) :
-@work_incentive Individual eqInd Individuals c c' (
+@work_incentive_between Individual eqInd Individuals c c' (
   pure_communism_Redistribution (inhabited_implies_nonnull_card i)
 ) i cont =
 (c' - c) / Fintype.card Individual := by
-  unfold pure_communism_Redistribution work_incentive
+  unfold pure_communism_Redistribution work_incentive_between
   simp
   unfold pure_communism total_value
   have inh : Fintype.card Individual ≠ 0 := by
@@ -213,6 +242,87 @@ lemma work_incentive_communism {c c' : MonetaryValue} (i : Individual)
           (fun a ↦ if a = i then c' - c else 0) (congrFun smc)
     rw [eqsum]
     exact Fintype.sum_ite_eq' i fun j ↦ c' - c
+
+lemma instantaneous_work_incentive_communism {c0 : MonetaryValue} (i : Individual)
+{cont : @Profile Individual MonetaryValue}
+(diff : DifferentiableAt ℝ (fun c =>
+  (pure_communism_Redistribution (inhabited_implies_nonnull_card i)).val (replace cont i c) i
+) c0) :
+@instantaneous_work_incentive Individual eqInd Individuals c0 (
+  pure_communism_Redistribution (inhabited_implies_nonnull_card i)
+) i cont diff = 1 / Fintype.card Individual := by
+  unfold pure_communism_Redistribution instantaneous_work_incentive pure_communism
+  unfold retribution_function replace total_value
+  simp
+  have dist : (
+    deriv (fun c ↦ (∑ x, if x = i then c else cont x) / ↑(Fintype.card Individual)) c0 =
+    deriv (fun c ↦ (∑ x, if x = i then c else cont x)) c0 / ↑(Fintype.card Individual)
+  ) := by
+    simpa [div_eq_mul_inv] using (
+      deriv_const_mul
+      ((Fintype.card Individual : ℝ)⁻¹)
+      (fun c ↦ ∑ x, if x = i then c else cont x)
+      c0
+    ).symm
+  rw [<- dist]
+  have derd : (
+    deriv (fun c ↦ (∑ x, if x = i then c else cont x) / ↑(Fintype.card Individual)) c0 =
+    deriv (fun c ↦ (∑ x, if x = i then c else cont x)) c0  / ↑(Fintype.card Individual)
+  ) := by
+    simpa using (
+      deriv_const_div
+      (fun c ↦ ∑ x, if x = i then c else cont x)
+      (↑(Fintype.card Individual))
+      c0
+    )
+  rw [derd]
+  have sumf : (
+    (fun c ↦ ∑ x, if x = i then c else cont x) =
+    ∑ x, (fun c ↦ if x = i then c else cont x)
+  ) := by
+    exact Eq.symm (sum_fn univ fun c c_1 ↦ if c = i then c_1 else cont c)
+  rw [sumf]
+  rw [deriv_sum]
+  rotate_left
+  · intro j ju
+    rcases eq : decide (j = i) with true|false
+    · have casne : (fun c ↦ if j = i then c else cont j) = fun c => cont j := by
+        apply funext
+        intro mv
+        refine ite_cond_eq_false mv (cont j) ?_
+        exact eq_false_of_decide eq
+      rw [casne]
+      simp
+    · have eqij : j = i := by
+        exact of_decide_eq_true eq
+      rw [eqij]
+      simp
+  · rw [div_eq_mul_inv]
+    have inh : Fintype.card Individual ≠ 0 := by
+      exact inhabited_implies_nonnull_card i
+    refine (mul_inv_eq_iff_eq_mul₀ ?_).mpr ?_
+    · exact Nat.cast_ne_zero.mpr inh
+    · have mul1 : (
+        (@Nat.cast MonetaryValue Real.instNatCast (Fintype.card Individual))⁻¹ *
+        @Nat.cast MonetaryValue Real.instNatCast (Fintype.card Individual) = 1
+      ) := by
+        refine inv_mul_cancel₀ ?_
+        exact Nat.cast_ne_zero.mpr inh
+      rw [mul1]
+      have all0 : (
+        ∀ (j : Individual), j ≠ i →
+        deriv (fun c ↦ if j = i then c else cont j) c0 = 0
+      ) := by
+        intro j neij
+        have casne : (fun c ↦ if j = i then c else cont j) = fun c => cont j := by
+          apply funext
+          intro mv
+          refine ite_cond_eq_false mv (cont j) ?_
+          exact eq_false neij
+        rw [casne]
+        simp
+      rw [Fintype.sum_eq_single i all0]
+      simp
 
 def currency_change (dist : @Profile Individual MonetaryValue)
 (k : MonetaryValue) :
