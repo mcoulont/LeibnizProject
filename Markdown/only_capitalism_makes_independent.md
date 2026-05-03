@@ -18,7 +18,7 @@ One relies on [this article](https://leibnizproject.com/Articles/definition_capi
 Throughout this page, let $I$ be the finite set of individuals (with $N$ as the number of individuals) and $gs \in \mathbb R$ is governement spendings.
 --MATH_END--
 
-[//]: # Lean4 (7-9)
+[//]: # Lean4 (6-8)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -26,7 +26,7 @@ It is said that own retribution depends only on own contribution in a redistribu
 $$\exists f \in {\mathbb R}^{\mathbb R} \text{ such that } \forall c \in {\mathbb R}^I, i \in I, r(c)(i) = f(c(i))$$
 --MATH_END--
 
-[//]: # Lean4 (14-19)
+[//]: # Lean4 (13-18)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -38,7 +38,7 @@ Own retribution does not depend on contributions of other individuals. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (21-30)
+[//]: # Lean4 (20-39)
 
 --MATH_START--
 $\mathbf{Proposition}$\
@@ -50,4 +50,4 @@ Let $c \in {\mathbb R}$. In a situation where everyone contributes up to $c$, we
 ■
 --MATH_END--
 
-[//]: # Lean4 (32-84)
+[//]: # Lean4 (31-83)

@@ -1,5 +1,4 @@
 
-import Articles.ethics_in_society
 import Articles.definition_capitalism_communism
 
 namespace only_capitalism_makes_independent

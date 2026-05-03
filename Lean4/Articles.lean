@@ -2,7 +2,10 @@
 import Tools.eqtype
 import Tools.function
 import Tools.permutations
+import Tools.real
 import Tools.fintype
+import Tools.continuous
+import Tools.calculus
 import Tools.preference
 import Articles.ethics_first_steps
 import Articles.every_ethic_without_dead_end_is_utilitarian
@@ -11,3 +14,4 @@ import Articles.ethics_in_society
 import Articles.objective_ethics_no_disapproval_iff_same_ethic
 import Articles.definition_capitalism_communism
 import Articles.only_capitalism_makes_independent
+import Articles.maximizing_work_incentive

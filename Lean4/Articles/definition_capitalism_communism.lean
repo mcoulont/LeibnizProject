@@ -218,12 +218,9 @@ MonetaryValue -> MonetaryValue :=
 
 @[reducible]
 noncomputable def instantaneous_work_incentive {government_spending : MonetaryValue}
-{i : Individual} {c0 : MonetaryValue}
-{redi : @Redistribution Individual Individuals government_spending}
-{cont : @Profile Individual MonetaryValue}
-(_ : DifferentiableAt ℝ (
-  @retribution_function Individual eqInd Individuals government_spending redi i cont
-) c0) :
+(i : Individual) (c0 : MonetaryValue)
+(redi : @Redistribution Individual Individuals government_spending)
+(cont : @Profile Individual MonetaryValue) :
 MonetaryValue :=
   deriv (
     @retribution_function Individual eqInd Individuals government_spending redi i cont
@@ -244,18 +241,11 @@ lemma work_incentive_capitalism_between (government_spending : MonetaryValue)
   rw [replace_changes]
 
 lemma instantaneous_work_incentive_capitalism {government_spending : MonetaryValue}
-{i : Individual} {c0 : MonetaryValue} {cont : @Profile Individual MonetaryValue}
-(diff : DifferentiableAt ℝ (
-  @retribution_function Individual eqInd Individuals government_spending (
-    pure_capitalism_costs_equally_divided_Redistribution (
-      inhabited_implies_nonnull_card i
-    ) government_spending
-  ) i cont
-) c0) :
+(i : Individual) (c0 : MonetaryValue) (cont : @Profile Individual MonetaryValue) :
 @instantaneous_work_incentive Individual eqInd Individuals government_spending i c0
 (pure_capitalism_costs_equally_divided_Redistribution (
   inhabited_implies_nonnull_card i
-) government_spending) cont diff = 1 := by
+) government_spending) cont = 1 := by
   unfold pure_capitalism_costs_equally_divided_Redistribution
   unfold instantaneous_work_incentive pure_capitalism_costs_equally_divided
   unfold retribution_function replace
@@ -321,7 +311,7 @@ lemma work_incentive_communism_between (government_spending : MonetaryValue)
 
 lemma instantaneous_work_incentive_communism {government_spending : MonetaryValue}
 {i : Individual} {c0 : MonetaryValue} {cont : @Profile Individual MonetaryValue}
-(diff : DifferentiableAt ℝ (
+(_ : DifferentiableAt ℝ (
   @retribution_function Individual eqInd Individuals government_spending (
     pure_communism_Redistribution (
       inhabited_implies_nonnull_card i
@@ -331,7 +321,7 @@ lemma instantaneous_work_incentive_communism {government_spending : MonetaryValu
 @instantaneous_work_incentive Individual eqInd Individuals government_spending i c0
 (pure_communism_Redistribution (
   inhabited_implies_nonnull_card i
-) government_spending) cont diff = 1  / Fintype.card Individual := by
+) government_spending) cont = 1  / Fintype.card Individual := by
   unfold pure_communism_Redistribution instantaneous_work_incentive pure_communism
   unfold retribution_function replace total_value
   simp

@@ -156,7 +156,7 @@ The work incentive of an individual between two contributions is the difference 
 $\mathbf{Definition}$\
 Let $r: {\mathbb R}^I \to {\mathbb R}^I$ be a redistribution. \
 Let $i \in I$ be an individual. \
-Let $q, q' \in {\mathbb R}$ be quantities (representing individual contributions) such that $c \lt c'$. \
+Let $q, q' \in {\mathbb R}$ be quantities (representing individual contributions) such that $q \lt q'$. \
 Let $c \in {\mathbb R}^I$ be a contribution profile. \
 The work incentive between contributions $q$ and $q'$ for $i$ is defined as
 $$r(c_{i \leftarrow q'})(i) - r(c_{i \leftarrow q})(i)$$
@@ -175,7 +175,7 @@ $$\frac {\mathrm{d} r(c_{i \leftarrow q})(i)} {\mathrm{d} q}$$
 It may not exist, in case the function is not differentiable.
 --MATH_END--
 
-[//]: # Lean4 (213-230)
+[//]: # Lean4 (213-227)
 
 In pure capitalisms the work incentive between two contributions is just the difference between them.
 
@@ -188,7 +188,7 @@ $(q' - \frac {gs} N) - (q - \frac {gs} N) = q' - q$. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (232-244)
+[//]: # Lean4 (229-241)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -199,7 +199,7 @@ $\frac {\mathrm{d} r(c_{i \leftarrow q})(i)} {\mathrm{d} q} = \frac {\mathrm{d} 
 ■
 --MATH_END--
 
-[//]: # Lean4 (246-262)
+[//]: # Lean4 (243-252)
 
 In pure communism the work incentive between two contributions is the difference between them divided by the number of individuals (the benefit of the extra work provided is split among individuals).
 
@@ -215,7 +215,7 @@ $= \frac {q' - q} N$ \
 ■
 --MATH_END--
 
-[//]: # Lean4 (264-320)
+[//]: # Lean4 (254-310)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -226,7 +226,7 @@ $\frac {\mathrm{d} r(c_{i \leftarrow q})(i)} {\mathrm{d} q} = \frac {\mathrm{d} 
 ■
 --MATH_END--
 
-[//]: # Lean4 (322-406)
+[//]: # Lean4 (312-396)
 
 
 ## Currency change
@@ -242,7 +242,7 @@ $$\begin{align*}
 \end{align*}$$
 --MATH_END--
 
-[//]: # Lean4 (408-511)
+[//]: # Lean4 (398-501)
 
 
 ## Fairness
@@ -255,7 +255,7 @@ The redistribution $r: {\mathbb R}^I \to {\mathbb R}^I$ is said fair if $\forall
 And it is said strictly fair if $\forall c \in {\mathbb R}^I, i, j \in I, c(i) \lt c(j) \Rightarrow r(i) \lt r(j)$
 --MATH_END--
 
-[//]: # Lean4 (513-525)
+[//]: # Lean4 (503-515)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -266,7 +266,7 @@ As $r(i) = c(i) - \frac {gs} N$, the two implications are obvious. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (527-549)
+[//]: # Lean4 (517-539)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -278,4 +278,4 @@ But it is not true that $r(i) \lt r(j)$ when $c(i) \lt c(j)$. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (551-577)
+[//]: # Lean4 (541-567)
