@@ -39,4 +39,10 @@ more_restrictive e ethicless state := by
   intros a h
   trivial
 
+def dead_end (ethic : @Ethic State Action) (state : State) : Prop :=
+  ∀ (action : Action), ethic state action = false
+
+def without_dead_end (ethic : @Ethic State Action) : Prop :=
+  ∀ (state : State), ¬ dead_end ethic state
+
 end ethics_first_steps

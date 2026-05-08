@@ -110,7 +110,7 @@ noncomputable def pure_communism_Redistribution (inh : Fintype.card Individual �
   ⟨ pure_communism government_spending,
     pure_communism_at_equilibirum inh government_spending ⟩
 
-def is_egalitarian (government_spending : MonetaryValue)
+def is_egalitarian {government_spending : MonetaryValue}
 (redi : @Redistribution Individual Individuals government_spending) :
 Prop :=
   ∀ (σ : Perm Individual) (cont : @Profile Individual MonetaryValue),

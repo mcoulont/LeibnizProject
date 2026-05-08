@@ -54,3 +54,26 @@ Obviously, every ethic is more restrictive than the void ethic.
 
 [//]: # Rocq (38-45)
 [//]: # Lean4 (32-40)
+
+
+## Dead ends
+
+A dead end is a situation in which the ethic allows no action.
+
+--MATH_START--
+$\mathbf{Definition}$\
+A dead end in an ethic $e: S × A \to \{⊥ ,⊤\}$ is a state $s \in S$ such that $\forall a \in A, e(s, a) = ⊥$.
+--MATH_END--
+
+[//]: # Rocq (47-48)
+[//]: # Lean4 (42-43)
+
+An ethic without dead end is an ethic for which no situation is a dead end. Note that this is not an assumption of hope: such a possible action can be "do nothing". It seems possible to assume that every ethic has no dead end (or at least can be slightly modified to remove them, for example adding as ethical action "kill oneself" to situations having none).
+
+--MATH_START--
+$\mathbf{Definition}$\
+An ethic is without dead end if $\forall s \in S$ $s$ is not a dead end.
+--MATH_END--
+
+[//]: # Rocq (50-51)
+[//]: # Lean4 (45-46)

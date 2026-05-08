@@ -13,8 +13,6 @@
 ./Tools/bigop_facts.v
 ./Tools/preference.v
 ./Articles/ethics_first_steps.v
-./Articles/every_ethic_without_dead_end_is_utilitarian.v
-./Articles/utilitarian_ethic_no_freedom_iff_maximum_for_unique_action.v
 ./Articles/ethics_in_society.v
 ./Articles/objective_ethics_no_disapproval_iff_same_ethic.v
 ./Articles/more_restrictive_ethics_diminish_conflicts.v

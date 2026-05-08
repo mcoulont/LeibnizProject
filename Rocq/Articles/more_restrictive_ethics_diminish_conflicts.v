@@ -4,7 +4,6 @@ From mathcomp Require Import all_ssreflect.
 
 Require Import eqType_facts.
 Require Import ethics_first_steps.
-Require Import every_ethic_without_dead_end_is_utilitarian.
 Require Import ethics_in_society.
 
 Section more_restrictive_ethics_diminish_conflicts.

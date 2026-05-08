@@ -44,4 +44,10 @@ Proof.
   intro. reflexivity.
 Qed.
 
+Definition dead_end (ethic : Ethic) (state : State) : Prop :=
+  forall (action : Action), ethic state action = false.
+
+Definition without_dead_end (ethic : Ethic) : Prop :=
+  forall (state : State), ~ dead_end ethic state.
+
 End ethics_first_steps.
