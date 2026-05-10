@@ -18,7 +18,7 @@ With wealth being represented as money (that is as a number): \
 
 --MATH_START--
 Throughout this page, let $I$ be the finite set of individuals (with $N \gt 0$ as the number of individuals). \
-Contributions by individuals are represented by their monetary value, which is a real number (potentially negative, in case of vandalism for example). So are retributions to individuals, and government spendings.
+Contributions by individuals are represented by their monetary value, which is a real number (potentially negative, in case of vandalism for example). So are retributions to individuals, and government spending.
 --MATH_END--
 
 [//]: # Lean4 (13-21)
@@ -30,7 +30,7 @@ In a society people work, contributing to the community up to a magnitude typica
 
 --MATH_START--
 $\mathbf{Definition}$\
-Being given government spendings $gs \in \mathbb R$, a profile of contributions made by every individual $c \in {\mathbb R}^I$, a redistribution function returns a retribution $r \in {\mathbb R}^I$, which is the money given back to every individual, with the constraint of accounts at equilibrium: $\sum_{i \in I} c(i) = gs + \sum_{i \in I} r(i)$.
+Being given government spending $gs \in \mathbb R$, a profile of contributions made by every individual $c \in {\mathbb R}^I$, a redistribution function returns a retribution $r \in {\mathbb R}^I$, which is the money given back to every individual, with the constraint of accounts at equilibrium: $\sum_{i \in I} c(i) = gs + \sum_{i \in I} r(i)$.
 --MATH_END--
 
 [//]: # Lean4 (23-38)
@@ -47,7 +47,7 @@ $$\begin{align*}
     {\mathbb R}^I &\to {\mathbb R}^I\\
     c &\mapsto c
 \end{align*}$$
-Pure capitalism with government spendings $gs \in \mathbb R$ is the redistribution defined by
+Pure capitalism with government spending $gs \in \mathbb R$ is the redistribution defined by
 $$\begin{align*}
     {\mathbb R}^I &\to {\mathbb R}^I\\
     c &\mapsto ({i \in I} \mapsto c(i) - \frac {gs} N)

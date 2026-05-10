@@ -15,7 +15,7 @@ If one wants to get a retribution independent of what other individuals do, only
 One relies on [this article](https://leibnizproject.com/Articles/definition_capitalism_communism.html).
 
 --MATH_START--
-Throughout this page, let $I$ be the finite set of individuals (with $N$ as the number of individuals) and $gs \in \mathbb R$ is governement spendings.
+Throughout this page, let $I$ be the finite set of individuals (with $N$ as the number of individuals) and $gs \in \mathbb R$ is governement spending.
 --MATH_END--
 
 [//]: # Lean4 (6-8)

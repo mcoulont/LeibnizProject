@@ -13,3 +13,4 @@ import Articles.objective_ethics_no_disapproval_iff_same_ethic
 import Articles.definition_capitalism_communism
 import Articles.only_capitalism_makes_independent
 import Articles.maximizing_work_incentive
+import Articles.only_communism_maximizes_utility

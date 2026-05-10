@@ -13,7 +13,7 @@ keywords:
 It is often asked and investigated how make people as keen as possible to work. If one fixes the maximization of the incentive to work (as defined in [this article](https://leibnizproject.com/Articles/definition_capitalism_communism.html) as a desirable goal, pure capitalisms) unsurprisingly maximize this incentive, but they are far from being the only ones.
 
 --MATH_START--
-Throughout this page, let $I$ be the finite set of individuals (with $N$ as the number of individuals) and $gs \in \mathbb R$ is governement spendings.
+Throughout this page, let $I$ be the finite set of individuals (with $N$ as the number of individuals) and $gs \in \mathbb R$ is governement spending.
 --MATH_END--
 
 [//]: # Lean4 (11-13)

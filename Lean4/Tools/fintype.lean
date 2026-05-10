@@ -37,3 +37,13 @@ lemma sum_rationals_mult_constant {A : Type} {As : Fintype A} (f : A → Rat) (k
 lemma sum_reals_mult_constant {A : Type} {As : Fintype A} (f : A → ℝ) (k : ℝ) :
 ∑ i, k * f i = k * (∑ i, f i) := by
   exact Eq.symm (Finset.mul_sum Finset.univ f k)
+
+lemma sum_reals_div_constant {A : Type} {k : ℝ} {As : Fintype A} (f : A → ℝ) (posk : k ≠ 0):
+∑ i, (f i / k) = (∑ i, f i) / k := by
+  refine Eq.symm (div_eq_of_eq_mul ?_ ?_)
+  · exact posk
+  · rw [Finset.sum_mul]
+    apply Fintype.sum_congr
+    intro i
+    rw [Lean.Grind.Field.div_mul_cancel]
+    exact posk
