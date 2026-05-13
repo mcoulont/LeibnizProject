@@ -92,8 +92,9 @@ noncomputable def pure_communism (government_spending : MonetaryValue) :
 
 lemma pure_communism_at_equilibirum (inh : Fintype.card Individual ≠ 0)
 (government_spending : MonetaryValue) :
-@accounts_at_equilibirum Individual Individuals government_spending
-(@pure_communism Individual Individuals government_spending) := by
+@accounts_at_equilibirum Individual Individuals government_spending (
+  @pure_communism Individual Individuals government_spending
+) := by
   unfold pure_communism accounts_at_equilibirum total_value
   intro dist
   simp
@@ -242,10 +243,11 @@ lemma work_incentive_capitalism_between (government_spending : MonetaryValue)
 
 lemma instantaneous_work_incentive_capitalism {government_spending : MonetaryValue}
 (i : Individual) (c0 : MonetaryValue) (cont : @Profile Individual MonetaryValue) :
-@instantaneous_work_incentive Individual eqInd Individuals government_spending i c0
-(pure_capitalism_costs_equally_divided_Redistribution (
-  inhabited_implies_nonnull_card i
-) government_spending) cont = 1 := by
+@instantaneous_work_incentive Individual eqInd Individuals government_spending i c0 (
+  pure_capitalism_costs_equally_divided_Redistribution (
+    inhabited_implies_nonnull_card i
+  ) government_spending
+) cont = 1 := by
   unfold pure_capitalism_costs_equally_divided_Redistribution
   unfold instantaneous_work_incentive pure_capitalism_costs_equally_divided
   unfold retribution_function replace
@@ -318,10 +320,11 @@ lemma instantaneous_work_incentive_communism {government_spending : MonetaryValu
     ) government_spending
   ) i cont
 ) c0) :
-@instantaneous_work_incentive Individual eqInd Individuals government_spending i c0
-(pure_communism_Redistribution (
-  inhabited_implies_nonnull_card i
-) government_spending) cont = 1  / Fintype.card Individual := by
+@instantaneous_work_incentive Individual eqInd Individuals government_spending i c0 (
+  pure_communism_Redistribution (
+    inhabited_implies_nonnull_card i
+  ) government_spending
+) cont = 1  / Fintype.card Individual := by
   unfold pure_communism_Redistribution instantaneous_work_incentive pure_communism
   unfold retribution_function replace total_value
   simp
@@ -426,8 +429,9 @@ noncomputable def currency_change_distribution_inverse {k : MonetaryValue}
   fun i => currency_change_inverse pos (dist i)
 
 lemma inverse_currency_change_distribution {k : MonetaryValue} (pos : 0 < k) :
-Inverse (@currency_change_distribution Individual k pos)
-(currency_change_distribution_inverse pos) := by
+Inverse (@currency_change_distribution Individual k pos) (
+  currency_change_distribution_inverse pos
+) := by
   unfold currency_change_distribution currency_change_distribution_inverse Inverse
   apply And.intro
   · intro dist
@@ -482,7 +486,6 @@ lemma currency_change_at_equilibrium {k : MonetaryValue}
   rw [Finset.mul_sum]
   refine Eq.symm (Fintype.sum_congr dist (fun a ↦ k * (dist a / k)) ?_)
   intro i
-  simp
   rw [mul_comm]
   rw [division_def]
   rw [mul_assoc]

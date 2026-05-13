@@ -68,7 +68,7 @@ $$\begin{align*}
 \end{align*}$$
 --MATH_END--
 
-[//]: # Lean4 (87-111)
+[//]: # Lean4 (87-112)
 
 
 ## Egalitarian redistribution
@@ -82,7 +82,7 @@ $$\forall σ \in S_I, c \in {\mathbb R}^I, {r(c)}_σ = r(c_σ)$$
 (where $S_I$ denotes the set of permutations on $I$ and $d_σ(i) = d(σ(i))$ $\forall d \in {\mathbb R}^I, σ \in S_I$).
 --MATH_END--
 
-[//]: # Lean4 (113-118)
+[//]: # Lean4 (114-119)
 
 As in pure capitalisms everyone is retributed depending solely on its contribution, they are egalitarian.
 
@@ -95,7 +95,7 @@ $\forall σ \in S_I, c \in {\mathbb R}^I, {r(c)}_σ = i \mapsto r(c)(σ(i)) = i 
 ■
 --MATH_END--
 
-[//]: # Lean4 (120-125)
+[//]: # Lean4 (121-126)
 
 Pure communism is unsurprisingly egalitarian as well.
 
@@ -108,7 +108,7 @@ $\forall σ \in S_I, c \in {\mathbb R}^I, {r(c)}_σ = \frac {(\sum_{i \in I} c(i
 ■
 --MATH_END--
 
-[//]: # Lean4 (127-145)
+[//]: # Lean4 (128-146)
 
 
 ## Work incentive
@@ -122,7 +122,7 @@ $$\forall c \in {\mathbb R}^I, i \in I, c' \in {\mathbb R} \text{ such that } c(
 (where $c_{i \leftarrow c'}$ denotes the profile of contributions $c$ in which $i$'s contribution is replaced with $c'$).
 --MATH_END--
 
-[//]: # Lean4 (147-153)
+[//]: # Lean4 (148-154)
 
 Pure capitalisms encourage the work as increasing one's contribution increases one's retribution up to the same amount.
 
@@ -135,7 +135,7 @@ $\forall c \in {\mathbb R}^I, i \in I, c' \in {\mathbb R} \text{ such that } c(i
 ■
 --MATH_END--
 
-[//]: # Lean4 (155-165)
+[//]: # Lean4 (156-166)
 
 Pure communism encourages the work but the reward is divided by the number of individuals.
 
@@ -148,7 +148,7 @@ $\forall c \in {\mathbb R}^I, i \in I, c' \in {\mathbb R} \text{ such that } c(i
 ■
 --MATH_END--
 
-[//]: # Lean4 (167-205)
+[//]: # Lean4 (168-206)
 
 The work incentive of an individual between two contributions is the difference between the corresponding retributions.
 
@@ -162,7 +162,7 @@ The work incentive between contributions $q$ and $q'$ for $i$ is defined as
 $$r(c_{i \leftarrow q'})(i) - r(c_{i \leftarrow q})(i)$$
 --MATH_END--
 
-[//]: # Lean4 (207-211)
+[//]: # Lean4 (208-212)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -175,7 +175,7 @@ $$\frac {\mathrm{d} r(c_{i \leftarrow q})(i)} {\mathrm{d} q}$$
 It may not exist, in case the function is not differentiable.
 --MATH_END--
 
-[//]: # Lean4 (213-227)
+[//]: # Lean4 (214-228)
 
 In pure capitalisms the work incentive between two contributions is just the difference between them.
 
@@ -188,7 +188,7 @@ $(q' - \frac {gs} N) - (q - \frac {gs} N) = q' - q$. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (229-241)
+[//]: # Lean4 (230-242)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -199,7 +199,7 @@ $\frac {\mathrm{d} r(c_{i \leftarrow q})(i)} {\mathrm{d} q} = \frac {\mathrm{d} 
 ■
 --MATH_END--
 
-[//]: # Lean4 (243-252)
+[//]: # Lean4 (244-254)
 
 In pure communism the work incentive between two contributions is the difference between them divided by the number of individuals (the benefit of the extra work provided is split among individuals).
 
@@ -215,7 +215,7 @@ $= \frac {q' - q} N$ \
 ■
 --MATH_END--
 
-[//]: # Lean4 (254-310)
+[//]: # Lean4 (256-312)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -226,7 +226,7 @@ $\frac {\mathrm{d} r(c_{i \leftarrow q})(i)} {\mathrm{d} q} = \frac {\mathrm{d} 
 ■
 --MATH_END--
 
-[//]: # Lean4 (312-396)
+[//]: # Lean4 (314-399)
 
 
 ## Currency change
@@ -242,7 +242,7 @@ $$\begin{align*}
 \end{align*}$$
 --MATH_END--
 
-[//]: # Lean4 (398-501)
+[//]: # Lean4 (401-504)
 
 
 ## Fairness
@@ -255,7 +255,7 @@ The redistribution $r: {\mathbb R}^I \to {\mathbb R}^I$ is said fair if $\forall
 And it is said strictly fair if $\forall c \in {\mathbb R}^I, i, j \in I, c(i) \lt c(j) \Rightarrow r(i) \lt r(j)$
 --MATH_END--
 
-[//]: # Lean4 (503-515)
+[//]: # Lean4 (506-518)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -266,7 +266,7 @@ As $r(i) = c(i) - \frac {gs} N$, the two implications are obvious. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (517-539)
+[//]: # Lean4 (520-542)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -278,4 +278,4 @@ But it is not true that $r(i) \lt r(j)$ when $c(i) \lt c(j)$. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (541-567)
+[//]: # Lean4 (544-570)

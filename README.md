@@ -8,6 +8,7 @@ Repository of the website [leibnizproject.com](https://leibnizproject.com)
 - `lake --version`
 - `lake build` and maybe fix compilation errors (commit if so)
 - restart Visual Studio Code
+- tag the commit with the version number (with a right click on it in gitk for example)
 
 ## Upgrade Rocq
 
@@ -16,3 +17,4 @@ Repository of the website [leibnizproject.com](https://leibnizproject.com)
 - `opam upgrade` (should take a while)
 - `make` and maybe fix compilation errors (commit if so)
 - restart Visual Studio Code
+- tag the commit with the version number (with a right click on it in gitk for example)
