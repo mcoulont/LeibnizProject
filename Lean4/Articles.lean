@@ -3,7 +3,9 @@ import Tools.eqtype
 import Tools.function
 import Tools.permutations
 import Tools.real
+import Tools.finset
 import Tools.fintype
+import Tools.limits
 import Tools.continuous
 import Tools.calculus
 import Tools.preference
@@ -12,5 +14,5 @@ import Articles.ethics_in_society
 import Articles.objective_ethics_no_disapproval_iff_same_ethic
 import Articles.definition_capitalism_communism
 import Articles.only_capitalism_makes_independent
-import Articles.maximizing_work_incentive
+import Articles.maximizing_average_work_incentive
 import Articles.only_communism_maximizes_utility

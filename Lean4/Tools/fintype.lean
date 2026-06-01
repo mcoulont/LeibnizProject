@@ -12,6 +12,12 @@ Fintype.card A ≠ 0 := by
   refine Fintype.card_pos_iff.mpr ?_
   exact Nonempty.intro a
 
+theorem sum_split_two {α β : Type*} [Fintype α] [DecidableEq α] [AddCommMonoid β]
+(f : α → β) (i j : α) :
+(∑ x, f x) = (∑ x ∈ ({i, j} : Finset α), f x) + ∑ x ∈ ({i, j} : Finset α)ᶜ, f x := by
+  simpa [add_comm] using
+    (Finset.sum_add_sum_compl ({i, j} : Finset α) f).symm
+
 lemma sum_rationals_perm {A : Type} {As : Fintype A} (f : A -> Rat) (σ : Perm A) :
 ∑ a : A, @PermutationsActingOnFunctions Rat A As f σ a = ∑ a : A, f a := by
   exact sum_comp σ f

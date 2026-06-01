@@ -20,3 +20,9 @@ Set.uIcc 0 M ⊆ Set.Ici 0 := by
   intro x hx
   simp [Set.uIcc_of_le hM] at hx
   exact hx.1
+
+lemma uIcc_nonpos_subset_Iic {m : ℝ} (hm : m ≤ 0) :
+Set.uIcc m 0 ⊆ Set.Iic 0 := by
+  intro x hx
+  simp [Set.uIcc_of_le hm] at hx
+  exact hx.2
