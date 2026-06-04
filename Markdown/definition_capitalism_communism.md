@@ -50,7 +50,7 @@ $$\begin{align*}
 Pure capitalism with government spending $gs \in \mathbb R$ is the redistribution defined by
 $$\begin{align*}
     {\mathbb R}^I &\to {\mathbb R}^I\\
-    c &\mapsto ({i \in I} \mapsto c(i) - \frac {gs} N)
+    c &\mapsto \left({i \in I} \mapsto c(i) - \frac {gs} N\right)
 \end{align*}$$
 Setting $gs$ to $0$ makes these two definitions coincide.
 --MATH_END--
@@ -64,7 +64,7 @@ $\mathbf{Definition}$\
 Pure communism is the redistribution defined by
 $$\begin{align*}
     {\mathbb R}^I &\to {\mathbb R}^I\\
-    c &\mapsto ({i_0 \in I} \mapsto \frac {(\sum_{i \in I} c(i)) - gs} N)
+    c &\mapsto \left({i_0 \in I} \mapsto \frac {(\sum_{i \in I} c(i)) - gs} N\right)
 \end{align*}$$
 --MATH_END--
 
