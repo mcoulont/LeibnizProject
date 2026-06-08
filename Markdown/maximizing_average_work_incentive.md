@@ -17,7 +17,7 @@ If one fixes the maximization of the incentive to work (as defined in [this arti
 Throughout this page, let $I$ be the finite set of individuals (with $N$ as the number of individuals) and $gs \in \mathbb R$ is governement spending.
 --MATH_END--
 
-[//]: # Lean4 (15-17)
+[//]: # Lean4 (14-16)
 
 
 ## Average work incentive
@@ -34,7 +34,7 @@ The average work incentive for $i$ between $a$ and $b$ is
 $$awi(a, b) = \frac {r(c_{i \leftarrow b})(i) - r(c_{i \leftarrow a})(i)} {b - a}$$
 --MATH_END--
 
-[//]: # Lean4 (22-29)
+[//]: # Lean4 (21-28)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -50,7 +50,7 @@ This is a straight enforcement of the fundamental theorem of calculus. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (31-59)
+[//]: # Lean4 (30-58)
 
 --MATH_START--
 $\mathbf{Definition}$\
@@ -64,7 +64,7 @@ Then: \
 Any of these quantities may not exist.
 --MATH_END--
 
-[//]: # Lean4 (61-105)
+[//]: # Lean4 (60-104)
 
 
 ## Maximizing the average work incentive
@@ -102,7 +102,7 @@ which is $1$. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (107-304)
+[//]: # Lean4 (106-303)
 
 The second hypothesis is rather technical. To be honest, it is designed to get quickly rid of the case of negative contributions (that is individuals who cost to the society instead of contributing to it), having in mind that it's supposed to be marginal. \
 To state it grossly, if some kind of massively destructing individual is able to generate much damage, the impact on the retributions of other individuals tends to be negligible (compared to the amount of this damage).
@@ -135,7 +135,7 @@ $$\begin{align}
 ■
 --MATH_END--
 
-[//]: # Lean4 (306-468)
+[//]: # Lean4 (305-467)
 
 So that with those two hypotheses, the global average work incentive can not exceed 1.
 
@@ -158,7 +158,7 @@ $\mathbf{Definition}$\
 A redistribution is said to maximize the (global) average work incentive if it exists and equals $1$.
 --MATH_END--
 
-[//]: # Rocq (470-500)
+[//]: # Rocq (469-499)
 
 
 ## Examples of redistributions maximizing the average work incentive
@@ -179,7 +179,7 @@ $$\begin{align}
 ■
 --MATH_END--
 
-[//]: # Lean4 (502-568)
+[//]: # Lean4 (501-567)
 
 A bit less intuitively, a society which retributes \
 - both the greatest and the least contributor up to their contribution and all the other individuals \
@@ -196,7 +196,7 @@ $i$ is said to be the (single) greatest contributor if it's a greatest contribut
 $i$ is said to be the (single) least contributor if it's a least contributor and $\forall j \in I, c(j) = c(i) \Rightarrow j = i$
 --MATH_END--
 
-[//]: # Lean4 (570-637)
+[//]: # Lean4 (569-636)
 
 --MATH_START--
 $\mathbf{Proposition-Definition}$\
@@ -238,7 +238,7 @@ $$\begin{align}
 ■
 --MATH_END--
 
-[//]: # Lean4 (639-1280)
+[//]: # Lean4 (638-1279)
 
 --MATH_START--
 $\mathbf{Lemma}$\
@@ -254,4 +254,4 @@ $$\begin{align}
 ■
 --MATH_END--
 
-[//]: # Lean4 (1282-1494)
+[//]: # Lean4 (1281-1493)

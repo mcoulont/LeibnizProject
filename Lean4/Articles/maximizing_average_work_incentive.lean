@@ -1,5 +1,4 @@
 
-import Mathlib.Data.FunLike.IsApply
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 
 import Tools.real
