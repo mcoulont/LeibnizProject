@@ -8,6 +8,10 @@ Images/Logo.png
 Articles/*
 index.html
 
+# Drafts
+drafts/
+Lean4/drafts
+
 # For Lean4
 .lake
 
