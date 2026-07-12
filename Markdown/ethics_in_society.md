@@ -33,7 +33,6 @@ The set $AP$ of action profiles is $A^I$.
 --MATH_END--
 
 [//]: # Rocq (12-12)
-[//]: # Lean4 (17-17)
 
 A subjective state is a situation seen in a specific individual's perspective.
 
@@ -43,7 +42,7 @@ The set $SubjS$ of subjective states is $S × I$.
 --MATH_END--
 
 [//]: # Rocq (14-35)
-[//]: # Lean4 (19-33)
+[//]: # Lean4 (17-31)
 
 Permuting two individuals in a state consists in exchanging their roles. For example, if a state is described by "Alice is in jail and Bob is free", permuting Alice and Bob gives "Bob is in jail and Alice is free".
 
@@ -58,7 +57,7 @@ Then $(s, i)_\sigma$ is defined as $(s_\sigma, \sigma (i))$.
 --MATH_END--
 
 [//]: # Rocq (37-58)
-[//]: # Lean4 (35-61)
+[//]: # Lean4 (33-59)
 
 An individual ethic tells for each subjective state if a given action is "right" or "wrong". As a subjective state can put anyone's shoes, so can an individual ethic.
 
@@ -68,7 +67,7 @@ The set $IE$ of individual ethics is ${\{⊥ ,⊤\}}^{SubjS × A}$.
 --MATH_END--
 
 [//]: # Rocq (60-60)
-[//]: # Lean4 (63-64)
+[//]: # Lean4 (61-62)
 
 An ethical profile gives the ethic of each individual.
 
@@ -84,4 +83,4 @@ Individuals $i, j \in I$ of an ethical profile $ep$ are said to always have the 
 --MATH_END--
 
 [//]: # Rocq (62-72)
-[//]: # Lean4 (66-78)
+[//]: # Lean4 (64-76)

@@ -16,12 +16,12 @@ variable {eqInd : DecidableEq Individual}
 variable {Individuals : Fintype Individual}
 
 open Classical Set Filter Topology Real Metric Finset Fintype
-open definition_capitalism_communism ethics_in_society
+open definition_capitalism_communism
 
 noncomputable def average_work_incentive {government_spending : MonetaryValue}
 (i : Individual) (a b : MonetaryValue)
 (redi : @Redistribution Individual Individuals government_spending)
-(cont : @Profile Individual MonetaryValue) :
+(cont : Individual -> MonetaryValue) :
 ℝ := (
   @retribution_function Individual eqInd Individuals government_spending redi i cont b -
   @retribution_function Individual eqInd Individuals government_spending redi i cont a
@@ -30,7 +30,7 @@ noncomputable def average_work_incentive {government_spending : MonetaryValue}
 lemma average_work_incentive_as_integral {government_spending : MonetaryValue}
 {i : Individual} {a b : MonetaryValue}
 {redi : @Redistribution Individual Individuals government_spending}
-{cont : @Profile Individual MonetaryValue}
+{cont : Individual -> MonetaryValue}
 (dif : ∀ x ∈ uIcc a b, DifferentiableAt ℝ (
   @retribution_function Individual eqInd Individuals government_spending redi i cont
 ) x)
@@ -59,7 +59,7 @@ lemma average_work_incentive_as_integral {government_spending : MonetaryValue}
 
 noncomputable def average_work_incentive_until_pos {government_spending : MonetaryValue}
 (i : Individual) (redi : @Redistribution Individual Individuals government_spending)
-(cont : @Profile Individual MonetaryValue) :
+(cont : Individual -> MonetaryValue) :
 MonetaryValue -> MonetaryValue :=
   fun M => (
     @average_work_incentive Individual eqInd Individuals government_spending
@@ -68,7 +68,7 @@ MonetaryValue -> MonetaryValue :=
 
 noncomputable def average_work_incentive_until_neg {government_spending : MonetaryValue}
 (i : Individual) (redi : @Redistribution Individual Individuals government_spending)
-(cont : @Profile Individual MonetaryValue) :
+(cont : Individual -> MonetaryValue) :
 MonetaryValue -> MonetaryValue :=
   fun m => (
     @average_work_incentive Individual eqInd Individuals government_spending
@@ -77,7 +77,7 @@ MonetaryValue -> MonetaryValue :=
 
 def average_work_incentive_pos_is {government_spending : MonetaryValue}
 (i : Individual) (redi : @Redistribution Individual Individuals government_spending)
-(cont : @Profile Individual MonetaryValue) (awip : MonetaryValue) :
+(cont : Individual -> MonetaryValue) (awip : MonetaryValue) :
 Prop :=
   Tendsto (
     @average_work_incentive_until_pos Individual eqInd Individuals government_spending
@@ -86,7 +86,7 @@ Prop :=
 
 def average_work_incentive_neg_is {government_spending : MonetaryValue}
 (i : Individual) (redi : @Redistribution Individual Individuals government_spending)
-(cont : @Profile Individual MonetaryValue) (awin : MonetaryValue) :
+(cont : Individual -> MonetaryValue) (awin : MonetaryValue) :
 Prop :=
   Tendsto (
     @average_work_incentive_until_neg Individual eqInd Individuals government_spending
@@ -95,7 +95,7 @@ Prop :=
 
 def global_average_work_incentive_is {government_spending : MonetaryValue}
 (i : Individual) (redi : @Redistribution Individual Individuals government_spending)
-(cont : @Profile Individual MonetaryValue) (awi : MonetaryValue) :
+(cont : Individual -> MonetaryValue) (awi : MonetaryValue) :
 Prop :=
   ∃ awin awip, (
     @average_work_incentive_pos_is Individual eqInd Individuals government_spending i redi cont awin ∧
@@ -106,13 +106,13 @@ Prop :=
 def sum_other_retributions_positive_if_individual_contribution_big_enough
 {government_spending : MonetaryValue}
 (i : Individual) (redi : @Redistribution Individual Individuals government_spending)
-(cont : @Profile Individual MonetaryValue) :
+(cont : Individual -> MonetaryValue) :
 Prop :=
   ∃M0, ∀M, M0 ≤ M → 0 ≤ ∑ j ∈ {i}ᶜ, redi.val (replace cont i M) j
 
 theorem average_work_incentive_pos_le_1 {government_spending : MonetaryValue}
 {i : Individual} {redi : @Redistribution Individual Individuals government_spending}
-{cont : @Profile Individual MonetaryValue} {awip : MonetaryValue}
+{cont : Individual -> MonetaryValue} {awip : MonetaryValue}
 (exst :
   @average_work_incentive_pos_is Individual eqInd Individuals government_spending
   i redi cont awip
@@ -305,7 +305,7 @@ awip <= 1 := by
 def individual_contribution_atBot_dominates_sum_other_retributions
 {government_spending : MonetaryValue}
 (i : Individual) (redi : @Redistribution Individual Individuals government_spending)
-(cont : @Profile Individual MonetaryValue) :
+(cont : Individual -> MonetaryValue) :
 Prop :=
   Tendsto (
     fun m ↦ (∑ j ∈ {i}ᶜ, redi.val (replace cont i m) j) / m
@@ -313,7 +313,7 @@ Prop :=
 
 theorem average_work_incentive_neg_eq_1 {government_spending : MonetaryValue}
 {i : Individual} {redi : @Redistribution Individual Individuals government_spending}
-{cont : @Profile Individual MonetaryValue}
+{cont : Individual -> MonetaryValue}
 (icd :
   @individual_contribution_atBot_dominates_sum_other_retributions
   Individual eqInd Individuals government_spending i redi cont
@@ -468,7 +468,7 @@ theorem average_work_incentive_neg_eq_1 {government_spending : MonetaryValue}
 
 theorem average_work_incentive_le_1 {government_spending : MonetaryValue}
 {i : Individual} {redi : @Redistribution Individual Individuals government_spending}
-{cont : @Profile Individual MonetaryValue} {A : MonetaryValue}
+{cont : Individual -> MonetaryValue} {A : MonetaryValue}
 (exst :
   @global_average_work_incentive_is Individual eqInd Individuals government_spending
   i redi cont A
@@ -494,12 +494,12 @@ A <= 1 := by
 
 def maximizes_average_work_incentive {government_spending : MonetaryValue}
 (i : Individual) (redi : @Redistribution Individual Individuals government_spending)
-(cont : @Profile Individual MonetaryValue) : Prop :=
+(cont : Individual -> MonetaryValue) : Prop :=
   @global_average_work_incentive_is Individual eqInd Individuals government_spending
   i redi cont 1
 
 lemma capitalism_maximizes_average_work_incentive (government_spending : MonetaryValue)
-(i : Individual) (cont : @Profile Individual MonetaryValue) :
+(i : Individual) (cont : Individual -> MonetaryValue) :
 @maximizes_average_work_incentive Individual eqInd Individuals government_spending i (
   pure_capitalism_costs_equally_divided_Redistribution (
     inhabited_implies_nonnull_card i
@@ -566,26 +566,26 @@ lemma capitalism_maximizes_average_work_incentive (government_spending : Monetar
       apply lim_frac_deg_1_0_bot
     · simp
 
-def greatest_contributor (cont : @Profile Individual MonetaryValue) (i : Individual) :
+def greatest_contributor (cont : Individual -> MonetaryValue) (i : Individual) :
 Prop :=
   ∀ j, cont j ≤ cont i
 
-def least_contributor (cont : @Profile Individual MonetaryValue) (i : Individual) :
+def least_contributor (cont : Individual -> MonetaryValue) (i : Individual) :
 Prop :=
   ∀ j, cont i ≤ cont j
 
-def single_greatest_contributor (cont : @Profile Individual MonetaryValue)
+def single_greatest_contributor (cont : Individual -> MonetaryValue)
 (i : Individual) :
 Prop :=
   greatest_contributor cont i ∧ ∀ j, cont j = cont i → j = i
 
-def single_least_contributor (cont : @Profile Individual MonetaryValue)
+def single_least_contributor (cont : Individual -> MonetaryValue)
 (i : Individual) :
 Prop :=
   least_contributor cont i ∧ ∀ j, cont j = cont i → j = i
 
 lemma ne_least_greatest_contributor {i j : Individual}
-(al2 : 2 ≤Fintype.card Individual) (cont : @Profile Individual MonetaryValue)
+(al2 : 2 ≤Fintype.card Individual) (cont : Individual -> MonetaryValue)
 (sgci : single_greatest_contributor cont i)
 (slcj : single_least_contributor cont j) :
 i ≠ j := by
@@ -614,7 +614,7 @@ i ≠ j := by
   norm_num at al2
 
 lemma single_greatest_contributor_unique {i j : Individual}
-{cont : @Profile Individual MonetaryValue} (sgci : single_greatest_contributor cont i)
+{cont : Individual -> MonetaryValue} (sgci : single_greatest_contributor cont i)
 (sgcj : single_greatest_contributor cont j) :
 i = j := by
   apply sgcj.right i
@@ -625,7 +625,7 @@ i = j := by
   · exact leji
 
 lemma single_least_contributor_unique {i j : Individual}
-{cont : @Profile Individual MonetaryValue} (slci : single_least_contributor cont i)
+{cont : Individual -> MonetaryValue} (slci : single_least_contributor cont i)
 (slcj : single_least_contributor cont j) :
 i = j := by
   apply slcj.right i
@@ -637,8 +637,8 @@ i = j := by
 
 noncomputable def communism_except_extremal_contributors
 (government_spending : MonetaryValue)
-(cont : @Profile Individual MonetaryValue) :
-@Profile Individual MonetaryValue :=
+(cont : Individual -> MonetaryValue) :
+Individual -> MonetaryValue :=
   fun i => (
     if single_greatest_contributor cont i then cont i
     else if single_least_contributor cont i then cont i
@@ -1280,7 +1280,7 @@ noncomputable def communism_except_extremal_contributors_Redistribution
 
 lemma communism_except_extremal_contributors_maximizes_average_work_incentive
 (al3 : 3 ≤Fintype.card Individual) (government_spending : MonetaryValue)
-(i : Individual) (cont : @Profile Individual MonetaryValue) :
+(i : Individual) (cont : Individual -> MonetaryValue) :
 @maximizes_average_work_incentive Individual eqInd Individuals government_spending i (
   communism_except_extremal_contributors_Redistribution al3 government_spending
 ) cont := by

@@ -14,8 +14,6 @@ variable {Individual : Type}
 open Equiv
 open ethics_first_steps
 
-def Profile (T  : Type) : Type := Individual -> T
-
 structure SubjectiveState : Type where
   state : State
   individual : Individual
@@ -63,7 +61,7 @@ def permutation_SubjectiveState
 def IndividualEthic : Type :=
   @Ethic (@SubjectiveState State Individual) Action
 
-def everyone_same_ethic (ethical_profile : @Profile Individual (
+def everyone_same_ethic (ethical_profile : Individual -> (
   @IndividualEthic State Action Individual)
 ) (subjective_state : @SubjectiveState State Individual) :
 Prop :=
@@ -71,7 +69,7 @@ Prop :=
     ethical_profile i subjective_state =
     ethical_profile j subjective_state
 
-def everyone_always_same_ethic (ethical_profile : @Profile Individual (
+def everyone_always_same_ethic (ethical_profile : Individual -> (
   @IndividualEthic State Action Individual)
 ) : Prop :=
   ∀ (subjective_state : SubjectiveState),

@@ -24,12 +24,12 @@ Prop :=
     ethic ( @get_SubjectiveState State Individual state individual)
 
 def everyone_is_objective
-(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(ethical_profile : Individual -> (@IndividualEthic State Action Individual))
 (ipos : @IndividualsPermutationsActingOnStates State Individual) :=
   ∀ (i : Individual), objective (ethical_profile i) ipos
 
 def may_disapprove
-(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(ethical_profile : Individual -> (@IndividualEthic State Action Individual))
 (i j : Individual) (state : State) :
 Prop :=
   ∃ (action : Action),
@@ -41,24 +41,24 @@ Prop :=
     ) action = false
 
 def may_never_disapprove
-(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(ethical_profile : Individual -> (@IndividualEthic State Action Individual))
 (i j : Individual) :
 Prop :=
   ∀ (state : State), ¬ may_disapprove ethical_profile i j state
 
 def nobody_may_disapprove
-(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(ethical_profile : Individual -> (@IndividualEthic State Action Individual))
 (state : State) :
 Prop :=
   ∀ (i j : Individual), ¬ may_disapprove ethical_profile i j state
 
 def nobody_may_ever_disapprove
-(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual)) :
+(ethical_profile : Individual -> (@IndividualEthic State Action Individual)) :
 Prop :=
   ∀ (state : State), nobody_may_disapprove ethical_profile state
 
 lemma same_ethic_implies_may_not_disapprove
-(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(ethical_profile : Individual -> (@IndividualEthic State Action Individual))
 (i j : Individual) (state : State) :
 ethical_profile i ( @get_SubjectiveState State Individual state j) =
 ethical_profile j ( @get_SubjectiveState State Individual state j) ->
@@ -79,7 +79,7 @@ theorem objective_ethics_may_never_disapprove_implies_same_ethic
 -- in my mind, should have worked without the line below thanks to eqInd
 [DecidableEq Individual]
 (ipos : @IndividualsPermutationsActingOnStates State Individual)
-(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual))
+(ethical_profile : Individual -> (@IndividualEthic State Action Individual))
 (i j : Individual) :
 objective (ethical_profile i) ipos ->
 objective (ethical_profile j) ipos ->
@@ -175,7 +175,7 @@ lemma objective_ethics_no_disapproval_iff_same
 -- in my mind, should have worked without the line below thanks to eqInd
 [DecidableEq Individual]
 (ipos : @IndividualsPermutationsActingOnStates State Individual)
-(ethical_profile : @Profile Individual (@IndividualEthic State Action Individual)) :
+(ethical_profile : Individual -> (@IndividualEthic State Action Individual)) :
 everyone_is_objective ethical_profile ipos ->
 (
   nobody_may_ever_disapprove ethical_profile <->

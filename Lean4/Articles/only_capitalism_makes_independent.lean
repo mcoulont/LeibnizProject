@@ -8,13 +8,13 @@ variable {eqInd : DecidableEq Individual}
 variable {Individuals : Fintype Individual}
 
 open Fintype
-open definition_capitalism_communism ethics_in_society
+open definition_capitalism_communism
 
 def retribution_depends_only_on_own_contribution {government_spending : MonetaryValue}
 (redi : @Redistribution Individual Individuals government_spending) :
 Prop :=
   ∃ (f : MonetaryValue -> MonetaryValue),
-  ∀ (cont : @Profile Individual MonetaryValue) (i : Individual),
+  ∀ (cont : Individual -> MonetaryValue) (i : Individual),
     redi.val cont i = f (cont i)
 
 lemma retribution_depends_only_on_own_contribution_capitalism
@@ -40,7 +40,7 @@ redi = pure_capitalism_costs_equally_divided_Redistribution inh government_spend
     apply retribution_depends_only_on_own_contribution_capitalism
   · intro rdoc
     have sumc := redi.property
-    ext cont
+    ext cont i
     unfold retribution_depends_only_on_own_contribution at rdoc
     obtain ⟨retr, rdo⟩ := rdoc
     unfold pure_capitalism_costs_equally_divided_Redistribution
@@ -76,8 +76,6 @@ redi = pure_capitalism_costs_equally_divided_Redistribution inh government_spend
         · exact Nat.cast_ne_zero.mpr inh
       · exact Nat.cast_ne_zero.mpr inh
     specialize (rdo cont)
-    apply funext
-    intro i
     specialize (rdo i)
     rewrite [defretr] at rdo
     tauto

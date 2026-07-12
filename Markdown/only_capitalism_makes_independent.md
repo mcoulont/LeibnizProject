@@ -38,7 +38,7 @@ Own retribution does not depend on contributions of other individuals. \
 ■
 --MATH_END--
 
-[//]: # Lean4 (20-39)
+[//]: # Lean4 (20-29)
 
 --MATH_START--
 $\mathbf{Proposition}$\
@@ -50,4 +50,4 @@ Let $c \in {\mathbb R}$. In a situation where everyone contributes up to $c$, we
 ■
 --MATH_END--
 
-[//]: # Lean4 (31-83)
+[//]: # Lean4 (31-81)

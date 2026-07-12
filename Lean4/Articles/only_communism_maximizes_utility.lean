@@ -9,7 +9,7 @@ variable {eqInd : DecidableEq Individual}
 variable {Individuals : Fintype Individual}
 
 open Set Filter Topology Real Metric
-open ethics_in_society definition_capitalism_communism ethics_in_society
+open definition_capitalism_communism
 
 def increases_with_money (utility : MonetaryValue -> ℝ) : Prop :=
   Monotone utility
@@ -20,12 +20,12 @@ def law_diminishing_marginal_utility (utility : MonetaryValue -> ℝ) : Prop :=
 def law_diminishing_marginal_utility_strict (utility : MonetaryValue -> ℝ) : Prop :=
   StrictConcaveOn ℝ (Set.Ici (0 : ℝ)) utility
 
-def social_utility (utility : MonetaryValue -> ℝ) (retr : @Profile Individual ℝ) : ℝ :=
+def social_utility (utility : MonetaryValue -> ℝ) (retr : Individual -> ℝ) : ℝ :=
   ∑ i, utility (retr i)
 
 theorem communism_maximizes_social_utility {government_spending : MonetaryValue}
 {utility : MonetaryValue -> ℝ}
-{cont : @Profile Individual MonetaryValue}
+{cont : Individual -> MonetaryValue}
 {redi : @Redistribution Individual Individuals government_spending}
 (inh : Fintype.card Individual ≠ 0) (ldmu : law_diminishing_marginal_utility utility)
 (rpos : ∀ i, 0 ≤ redi.val cont i) :
@@ -96,7 +96,7 @@ theorem communism_maximizes_social_utility {government_spending : MonetaryValue}
   · exact Nat.cast_ne_zero.mpr inh
 
 theorem only_communism_maximizes_social_utility {government_spending : MonetaryValue}
-{utility : MonetaryValue -> ℝ} {cont : @Profile Individual MonetaryValue}
+{utility : MonetaryValue -> ℝ} {cont : Individual -> MonetaryValue}
 {redi : @Redistribution Individual Individuals government_spending}
 (inh : Fintype.card Individual ≠ 0) (ldmu : law_diminishing_marginal_utility_strict utility)
 (rpos : ∀ i, 0 ≤ redi.val cont i) :
