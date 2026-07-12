@@ -5,13 +5,13 @@ namespace only_capitalism_makes_independent
 
 variable {Individual : Type}
 variable {eqInd : DecidableEq Individual}
-variable {Individuals : Fintype Individual}
+variable {Society : Fintype Individual}
 
 open Fintype
 open definition_capitalism_communism
 
 def retribution_depends_only_on_own_contribution {government_spending : MonetaryValue}
-(redi : @Redistribution Individual Individuals government_spending) :
+(redi : @Redistribution Individual Society government_spending) :
 Prop :=
   ∃ (f : MonetaryValue -> MonetaryValue),
   ∀ (cont : Individual -> MonetaryValue) (i : Individual),
@@ -30,7 +30,7 @@ retribution_depends_only_on_own_contribution (
 
 theorem only_pure_capitalism_makes_independent {government_spending : MonetaryValue}
 (inh : Fintype.card Individual ≠ 0)
-(redi : @Redistribution Individual Individuals government_spending) :
+(redi : @Redistribution Individual Society government_spending) :
 retribution_depends_only_on_own_contribution redi <->
 redi = pure_capitalism_costs_equally_divided_Redistribution inh government_spending := by
   apply Iff.intro

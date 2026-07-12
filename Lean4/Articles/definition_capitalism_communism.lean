@@ -11,7 +11,7 @@ namespace definition_capitalism_communism
 
 variable {Individual : Type}
 variable {eqInd : DecidableEq Individual}
-variable {Individuals : Fintype Individual}
+variable {Society : Fintype Individual}
 
 open Finset BigOperators Equiv
 
@@ -25,14 +25,14 @@ def accounts_at_equilibirum (government_spending : MonetaryValue)
 (redi : (Individual -> MonetaryValue) -> (Individual -> MonetaryValue)) :
 Prop :=
   ∀ (dist : Individual -> MonetaryValue),
-    @total_value Individual Individuals (redi dist) + government_spending =
-    @total_value Individual Individuals dist
+    @total_value Individual Society (redi dist) + government_spending =
+    @total_value Individual Society dist
 
 @[reducible]
 def Redistribution (government_spending : MonetaryValue) : Type :=
   {
     redi : (Individual -> MonetaryValue) -> (Individual -> MonetaryValue) //
-    @accounts_at_equilibirum Individual Individuals government_spending redi
+    @accounts_at_equilibirum Individual Society government_spending redi
   }
 
 def pure_capitalism :
@@ -46,7 +46,7 @@ noncomputable def pure_capitalism_costs_equally_divided
   cont i - government_spending / Fintype.card Individual
 
 lemma pure_capitalism_costs_equally_divided_0 :
-@pure_capitalism_costs_equally_divided Individual Individuals 0 =
+@pure_capitalism_costs_equally_divided Individual Society 0 =
 @pure_capitalism Individual := by
   unfold pure_capitalism_costs_equally_divided pure_capitalism
   apply funext
@@ -54,8 +54,8 @@ lemma pure_capitalism_costs_equally_divided_0 :
 
 lemma pure_capitalism_costs_equally_divided_at_equilibirum
 (inh : Fintype.card Individual ≠ 0) (government_spending : MonetaryValue) :
-@accounts_at_equilibirum Individual Individuals government_spending (
-  @pure_capitalism_costs_equally_divided Individual Individuals government_spending
+@accounts_at_equilibirum Individual Society government_spending (
+  @pure_capitalism_costs_equally_divided Individual Society government_spending
 ) := by
   unfold pure_capitalism_costs_equally_divided accounts_at_equilibirum
   intro dist
@@ -70,12 +70,12 @@ lemma pure_capitalism_costs_equally_divided_at_equilibirum
 
 noncomputable def pure_capitalism_costs_equally_divided_Redistribution
 (inh : Fintype.card Individual ≠ 0) (government_spending : MonetaryValue) :
-@Redistribution Individual Individuals government_spending :=
+@Redistribution Individual Society government_spending :=
   ⟨ pure_capitalism_costs_equally_divided government_spending,
     pure_capitalism_costs_equally_divided_at_equilibirum inh government_spending ⟩
 
 def pure_capitalism_Redistribution (inh : Fintype.card Individual ≠ 0) :
-@Redistribution Individual Individuals 0 :=
+@Redistribution Individual Society 0 :=
   ⟨
     pure_capitalism,
     pure_capitalism_costs_equally_divided_0 ▸
@@ -85,13 +85,13 @@ def pure_capitalism_Redistribution (inh : Fintype.card Individual ≠ 0) :
 noncomputable def pure_communism (government_spending : MonetaryValue) :
 (Individual -> MonetaryValue) -> (Individual -> MonetaryValue) :=
   fun (cont : Individual -> MonetaryValue) => fun _ =>
-  (@total_value Individual Individuals cont - government_spending) /
+  (@total_value Individual Society cont - government_spending) /
   (Fintype.card Individual : MonetaryValue)
 
 lemma pure_communism_at_equilibirum (inh : Fintype.card Individual ≠ 0)
 (government_spending : MonetaryValue) :
-@accounts_at_equilibirum Individual Individuals government_spending (
-  @pure_communism Individual Individuals government_spending
+@accounts_at_equilibirum Individual Society government_spending (
+  @pure_communism Individual Society government_spending
 ) := by
   unfold pure_communism accounts_at_equilibirum total_value
   intro dist
@@ -105,12 +105,12 @@ lemma pure_communism_at_equilibirum (inh : Fintype.card Individual ≠ 0)
 
 noncomputable def pure_communism_Redistribution (inh : Fintype.card Individual ≠ 0)
 (government_spending : MonetaryValue) :
-@Redistribution Individual Individuals government_spending :=
+@Redistribution Individual Society government_spending :=
   ⟨ pure_communism government_spending,
     pure_communism_at_equilibirum inh government_spending ⟩
 
 def is_egalitarian {government_spending : MonetaryValue}
-(redi : @Redistribution Individual Individuals government_spending) :
+(redi : @Redistribution Individual Society government_spending) :
 Prop :=
   ∀ (σ : Perm Individual) (cont : Individual -> MonetaryValue),
     PermutationsActingOnFunctions (redi.val cont) σ =
@@ -118,14 +118,14 @@ Prop :=
 
 lemma capitalism_is_egalitarian (inh : Fintype.card Individual ≠ 0)
 (government_spending : MonetaryValue) :
-@is_egalitarian Individual Individuals government_spending (
+@is_egalitarian Individual Society government_spending (
   pure_capitalism_costs_equally_divided_Redistribution inh government_spending
  ) := by
   tauto
 
 lemma communism_is_egalitarian (inh : Fintype.card Individual ≠ 0)
 (government_spending : MonetaryValue) :
-@is_egalitarian Individual Individuals government_spending (
+@is_egalitarian Individual Society government_spending (
   pure_communism_Redistribution inh government_spending
 ) := by
   unfold is_egalitarian pure_communism_Redistribution
@@ -144,7 +144,7 @@ lemma communism_is_egalitarian (inh : Fintype.card Individual ≠ 0)
       tauto
 
 def encourages_work {government_spending : MonetaryValue}
-(redi : @Redistribution Individual Individuals government_spending) :
+(redi : @Redistribution Individual Society government_spending) :
 Prop :=
   ∀ (cont : Individual -> MonetaryValue) (m : MonetaryValue)
   (i : Individual),
@@ -153,7 +153,7 @@ Prop :=
 
 lemma capitalism_encourages_work (inh : Fintype.card Individual ≠ 0)
 (government_spending : MonetaryValue) :
-@encourages_work Individual eqInd Individuals government_spending (
+@encourages_work Individual eqInd Society government_spending (
   pure_capitalism_costs_equally_divided_Redistribution inh government_spending
  ) := by
   unfold encourages_work pure_capitalism_costs_equally_divided_Redistribution
@@ -165,7 +165,7 @@ lemma capitalism_encourages_work (inh : Fintype.card Individual ≠ 0)
 
 lemma communism_encourages_work (inh : Fintype.card Individual ≠ 0)
 (government_spending : MonetaryValue) :
-@encourages_work Individual eqInd Individuals government_spending (
+@encourages_work Individual eqInd Society government_spending (
   pure_communism_Redistribution inh government_spending
 ) := by
   unfold encourages_work pure_communism_Redistribution
@@ -204,13 +204,13 @@ lemma communism_encourages_work (inh : Fintype.card Individual ≠ 0)
       exact ltjm
 
 def work_incentive_between {c1 c2 : MonetaryValue} {government_spending : MonetaryValue}
-(redi : @Redistribution Individual Individuals government_spending) (i : Individual)
+(redi : @Redistribution Individual Society government_spending) (i : Individual)
 (cont : Individual -> MonetaryValue) :
 MonetaryValue :=
   redi.val (replace cont i c2) i - redi.val (replace cont i c1) i
 
 def retribution_function {government_spending : MonetaryValue}
-(redi : @Redistribution Individual Individuals government_spending)
+(redi : @Redistribution Individual Society government_spending)
 (i : Individual) (cont : Individual -> MonetaryValue) :
 MonetaryValue -> MonetaryValue :=
   fun c => redi.val (replace cont i c) i
@@ -218,17 +218,17 @@ MonetaryValue -> MonetaryValue :=
 @[reducible]
 noncomputable def instantaneous_work_incentive {government_spending : MonetaryValue}
 (i : Individual) (c0 : MonetaryValue)
-(redi : @Redistribution Individual Individuals government_spending)
+(redi : @Redistribution Individual Society government_spending)
 (cont : Individual -> MonetaryValue) :
 MonetaryValue :=
   deriv (
-    @retribution_function Individual eqInd Individuals government_spending redi i cont
+    @retribution_function Individual eqInd Society government_spending redi i cont
   ) c0
 
 lemma work_incentive_capitalism_between (government_spending : MonetaryValue)
 (i : Individual) (c c' : MonetaryValue) (cont : Individual -> MonetaryValue) :
 (
-  @work_incentive_between Individual eqInd Individuals c c' government_spending
+  @work_incentive_between Individual eqInd Society c c' government_spending
   (pure_capitalism_costs_equally_divided_Redistribution (
     inhabited_implies_nonnull_card i
   ) government_spending) i cont
@@ -241,7 +241,7 @@ lemma work_incentive_capitalism_between (government_spending : MonetaryValue)
 
 lemma instantaneous_work_incentive_capitalism {government_spending : MonetaryValue}
 (i : Individual) (c0 : MonetaryValue) (cont : Individual -> MonetaryValue) :
-@instantaneous_work_incentive Individual eqInd Individuals government_spending i c0 (
+@instantaneous_work_incentive Individual eqInd Society government_spending i c0 (
   pure_capitalism_costs_equally_divided_Redistribution (
     inhabited_implies_nonnull_card i
   ) government_spending
@@ -254,7 +254,7 @@ lemma instantaneous_work_incentive_capitalism {government_spending : MonetaryVal
 lemma work_incentive_communism_between (government_spending : MonetaryValue)
 (i : Individual) (c c' : MonetaryValue) (cont : Individual -> MonetaryValue) :
 (
-  @work_incentive_between Individual eqInd Individuals c c' government_spending
+  @work_incentive_between Individual eqInd Society c c' government_spending
   (pure_communism_Redistribution (
     inhabited_implies_nonnull_card i
   ) government_spending) i cont
@@ -312,13 +312,13 @@ lemma work_incentive_communism_between (government_spending : MonetaryValue)
 lemma instantaneous_work_incentive_communism {government_spending : MonetaryValue}
 {i : Individual} {c0 : MonetaryValue} {cont : Individual -> MonetaryValue}
 (_ : DifferentiableAt ℝ (
-  @retribution_function Individual eqInd Individuals government_spending (
+  @retribution_function Individual eqInd Society government_spending (
     pure_communism_Redistribution (
       inhabited_implies_nonnull_card i
     ) government_spending
   ) i cont
 ) c0) :
-@instantaneous_work_incentive Individual eqInd Individuals government_spending i c0 (
+@instantaneous_work_incentive Individual eqInd Society government_spending i c0 (
   pure_communism_Redistribution (
     inhabited_implies_nonnull_card i
   ) government_spending
@@ -454,8 +454,8 @@ lemma currency_change_at_equilibrium {k : MonetaryValue}
 {government_spending : MonetaryValue}
 {redi : (Individual -> MonetaryValue) -> (Individual -> MonetaryValue)}
 (pos : 0 < k)
-(equi : @accounts_at_equilibirum Individual Individuals government_spending redi) :
-@accounts_at_equilibirum Individual Individuals (government_spending * k) (
+(equi : @accounts_at_equilibirum Individual Society government_spending redi) :
+@accounts_at_equilibirum Individual Society (government_spending * k) (
   currency_change_redistribution pos redi
 ) := by
   unfold accounts_at_equilibirum currency_change_redistribution
@@ -495,21 +495,21 @@ lemma currency_change_at_equilibrium {k : MonetaryValue}
 
 noncomputable def change_currency_Redistribution {k : MonetaryValue}
 {government_spending : MonetaryValue}
-(redi : @Redistribution Individual Individuals government_spending)
+(redi : @Redistribution Individual Society government_spending)
 (pos : 0 < k) :
-@Redistribution Individual Individuals (government_spending * k) :=
+@Redistribution Individual Society (government_spending * k) :=
   ⟨ currency_change_redistribution pos redi,
     currency_change_at_equilibrium pos redi.property ⟩
 
 def is_fair {government_spending : MonetaryValue}
-(redi : @Redistribution Individual Individuals government_spending) :
+(redi : @Redistribution Individual Society government_spending) :
 Prop :=
   ∀ (cont : Individual -> MonetaryValue) (i j : Individual),
     cont i <= cont j ->
     redi.val cont i <= redi.val cont j
 
 def is_strictly_fair {government_spending : MonetaryValue}
-(redi : @Redistribution Individual Individuals government_spending) :
+(redi : @Redistribution Individual Society government_spending) :
 Prop :=
   ∀ (cont : Individual -> MonetaryValue) (i j : Individual),
     cont i < cont j ->
@@ -517,7 +517,7 @@ Prop :=
 
 lemma capitalism_is_fair (inh : Fintype.card Individual ≠ 0)
 (government_spending : MonetaryValue) :
-@is_fair Individual Individuals government_spending (
+@is_fair Individual Society government_spending (
   pure_capitalism_costs_equally_divided_Redistribution inh government_spending
 ) := by
   unfold is_fair pure_capitalism_costs_equally_divided_Redistribution
@@ -529,7 +529,7 @@ lemma capitalism_is_fair (inh : Fintype.card Individual ≠ 0)
 
 lemma capitalism_is_strictly_fair (inh : Fintype.card Individual ≠ 0)
 (government_spending : MonetaryValue) :
-@is_strictly_fair Individual Individuals government_spending (
+@is_strictly_fair Individual Society government_spending (
   pure_capitalism_costs_equally_divided_Redistribution inh government_spending
 ) := by
   unfold is_strictly_fair pure_capitalism_costs_equally_divided_Redistribution
@@ -551,7 +551,7 @@ is_fair (pure_communism_Redistribution inh government_spending) := by
 
 lemma communism_not_strictly_fair {i j : Individual} [DecidableEq Individual]
 (government_spending : MonetaryValue) (neij : j ≠ i) :
-¬ @is_strictly_fair Individual Individuals government_spending (
+¬ @is_strictly_fair Individual Society government_spending (
   pure_communism_Redistribution (inhabited_implies_nonnull_card i) government_spending
 ) := by
   unfold is_strictly_fair pure_communism_Redistribution

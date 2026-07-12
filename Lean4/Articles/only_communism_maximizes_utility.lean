@@ -6,7 +6,7 @@ namespace only_communism_maximizes_utility
 
 variable {Individual : Type}
 variable {eqInd : DecidableEq Individual}
-variable {Individuals : Fintype Individual}
+variable {Society : Fintype Individual}
 
 open Set Filter Topology Real Metric
 open definition_capitalism_communism
@@ -26,12 +26,12 @@ def social_utility (utility : MonetaryValue -> ℝ) (retr : Individual -> ℝ) :
 theorem communism_maximizes_social_utility {government_spending : MonetaryValue}
 {utility : MonetaryValue -> ℝ}
 {cont : Individual -> MonetaryValue}
-{redi : @Redistribution Individual Individuals government_spending}
+{redi : @Redistribution Individual Society government_spending}
 (inh : Fintype.card Individual ≠ 0) (ldmu : law_diminishing_marginal_utility utility)
 (rpos : ∀ i, 0 ≤ redi.val cont i) :
-@social_utility Individual Individuals utility (redi.val cont) ≤
-@social_utility Individual Individuals utility (
-  @pure_communism Individual Individuals government_spending cont
+@social_utility Individual Society utility (redi.val cont) ≤
+@social_utility Individual Society utility (
+  @pure_communism Individual Society government_spending cont
 ) := by
   unfold social_utility pure_communism total_value
   rw [Finset.sum_const]
@@ -97,14 +97,14 @@ theorem communism_maximizes_social_utility {government_spending : MonetaryValue}
 
 theorem only_communism_maximizes_social_utility {government_spending : MonetaryValue}
 {utility : MonetaryValue -> ℝ} {cont : Individual -> MonetaryValue}
-{redi : @Redistribution Individual Individuals government_spending}
+{redi : @Redistribution Individual Society government_spending}
 (inh : Fintype.card Individual ≠ 0) (ldmu : law_diminishing_marginal_utility_strict utility)
 (rpos : ∀ i, 0 ≤ redi.val cont i) :
-@social_utility Individual Individuals utility (redi.val cont) =
-@social_utility Individual Individuals utility (
-  @pure_communism Individual Individuals government_spending cont
+@social_utility Individual Society utility (redi.val cont) =
+@social_utility Individual Society utility (
+  @pure_communism Individual Society government_spending cont
 ) →
-redi.val cont = @pure_communism Individual Individuals government_spending cont := by
+redi.val cont = @pure_communism Individual Society government_spending cont := by
   intro eqsu
   unfold social_utility pure_communism total_value at eqsu
   rw [Finset.sum_const] at eqsu

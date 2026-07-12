@@ -7,7 +7,6 @@ variable {State : Type}
 variable {Action : Type}
 variable {Individual : Type}
 variable {eqInd : DecidableEq Individual}
-variable {Individuals : Fintype Individual}
 
 open Equiv
 open ethics_in_society
