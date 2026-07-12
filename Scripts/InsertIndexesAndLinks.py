@@ -123,7 +123,8 @@ def detect_objects_to_point_to(
 				1 < line_prover_file.count(TOKEN_LEAN_COMMENT_LINE)
 			):
 				print(
-					"Error: multiple comment line token in .lean line " +
+					"Error: multiple comment line token in " +
+					prover_file + ".lean line " +
 					str(line_number) + "\n",
 					file=sys.stderr
 				)
