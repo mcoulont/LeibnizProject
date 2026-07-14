@@ -16,3 +16,4 @@ import Articles.definition_capitalism_communism
 import Articles.only_capitalism_makes_independent
 import Articles.maximizing_average_work_incentive
 import Articles.only_communism_maximizes_utility
+import Articles.definition_corruption
